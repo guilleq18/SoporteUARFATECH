@@ -28,7 +28,7 @@
       <script src="js/jquery.dataTables.min.js"></script>
       <script src="js/select2.min.js"></script>
       
-    <title>SGD</title>
+    <title>Soporte UARFATECH</title>
 </head>
 <nav class="navbar navbar-default">
   <div class="container-fluid"> 
