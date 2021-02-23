@@ -14,7 +14,7 @@
       <link rel="stylesheet" href="css/prop.css">
       <script src="js/jquery-3.4.1.min.js"></script>
       
-    <title>SGD</title>
+    <title>Soporte UARFATECH</title>
 </head>
 <body>
     
@@ -22,7 +22,7 @@
 
 <!--****************************************FORMULARIO********************************************** -->
 <div class="container">
-<br><p class="text-center">Sistema de Gestion Deilion</p>
+<br><p class="text-center">SI-REG</p>
 <hr>
 <div class="row justify-content-center">
 <div class="col-md-6">
