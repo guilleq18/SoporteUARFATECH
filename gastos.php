@@ -22,26 +22,32 @@
        
     $(document).ready(function(){
 
-      $('#tabla tbody').on('click', 'tr', function () {
-        var item = tabla.row(this).data();
+      //Codigo para obtener el id de una celda presionada del datatable
+      $('#tabla ').on('click', 'tbody tr', function () {
+
+        var taibol = $('#tabla').DataTable();
+        var item = taibol.row(this).data();
         alert( 'You clicked on '+item['codigoCadena']+'\'s row' );
         var id = item['codigoCadena'];
       
                 $("#tabla1").DataTable( {
+                  
                 language: {
                   url: './js/Spanish.json',
                   buttons: {pageLength: { _: "Mostrar %d filas"}}
                 },
+                
                 ajax: {
                   url: "/php/controller.php",
                   type: "POST",
                   data: {tipo: "traerSucursales", idCadena:id},
                   dataSrc: ""
                 },
+                destroy: true,
                 columns: [
                   { data: "codigoSucursal"},
                   { data: "codigoCadena"},
-                  { data: "cnombre"},
+                  { data: "nombre"},
                   { data: "roc"},		
                   { data: "estatus"},
                   

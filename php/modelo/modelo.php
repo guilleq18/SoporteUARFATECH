@@ -40,11 +40,11 @@ class Modelo {
     }
     //llenar datatable de trabajos
     
-    public function traerBalanceIngreso($registros)
+    public function traerSucursales($registros)
     {
         $sql = "  
                 DECLARE @idCadena date='".$registros['id']."';
-                SELECT * FROM SucursalesCat where codigoCadena=@idCadena and estatus=0;";
+                SELECT * FROM sucursalesCat where codigoCadena=@idCadena and estatus=0;";
         $datos = $this->gestorBD->hacerConsulta($sql);
         return $datos;
     }
