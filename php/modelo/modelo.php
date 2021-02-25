@@ -43,8 +43,8 @@ class Modelo {
     public function traerSucursales($registros)
     {
         $sql = "  
-                DECLARE @idCadena date='".$registros['id']."';
-                SELECT * FROM sucursalesCat where codigoCadena=@idCadena and estatus=0;";
+                DECLARE @idCadena int='".$registros['id']."';
+                SELECT * FROM sucursalesCat where codigoCadena=@idCadena ;";
         $datos = $this->gestorBD->hacerConsulta($sql);
         return $datos;
     }
