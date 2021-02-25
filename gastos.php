@@ -46,13 +46,27 @@
                 columns: [
                   { data: "codigoSucursal"},
                   { data: "codigoCadena"},
-                  { data: "nombre"},
-                  { data: "roc"},		
-                  { data: "estatus"},
+                  { data: "nombreCadena", sTitle:"Cadena"},
+                  { data: "nombre", sTitle:"Sucursal"},
+                  { data: "roc", sTitle:"ROC"},
+                  { data: null, sTitle:"Acciones"},
                   
+                ], 
+                //aqui agrego una columna;
+                //con el primer targets le digo cual columna quiero que se vea.
+                //con el segundo target le digo en donde van a estar los botones
+                columnDefs: [
+                  { targets: [0,1], visible: false },
+				          { targets: 5, width: 30, orderable: false, searchable: false, render: function (data, type, row) {
+                    data="";
+                        data+='<img class="accion accInfo" title="Información del proveedor" width="30" height="30" border="0" src="./images/ver.png"><img class="accion accProductos" title="Ver listado de productos" width="30" height="30" border="0"';
+                        
+                        return data;}}
+                          
                 ],
-                    
-                  });
+                
+                  
+              });
 			
 		  
       });
@@ -77,11 +91,24 @@
 				{ data: "nombre", sTitle: "Nombre"},
         { data: "provincia", sTitle: "Provincia"},
 				{ data: "estatus", sTitle: "Status"},
-			
-			],
-          
-        });
-       
+        { data: null}
+                  
+                ], 
+                //aqui agrego una columna;
+                //con el primer targets le digo cual columna quiero que se vea.
+                //con el segundo target le digo en donde van a estar los botones
+                columnDefs: [
+                  { targets: 0, visible: false },
+				          { targets: 4, width: 30, orderable: false, searchable: false, render: function (data, type, row) {
+                    data="";
+                        data+='<img class="accion accInfo" title="Información del proveedor" width="30" height="30" border="0" src="./images/ver.png"><img class="accion accProductos" title="Ver listado de productos" width="30" height="30" border="0"';
+                        
+                        return data;}}
+                          
+                ],
+                
+                  
+              });
         
         
     });

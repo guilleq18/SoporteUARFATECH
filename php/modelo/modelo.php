@@ -44,7 +44,9 @@ class Modelo {
     {
         $sql = "  
                 DECLARE @idCadena int='".$registros['id']."';
-                SELECT * FROM sucursalesCat where codigoCadena=@idCadena ;";
+                SELECT sc.codigoSucursal, sc.codigoCadena, cc.nombre as nombreCadena, sc.nombre, sc.roc FROM SucursalesCat sc
+                INNER JOIN CadenasCat cc on cc.codigoCadena=sc.codigoCadena 
+                WHERE sc.codigoCadena=@idCadena and sc.estatus=0 ;";
         $datos = $this->gestorBD->hacerConsulta($sql);
         return $datos;
     }
