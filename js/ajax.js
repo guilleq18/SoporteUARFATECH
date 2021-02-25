@@ -13,15 +13,15 @@ var array_detalle_trabajo=[];
 var array_colocar_clientes_mod=[];
 var array_detalle_gasto=[];
 
-function colocarClientes(){
+function colocarCadenas(){
 	$.ajax({
 		url:'php/controller.php',
 		type:'POST',
 		async: false,
 		dataType:'json',
-		data:{tipo:'traerClientes'},
+		data:{tipo:'traerCadenas'},
 	    success:function(data){
-            array_clientes=data;
+            array_trabajos=data;
             
 		},
 		error: function (jqXHR, textStatus, errorThrown){

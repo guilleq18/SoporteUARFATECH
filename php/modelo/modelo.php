@@ -27,24 +27,12 @@ class Modelo {
 
 
 
-	public function traerUsuario($_dni, $_pass){
-        
-        $sql = "
-		SET NOCOUNT ON;
-		DECLARE @dni nvarchar(20)='".$_dni."';
-		DECLARE @Contrasena nvarchar(40)='".$_pass."';
-		SET NOCOUNT OFF;
-
-		select codigoUsuario,dni,nombre from usuario where dni=@dni and contrasena=@Contrasena;
-		";
-        $user = json_decode($this->gestorBD->hacerConsulta($sql), true);
-        return $user;
-    }
+	
 
     //metodo que realiza la consulta de clientes
-    public function traerCliente()
+    public function traercadenas()
     {
-        $sql = "SELECT * FROM clientes where baja=0; ";
+        $sql = "SELECT * FROM CadenasCat; ";
         //instancio en datos la consulta que se envia al metodo hacerConsulta que me devuelve los datos a mostrar
         $datos = $this->gestorBD->hacerConsulta($sql);
         //retorno la variable datos para poder ser utilizada posteriormente al ser llamado el metodo

@@ -1,10 +1,5 @@
 <!DOCTYPE html>
-<?php 
-    session_start();
-    if(!isset($_SESSION['codigoUsuario'])){
-        header("Location: /login.php");
-    }
-?>
+
 
 <head>
     <meta charset="UTF-8">
@@ -28,7 +23,7 @@
        
      $(document).ready(function(){
    
-         colocarTrabajos();
+         colocarCadenas();
           var datos = [];
           for (var i = 0, len = array_trabajos.length; i < len; ++i) {
           dato = array_trabajos[i];
@@ -41,16 +36,9 @@
             },
             data: datos,
             aoColumns: [
-              { mData: "codigoTrabajo", sTitle: "ID"},
-              { mData: "tipoTrabajo", sTitle: "Tipo de Trabajo"},
-              { mData: "nombre", sTitle: "Cliente"},
-              { mData: "nombreCorto", sTitle: "Descripcion Corta"},
-              { mData: "fechaEntrega", sTitle: "Fecha Entrega"},
-              { mData: "importe", sTitle: "Importe $"},
-              { mData: "referente", sTitle: "Referente"},
-              { mData: "telefonoReferente", sTitle: "Telefono Referente"},
-              { mData: "puestoEmpresa", sTitle: "Cargo"},
-              
+              { mData: "codigoCadena", sTitle: "ID"},
+              { mData: "nombre", sTitle: "Tipo de Trabajo"},
+              { mData: "estatus", sTitle: "Cliente"},
             ]
           
         });

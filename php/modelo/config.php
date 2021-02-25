@@ -1,6 +1,6 @@
 <?php
 	define('DBUSER','sa');
-	define('DBPASS','sa');
+	define('DBPASS','Utech2016');
 	define('DBHOST','vr-pruebas');
-	define('DBNAME','soporteUARFA');
+	define('DBNAME','UARFASoporte');
 ?>

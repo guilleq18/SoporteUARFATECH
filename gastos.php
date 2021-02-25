@@ -1,10 +1,5 @@
 <!DOCTYPE html>
-<?php 
-    session_start();
-    if(!isset($_SESSION['codigoUsuario'])){
-        header("Location: /login.php");
-    }
-?>
+
 
 <head>
     <meta charset="UTF-8">
@@ -25,47 +20,32 @@
       <script src="js/validar.js"></script>
       <script type="text/javascript">
        
-     $(document).ready(function(){
+    $(document).ready(function(){
    
-        colocarGastos();
-            var datos = [];
-            for (var i = 0, len = array_gastos.length; i < len; ++i) {
-            dato = array_gastos[i];
-           
-            datos.push(dato);
-        }  
-        
-        $("#tabla").DataTable( {
-            language: {
-                  url: 'js/Spanish.json'
-            },
-               data: datos,
-               aoColumns: [
-                  { mData: "codigoGasto", sTitle: "ID"},
-                  { mData: "tipoGasto", sTitle: "Tipo de Egreso"},
-                  { mData: "alias", sTitle: "Alias"},
-                  { mData: "importe", sTitle: "Importe"},
-                  { mData: "descripcion", sTitle: "Descripcion"},
-                  { mData: "fecha", sTitle: "Fecha "},
-                  
-        ]
+      $("#tabla").DataTable( {
+			language: {
+				url: './js/Spanish.json',
+				buttons: {pageLength: { _: "Mostrar %d filas"}}
+			},
+			ajax: {
+				url: "/php/controller.php",
+				type: "POST",
+				data: {tipo: "traerCadenas"},
+				dataSrc: ""
+			},
+			columns: [
+				{ data: "codigoCadena"},
+				{ data: "nombre"},
+        { data: "provincia"},
+				{ data: "estatus"},		
+				{ data: null}
+			],
           
         });
        
-        //funcion para enviar los parametros de los inputs al ajax
-        $("#carga").click(function(e){
-            
-          if (validarGasto()==false){
-            
-          }else{ 
-
-            $("#agregarCLiente").modal('hide');//ocultamos el modal
-            
-            agregarGasto($("#tipoGasto").val(), $("#alias").val(), $("#descripcion").val(), $("#fecha").val(), $("#importe").val());
-          }  
-        });
         
-   });
+        
+    });
  
 	</script>
 

@@ -8,9 +8,9 @@ $modelo=new Modelo();
 
 $tipo=$_POST['tipo'];
 
-if ($tipo=='traerClientes'){
+if ($tipo=='traerCadenas'){
 
-		$result = $modelo->traerCliente();
+		$result = $modelo->traerCadenas();
 		echo $result;
 	
 	}
