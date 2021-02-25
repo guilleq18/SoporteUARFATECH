@@ -59,7 +59,7 @@
                   { targets: [0,1], visible: false },
 				          { targets: 5, width: 30, orderable: false, searchable: false, render: function (data, type, row) {
                     data="";
-                        data+='<img class="accion accInfo" title="Información del proveedor" width="30" height="30" border="0" src="./images/ver.png"><img class="accion accProductos" title="Ver listado de productos" width="30" height="30" border="0"';
+                        data+='<img class="accion accSecciones" title="Configuración de seciones" width="30" height="30" border="0" src="./img/buscar.png">';
                         
                         return data;}}
                           
@@ -91,7 +91,7 @@
 				{ data: "nombre", sTitle: "Nombre"},
         { data: "provincia", sTitle: "Provincia"},
 				{ data: "estatus", sTitle: "Status"},
-        { data: null}
+        { data: null, sTitle:"Acciones"}
                   
                 ], 
                 //aqui agrego una columna;
@@ -101,7 +101,7 @@
                   { targets: 0, visible: false },
 				          { targets: 4, width: 30, orderable: false, searchable: false, render: function (data, type, row) {
                     data="";
-                        data+='<img class="accion accInfo" title="Información del proveedor" width="30" height="30" border="0" src="./images/ver.png"><img class="accion accProductos" title="Ver listado de productos" width="30" height="30" border="0"';
+                        data+='<img class="accion accSecciones" title="Configuración de seciones" width="30" height="30" border="0" src="./img/buscar.png">';
                         
                         return data;}}
                           
