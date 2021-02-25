@@ -21,6 +21,40 @@
       <script type="text/javascript">
        
     $(document).ready(function(){
+
+      $('#tabla tbody').on('click', 'tr', function () {
+        var item = tabla.row(this).data();
+        alert( 'You clicked on '+item['codigoCadena']+'\'s row' );
+        var id = item['codigoCadena'];
+      
+                $("#tabla1").DataTable( {
+                language: {
+                  url: './js/Spanish.json',
+                  buttons: {pageLength: { _: "Mostrar %d filas"}}
+                },
+                ajax: {
+                  url: "/php/controller.php",
+                  type: "POST",
+                  data: {tipo: "traerSucursales", idCadena:id},
+                  dataSrc: ""
+                },
+                columns: [
+                  { data: "codigoSucursal"},
+                  { data: "codigoCadena"},
+                  { data: "cnombre"},
+                  { data: "roc"},		
+                  { data: "estatus"},
+                  
+                ],
+                    
+                  });
+			
+		  
+      });
+
+
+
+
    
       $("#tabla").DataTable( {
 			language: {
@@ -34,11 +68,11 @@
 				dataSrc: ""
 			},
 			columns: [
-				{ data: "codigoCadena"},
-				{ data: "nombre"},
-        { data: "provincia"},
-				{ data: "estatus"},		
-				{ data: null}
+				{ data: "codigoCadena", sTitle: "ID"},
+				{ data: "nombre", sTitle: "Nombre"},
+        { data: "provincia", sTitle: "Provincia"},
+				{ data: "estatus", sTitle: "Status"},
+			
 			],
           
         });
@@ -164,6 +198,15 @@
 		<div class="col-lg-1 col-sm-1"></div>
 		<div class="col-md-10">
 	  		<table id="tabla" class="table table-bordered"></table>
+		</div>
+  	</div>
+  </div>
+  <div style="clear:both; margin:10px" > </div>
+  <!--datatable-->
+  <div class="row" style="margin-bottom: 20px;">
+		<div class="col-lg-1 col-sm-1"></div>
+		<div class="col-md-10">
+	  		<table id="tabla1" class="table table-bordered"></table>
 		</div>
   	</div>
   </div>

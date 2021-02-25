@@ -14,11 +14,10 @@ if ($tipo=='traerCadenas'){
 		echo $result;
 	
 	}
-if ($tipo=='traerBalanceIngreso'){
+if ($tipo=='traerSucursales'){
 
-		$registros['fechaInicial']=$_POST['fechaInicial'];
-		$registros['fechaFinal']=$_POST['fechaFinal'];
-    	$result = $modelo->traerBalanceIngreso($registros);
+		$registros['id']=$_POST['idCadena'];
+		$result = $modelo->traerSucursales($registros);
 	    echo $result;
 	
 }

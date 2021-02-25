@@ -39,35 +39,13 @@ class Modelo {
         return $datos;
     }
     //llenar datatable de trabajos
-    public function traerTrabajos()
-    {
-        $sql = "SELECT tr.codigoTrabajo, cl.nombre, tr.tipoTrabajo, tr.nombreCorto, tr.descripcion, tr.fechaInicio, case when cast(tr.fechaEntrega as nvarchar) <= '1900-01-01' then 'Pendiente' else cast(tr.fechaEntrega as nvarchar) end as fechaEntrega, tr.referente, tr.telefonoReferente, tr.puestoEmpresa, tr.importe FROM clientes cl INNER JOIN trabajos tr ON cl.codigoCliente=tr.codigoCliente";
-        //instancio en datos la consulta que se envia al metodo hacerConsulta que me devuelve los datos a mostrar
-        $datos = $this->gestorBD->hacerConsulta($sql);
-        //retorno la variable datos para poder ser utilizada posteriormente al ser llamado el metodo
-        return $datos;
-    }
-    //llenar datatable de Gastos
-    public function traerGastos()
-    {
-        $sql = "SELECT * FROM gastos";
-        //instancio en datos la consulta que se envia al metodo hacerConsulta que me devuelve los datos a mostrar
-        $datos = $this->gestorBD->hacerConsulta($sql);
-        //retorno la variable datos para poder ser utilizada posteriormente al ser llamado el metodo
-        return $datos;
-    }
+    
     public function traerBalanceIngreso($registros)
     {
         $sql = "  
-                DECLARE @fechaInicial date='".$registros['fechaInicial']."';
-                DECLARE @fechaFinal date='".$registros['fechaFinal']."';
-                
-                SELECT tr.tipoTrabajo, sum(tr.importe) as importe FROM trabajos tr where fechaEntrega>=@fechaInicial and fechaEntrega<=@fechaFinal
-                group by tr.tipoTrabajo
-                order by tr.tipoTrabajo";
-        //instancio en datos la consulta que se envia al metodo hacerConsulta que me devuelve los datos a mostrar
+                DECLARE @idCadena date='".$registros['id']."';
+                SELECT * FROM SucursalesCat where codigoCadena=@idCadena and estatus=0;";
         $datos = $this->gestorBD->hacerConsulta($sql);
-        //retorno la variable datos para poder ser utilizada posteriormente al ser llamado el metodo
         return $datos;
     }
     public function traerBalanceGasto($registros)
