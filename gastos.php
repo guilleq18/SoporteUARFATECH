@@ -27,9 +27,8 @@
 
         var taibol = $('#tabla').DataTable();
         var item = taibol.row(this).data();
-        alert( 'You clicked on '+item['codigoCadena']+'\'s row' );
         var id = item['codigoCadena'];
-      
+        //levanto el datatable que necesito 
                 $("#tabla1").DataTable( {
                   
                 language: {
