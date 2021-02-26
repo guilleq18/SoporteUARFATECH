@@ -23,13 +23,16 @@
     $(document).ready(function(){
 
       //Codigo para obtener el id de una celda presionada del datatable
-      $('#tabla ').on('click', 'tbody tr', function () {
+      $('#tabla').on('click', 'tbody tr', function () {
 
+       
+          
+        
         var taibol = $('#tabla').DataTable();
         var item = taibol.row(this).data();
         var id = item['codigoCadena'];
         //levanto el datatable que necesito 
-                $("#tabla1").DataTable( {
+              $("#tabla1").DataTable( {
                   
                 language: {
                   url: './js/Spanish.json',
@@ -59,14 +62,14 @@
                   { targets: [0,1], visible: false },
 				          { targets: 5, width: 30, orderable: false, searchable: false, render: function (data, type, row) {
                     data="";
-                        data+='<img class="accion accSecciones" title="Configuración de seciones" width="30" height="30" border="0" src="./img/buscar.png">';
-                        
-                        return data;}}
+                    data+='<span class="accion modifSucursal" title="Configuración de seciones" width="30" height="30" border="1" style="pading:1px"><input type="image" src="./img/editar.png"> <span &nbsp; class="accion delSucursal" title="Configuración de seciones" width="30" height="30" border="1" pading:1px><input type="image" src="./img/del.png"></span>';
+                    return data;}}
                           
                 ],
                 
                   
               });
+            
 			
 		  
       });
@@ -101,7 +104,9 @@
                   { targets: 0, visible: false },
 				          { targets: 4, width: 30, orderable: false, searchable: false, render: function (data, type, row) {
                     data="";
-                        data+='<button class="accion accSecciones" title="Configuración de seciones" width="30" height="30" border="0" src="./img/buscar.png"></button>';
+
+                        data+='<span class="accion modifCadena" title="Configuración de seciones" width="30" height="30" border="1" style="pading:1px"><input type="image" src="./img/editar.png"> <span &nbsp; class="accion delCadena" title="Configuración de seciones" width="30" height="30" border="1" pading:1px><input type="image" src="./img/del.png"></span>';
+                        
                         
                         return data;}}
                           
@@ -110,7 +115,7 @@
                   
       });
       //paso los datos de las cadenas al modal para modificarlos
-      $( "#tabla tbody" ).on( "click", ".accSecciones", function() {
+      $( "#tabla tbody" ).on( "click", ".modifCadena", function() {
               var item = $("#tabla").DataTable().row( $(this).parents('tr') ).data();
               $('#modCadena').modal('show');
               document.getElementById("idCadena").value = item['codigoCadena'];
