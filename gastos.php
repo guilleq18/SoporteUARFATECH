@@ -76,22 +76,22 @@
 
    
       $("#tabla").DataTable( {
-			language: {
-				url: './js/Spanish.json',
-				buttons: {pageLength: { _: "Mostrar %d filas"}}
-			},
-			ajax: {
-				url: "/php/controller.php",
-				type: "POST",
-				data: {tipo: "traerCadenas"},
-				dataSrc: ""
-			},
-			columns: [
-				{ data: "codigoCadena", sTitle: "ID"},
-				{ data: "nombre", sTitle: "Nombre"},
-        { data: "provincia", sTitle: "Provincia"},
-				{ data: "estatus", sTitle: "Status"},
-        { data: null, sTitle:"Acciones"}
+          language: {
+            url: './js/Spanish.json',
+            buttons: {pageLength: { _: "Mostrar %d filas"}}
+          },
+          ajax: {
+            url: "/php/controller.php",
+            type: "POST",
+            data: {tipo: "traerCadenas"},
+            dataSrc: ""
+          },
+          columns: [
+            { data: "codigoCadena", sTitle: "ID"},
+            { data: "nombre", sTitle: "Nombre"},
+            { data: "provincia", sTitle: "Provincia"},
+            { data: "estatus", sTitle: "Status"},
+            { data: null, sTitle:"Acciones"}
                   
                 ], 
                 //aqui agrego una columna;
@@ -101,15 +101,22 @@
                   { targets: 0, visible: false },
 				          { targets: 4, width: 30, orderable: false, searchable: false, render: function (data, type, row) {
                     data="";
-                        data+='<img class="accion accSecciones" title="Configuración de seciones" width="30" height="30" border="0" src="./img/buscar.png">';
+                        data+='<button class="accion accSecciones" title="Configuración de seciones" width="30" height="30" border="0" src="./img/buscar.png"></button>';
                         
                         return data;}}
                           
                 ],
                 
                   
-              });
-        
+      });
+      //paso los datos de las cadenas al modal para modificarlos
+      $( "#tabla tbody" ).on( "click", ".accSecciones", function() {
+              var item = $("#tabla").DataTable().row( $(this).parents('tr') ).data();
+              $('#modCadena').modal('show');
+              document.getElementById("idCadena").value = item['codigoCadena'];
+              document.getElementById("nombreCad").value = item['nombre'];
+              document.getElementById("provCadena").value = item['provincia'];
+		  });
         
     });
  
@@ -212,6 +219,40 @@
                               
                             </div> <!-- form-row end.// -->
                              
+                        
+                    </div>
+                </div>
+           
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                  <p style="margin: 10px 0px;"><button class="btn btn-lg btn-primary" id="carga">Registrar</button></p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Modal Mod cadena--> 
+          <div class="modal fade" id="modCadena" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h3 class="modal-title" id="exampleModalLongTitle">Modificar Cadena</h3>
+                </div>
+                      <div class="modal-body"> 
+                        <div class="card">
+
+                            <div class="form-row">
+                            <div class="col form-group">
+                                  <h3 class="control-label " >Nombre </h3>   
+                                  <input type="text" class="form-control input-lg"  name="nombreCad" id="nombreCad" required>
+                              </div> <!-- form-group end.// -->
+                           
+                              <div class="col form-group">
+                                  <h3 class="control-label " >Provincia</h3>
+                                  <input type="text" class="form-control input-lg"  name="Provincia" id="provCadena" required>
+                              </div> <!-- form-group end.// -->
+                              <input type="text" name="idCadena" id="idCadena" style="visibility:hidden">
+                              
+                            </div> <!-- form-row end.// -->
                         
                     </div>
                 </div>
