@@ -102,10 +102,12 @@
                 //con el segundo target le digo en donde van a estar los botones
                 columnDefs: [
                   { targets: 0, visible: false },
-				          { targets: 4, width: 30, orderable: false, searchable: false, render: function (data, type, row) {
+				          { targets: 4, width: 30, orderable: false, searchable: false, 
+                    render: function (data, type, row) {
                     data="";
 
-                        data+='<span class="accion modifCadena" title="Configuración de seciones" width="30" height="30" border="1" style="pading:1px"><input type="image" src="./img/editar.png"> <span &nbsp; class="accion delCadena" title="Configuración de seciones" width="30" height="30" border="1" pading:1px><input type="image" src="./img/del.png"></span>';
+                    data+='<span class="accion modifCadena" title="Configuración de seciones" width="30" height="30" border="1" style="pading:1px"><input type="image" src="./img/editar.png"></span> <span &nbsp; class="accion delCadena" title="Configuración de seciones" width="30" height="30" border="1" pading:1px><input type="image" src="./img/del.png"></span>'; 
+                        //data+=;
                         
                         
                         return data;}}
@@ -117,11 +119,36 @@
       //paso los datos de las cadenas al modal para modificarlos
       $( "#tabla tbody" ).on( "click", ".modifCadena", function() {
               var item = $("#tabla").DataTable().row( $(this).parents('tr') ).data();
-              $('#modCadena').modal('show');
+              $('#cadenaModificar').modal('show');
               document.getElementById("idCadena").value = item['codigoCadena'];
               document.getElementById("nombreCad").value = item['nombre'];
               document.getElementById("provCadena").value = item['provincia'];
 		  });
+      $( "#tabla tbody" ).on( "click", ".delCadena", function() {
+              var item = $("#tabla").DataTable().row( $(this).parents('tr') ).data();
+              $('#deleteCadena').modal('show');
+              document.getElementById("CadenaCodigo").value = item['codigoCadena'];
+              
+		  });
+      //MODIFICAR CADENA
+      $("#modificarCadena").click(function(e){
+              
+                        
+                $("#cadenaModificar").modal('hide');//ocultamos el modal
+                
+                modificCadena($("#idCadena").val(), $("#nombreCad").val(), $("#provCadena").val());
+              
+          
+      });
+      $("#delCadena").click(function(e){
+              
+                        
+              $("#deleteCadena").modal('hide');//ocultamos el modal
+              
+              deleteCadena($("#CadenaCodigo").val());
+            
+        
+      });
         
     });
  
@@ -235,17 +262,18 @@
               </div>
             </div>
           </div>
-          <!-- Modal Mod cadena--> 
-          <div class="modal fade" id="modCadena" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+          
+           <!-- Modal Modificar-->
+            <div class="modal fade" id="cadenaModificar" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
             <div class="modal-dialog" role="document">
               <div class="modal-content">
                 <div class="modal-header">
-                  <h3 class="modal-title" id="exampleModalLongTitle">Modificar Cadena</h3>
+                  <h3 class="modal-title" id="exampleModalLongTitle">Agregar Egreso</h3>
                 </div>
                       <div class="modal-body"> 
                         <div class="card">
-
-                            <div class="form-row">
+                         
+                        <div class="form-row">
                             <div class="col form-group">
                                   <h3 class="control-label " >Nombre </h3>   
                                   <input type="text" class="form-control input-lg"  name="nombreCad" id="nombreCad" required>
@@ -254,8 +282,36 @@
                               <div class="col form-group">
                                   <h3 class="control-label " >Provincia</h3>
                                   <input type="text" class="form-control input-lg"  name="Provincia" id="provCadena" required>
-                              </div> <!-- form-group end.// -->
+                              </div> <!- form-group end.// ->
                               <input type="text" name="idCadena" id="idCadena" style="visibility:hidden">
+                              
+                            </div> <!-- form-row end.// -->
+                             
+                        
+                    </div>
+                </div>
+           
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                  <p style="margin: 10px 0px;"><button class="btn btn-lg btn-primary" id="modificarCadena">Registrar</button></p>
+                </div>
+              </div>
+            </div>
+          </div> 
+
+
+          <!-- Modal Eliminar cadena--> 
+          <div class="modal fade" id="deleteCadena" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h3 class="modal-title" id="exampleModalLongTitle">Eliminar Cadena</h3>
+                </div>
+                      <div class="modal-body"> 
+                        <div class="card">
+
+                            <div class="form-row">
+                            <input type="text" name="CadenaCodigo" id="CadenaCodigo" style="visibility:hidden">
                               
                             </div> <!-- form-row end.// -->
                         
@@ -264,13 +320,16 @@
            
                 <div class="modal-footer">
                   <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                  <p style="margin: 10px 0px;"><button class="btn btn-lg btn-primary" id="carga">Registrar</button></p>
+                  <p style="margin: 10px 0px;"><button class="btn btn-lg btn-primary" id="delCadena">Registrar</button></p>
                 </div>
               </div>
             </div>
           </div>
 		</div>	
     </div>
+
+    
+
     <!--datatable-->
     <div class="row" style="margin-bottom: 20px;">
 		<div class="col-lg-1 col-sm-1"></div>

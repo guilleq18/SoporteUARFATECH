@@ -350,7 +350,7 @@ function detalleTrabajo (codigoTrabajo)
 
 
 }
-function modCliente(codigoCliente, tipoCliente, nombre, numeroDocumento, telefono, email, direccion, ciudad){
+function modificCadena(codigoCadena, nombreCad, provCadena){
 	
 	
 	$.ajax({
@@ -359,7 +359,7 @@ function modCliente(codigoCliente, tipoCliente, nombre, numeroDocumento, telefon
 		async: false,
 		dataType:'json',
 		//paso a json los datos que recibo de parametro y el ajax los manda a controller
-		data:{tipo:'modCliente', codigoCliente:codigoCliente, tipoCliente: tipoCliente, nombre: nombre, numeroDocumento: numeroDocumento, telefono: telefono, email: email, direccion: direccion, ciudad: ciudad},
+		data:{tipo:'modCadena', codigoCadena:codigoCadena, nombreCad:nombreCad, provCadena:provCadena},
 		
 		success:function(data){
 			if (data.estado=="OK")
@@ -367,7 +367,7 @@ function modCliente(codigoCliente, tipoCliente, nombre, numeroDocumento, telefon
 				alert("Cambios Realizados con Exito!");
 				
 			}else{// de no serlo indico porque
-				alert("El Cliente no pudo ser modificado");
+				alert("La cadena no pudo ser modificada");
 			}
 				
 		},
@@ -377,7 +377,7 @@ function modCliente(codigoCliente, tipoCliente, nombre, numeroDocumento, telefon
 	});
 		
 }
-function bajaCliente(codigoCliente){
+function deleteCadena(codigoCadena){
 	
 	
 	$.ajax({
@@ -386,13 +386,13 @@ function bajaCliente(codigoCliente){
 		async: false,
 		dataType:'json',
 		//paso a json los datos que recibo de parametro y el ajax los manda a controller
-		data:{tipo:'bajaCliente', codigoCliente:codigoCliente},
+		data:{tipo:'deleteCadena', codigoCadena:codigoCadena},
 		
 		success:function(data){
 			if (data.estado=="OK")
 			{	
-				window.open("/clientes.php");
-				window.close("/detalleCliente.php");
+				//window.open("/clientes.php");
+				//window.close("/detalleCliente.php");
 				alert("Cliente Eliminado con exito!");
 				
 			}else{// de no serlo indico porque

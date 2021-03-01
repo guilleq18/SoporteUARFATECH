@@ -160,20 +160,14 @@ if($tipo=="detalleCliente")
 		echo $result;
 	}
 	
-
 }
-if($tipo=="modCliente")
+if($tipo=="modCadena")
 {
-			$registros['codigoCliente']=$_POST['codigoCliente'];
-			$registros['tipoCliente']=$_POST['tipoCliente'];
-			$registros['nombre']=$_POST['nombre'];
-			$registros['numeroDocumento']=$_POST['numeroDocumento'];
-			$registros['telefono']=$_POST['telefono'];
-			$registros['email']=$_POST['email'];
-			$registros['direccion']=$_POST['direccion'];
-			$registros['ciudad']=$_POST['ciudad'];
+			$registros['codigoCadena']=$_POST['codigoCadena'];
+			$registros['nombreCad']=$_POST['nombreCad'];
+			$registros['provCadena']=$_POST['provCadena'];
 			
-			$result = $modelo->modCliente($registros);		
+			$result = $modelo->modCadena($registros);		
 			if(isset($result)){
 				$array=new stdClass;
 					$array->estado="OK";
@@ -183,12 +177,12 @@ if($tipo=="modCliente")
 	
 
 }
-if($tipo=="bajaCliente")
+if($tipo=="deleteCadena")
 {
-			$registros['codigoCliente']=$_POST['codigoCliente'];
+			$registros['codigoCadena']=$_POST['codigoCadena'];
 			
 			
-			$result = $modelo->bajaCliente($registros);		
+			$result = $modelo->deleteCadena($registros);		
 			if(isset($result)){
 				$array=new stdClass;
 					$array->estado="OK";

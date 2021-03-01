@@ -32,7 +32,7 @@ class Modelo {
     //metodo que realiza la consulta de clientes
     public function traercadenas()
     {
-        $sql = "SELECT * FROM CadenasCat; ";
+        $sql = "SELECT * FROM CadenasCat where estatus=0; ";
         //instancio en datos la consulta que se envia al metodo hacerConsulta que me devuelve los datos a mostrar
         $datos = $this->gestorBD->hacerConsulta($sql);
         //retorno la variable datos para poder ser utilizada posteriormente al ser llamado el metodo
@@ -120,31 +120,39 @@ class Modelo {
        $datos = $this->gestorBD->hacerInsert($sql);
         return $datos;
      }
-     public function modCliente($registros){
+     /*public function modCadena($registros){
   
         $sql="           
-            DECLARE @codigoCliente int='".$registros['codigoCliente']. "';
-            DECLARE @tipoCliente nvarchar(15)='".$registros['tipoCliente']."';
-            DECLARE @nombre nvarchar(40)='".$registros['nombre']."';
-            DECLARE @numeroDocumento nvarchar(20)='".$registros['numeroDocumento']."';
-            DECLARE @telefono nvarchar(20)='".$registros['telefono']."';
-            DECLARE @email nvarchar(50)='".$registros['email']."';
-            DECLARE @direccion nvarchar(50)='".$registros['direccion']."';
-            DECLARE @ciudad nvarchar(25)='".$registros['ciudad']."';
+            DECLARE @idCadena bigint='".$registros['idCadena']. "';
+            DECLARE @nombreCad nvarchar(40)='".$registros['nombreCad']."';
+            DECLARE @provCadena nvarchar(15)='".$registros['provCadena']."';
             
-            UPDATE dbo.clientes SET tipoCliente=@tipoCliente, nombre=@nombre, numeroDocumento=@numeroDocumento, telefono=@telefono, email=@email, direccion=@direccion, ciudad=@ciudad WHERE codigoCliente=@codigoCliente;";
+            UPDATE dbo.CadenasCat SET codigoCadena=@idCadena, nombre=@nombreCad, provincia=@provCadena WHERE codigoCadena=1;";
+            
+          
+       $datos = $this->gestorBD->hacerCambio($sql);
+        return $datos;
+     }*/
+     public function modCadena($registros){
+  
+        $sql="           
+            DECLARE @codigoCadena bigint='".$registros['codigoCadena']. "';
+            DECLARE @nombreCad nvarchar(40)='".$registros['nombreCad']."';
+            DECLARE @provCadena nvarchar(25)='".$registros['provCadena']."';
+            
+            UPDATE dbo.CadenasCat SET nombre=@nombreCad, provincia=@provCadena WHERE codigoCadena=@codigoCadena;";
             
           
        $datos = $this->gestorBD->hacerCambio($sql);
         return $datos;
      }
-     public function bajaCliente($registros){
+     public function deleteCadena($registros){
   
         $sql="           
-            DECLARE @codigoCliente int='".$registros['codigoCliente']. "';
+            DECLARE @codigoCadena bigint='".$registros['codigoCadena']. "';
            
             
-            UPDATE dbo.clientes SET baja=1 WHERE codigoCliente=@codigoCliente;";
+            UPDATE dbo.CadenasCat SET estatus=1 WHERE codigoCadena=@codigoCadena;";
             
           
        $datos = $this->gestorBD->hacerCambio($sql);
