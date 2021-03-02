@@ -60,16 +60,30 @@
                 //con el segundo target le digo en donde van a estar los botones
                 columnDefs: [
                   { targets: [0,1], visible: false },
-				          { targets: 5, width: 30, orderable: false, searchable: false, render: function (data, type, row) {
+				          { targets: 5, width: 30, orderable: false, searchable: false, 
+                    render: function (data, type, row) {
                     data="";
-                    data+='<span class="accion modifSucursal" title="Configuración de seciones" width="30" height="30" border="1" style="pading:1px"><input type="image" src="./img/editar.png"> <span &nbsp; class="accion delSucursal" title="Configuración de seciones" width="30" height="30" border="1" pading:1px><input type="image" src="./img/del.png"></span>';
+                    data+='<span class="accion modificSuc" title="Configuración de seciones" width="30" height="30" border="0" style="pading:1px"><input type="image" src="./img/editar.png"></span> <span &nbsp; class="accion delSucursal" title="Configuración de seciones" width="30" height="30" border="1" pading:1px><input type="image" src="./img/del.png"></span>';
                     return data;}}
                           
                 ],
                 
                   
-              });
-            
+          });
+          //funciones para modificar y eliminar una sucursal
+          $( "#tabla1 tbody" ).on( "click", ".modificSuc", function() {
+              var item = $("#tabla1").DataTable().row( $(this).parents('tr') ).data();
+              $('#modiSucursal').modal('show');
+              document.getElementById("idSucursal").value = item['codigoSucursal'];
+              document.getElementById("nombreSuc").value = item['nombre'];
+              document.getElementById("responsableSuc").value = item['roc'];
+		      });
+          $( "#tabla1 tbody" ).on( "click", ".delSucursal", function() {
+              var item = $("#tabla1").DataTable().row( $(this).parents('tr') ).data();
+              $('#deleteSucursal').modal('show');
+              document.getElementById("codigoSuc").value = item['codigoSucursal'];
+              
+		       });
 			
 		  
       });
@@ -92,7 +106,8 @@
           columns: [
             { data: "codigoCadena", sTitle: "ID"},
             { data: "nombre", sTitle: "Nombre"},
-            { data: "provincia", sTitle: "Provincia"},
+            { data: "nombreProvincia", sTitle: "Provincia"},
+            { data: "provincia", sTitle: "codigoProvincia"},
             { data: "estatus", sTitle: "Status"},
             { data: null, sTitle:"Acciones"}
                   
@@ -101,13 +116,13 @@
                 //con el primer targets le digo cual columna quiero que se vea.
                 //con el segundo target le digo en donde van a estar los botones
                 columnDefs: [
-                  { targets: 0, visible: false },
-				          { targets: 4, width: 30, orderable: false, searchable: false, 
+                  { targets: [0,4,5], visible: false },
+				          { targets: 6, width: 30, orderable: false, searchable: false, 
                     render: function (data, type, row) {
                     data="";
 
                     data+='<span class="accion modifCadena" title="Configuración de seciones" width="30" height="30" border="1" style="pading:1px"><input type="image" src="./img/editar.png"></span> <span &nbsp; class="accion delCadena" title="Configuración de seciones" width="30" height="30" border="1" pading:1px><input type="image" src="./img/del.png"></span>'; 
-                        //data+=;
+                        
                         
                         
                         return data;}}
@@ -130,25 +145,60 @@
               document.getElementById("CadenaCodigo").value = item['codigoCadena'];
               
 		  });
+      colocarProvinciasSelect();
+        //lleno el select de clientes
+        $("#select_provincias").select2({
+        data: array_colocar_provincias,
+        width: '100%',
+        allowClear: false,
+        language: "es"
+    });
+      //AGREGAR CADENA
+      $("#registrarCadena").click(function(e){
+              
+                        
+              $("#cadenaReg").modal('hide');//ocultamos el modal
+                 
+              registrarCadena($("#cadenaNombre").val(), $("#select_provincias").val());
+               
+           
+       });
+      
       //MODIFICAR CADENA
       $("#modificarCadena").click(function(e){
               
                         
-                $("#cadenaModificar").modal('hide');//ocultamos el modal
+             $("#cadenaModificar").modal('hide');//ocultamos el modal
                 
-                modificCadena($("#idCadena").val(), $("#nombreCad").val(), $("#provCadena").val());
+             modificCadena($("#idCadena").val(), $("#nombreCad").val(), $("#provCadena").val());
               
           
       });
       $("#delCadena").click(function(e){
               
-                        
-              $("#deleteCadena").modal('hide');//ocultamos el modal
+             $("#deleteCadena").modal('hide');//ocultamos el modal
               
-              deleteCadena($("#CadenaCodigo").val());
+             deleteCadena($("#CadenaCodigo").val());
             
         
       });
+      $("#modificarSucursal").click(function(e){
+              
+                        
+              $("#modiSucursal").modal('hide');//ocultamos el modal
+                 
+              modificSucursal($("#idSucursal").val(), $("#nombreSuc").val(), $("#responsableSuc").val());
+               
+           
+       });
+       $("#borrasSucursal").click(function(e){
+               
+              $("#deleteSucursal").modal('hide');//ocultamos el modal
+               
+              deleteSucursal($("#codigoSuc").val());
+             
+         
+       });
         
     });
  
@@ -185,7 +235,7 @@
   	<div class="row">
 	  <div class="col-lg-1 col-sm-1"></div>
       <div class="col-lg-10 page-header">
-        <h3>Lista de Egresos</i></h3>
+        <h3>Informacion de Cadenas y Sucursales</i></h3>
       </div>
 	  <div class="col-lg-1 col-sm-1"></div>
 	</div>
@@ -199,57 +249,35 @@
     <div class="row" style="margin: 10px 0px;">
 		<div class="col-lg-1 col-md-1 "></div>
 		<div class="col-md-2">
-    <button type="button" class="" data-toggle="modal" data-target="#agregarGasto">
-      Agregar Egreso
+    <button type="button" class="" data-toggle="modal" data-target="#cadenaReg">
+      Agregar Cadena
     </button>
-    <form action="detalleGasto.php" formtarget="_blank" method="POST" id="detalleG">
-        <h3>Ver Egreso</h3>
-        <input class="float-left form-control" type="text" name="codigo" id="codigo">
-        </form>
-      </div>
+    </div>
 		<div class="col-lg-1 col-md-1"></div>
 	</div>
 <br>
-          <!-- Modal--> 
-          <div class="modal fade" id="agregarGasto" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+          <!-- Modal agregar Cadena--> 
+          <div class="modal fade" id="cadenaReg" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
             <div class="modal-dialog" role="document">
               <div class="modal-content">
                 <div class="modal-header">
-                  <h3 class="modal-title" id="exampleModalLongTitle">Agregar Egreso</h3>
+                  <h3 class="modal-title" id="exampleModalLongTitle">Agregar Cadena</h3>
                 </div>
                       <div class="modal-body"> 
                         <div class="card">
                          
                             <div class="form-row">
                               <div class="col form-group">
-                              <h3 class="control-label ">Seleccionar Tipo de Egreso</h3>
-                                    <select class="form-control" name="tipoGasto" id="tipoGasto" 
-                                    required>
-                                    <option value=""></option>
-                                    <option value="Pago">Pago </option>
-                                    <option value="Compra">Compra</option>
+                                  <h3 class="control-label " >Nombre de la Cadena </h3>   
+                                  <input type="text" class="form-control input-lg" placeholder="" name="nombre" id="cadenaNombre" required>
+                              </div> <!-- form-group end.// -->
+                              <div class="col form-group">
+                                  <h3 class="control-label " >Provincia a la que pertenece</h3>
+                                    <select class="form-control" name="selectClientes" id="select_provincias"   required>
+                                     <option value=""></option>
                                     </select>
-                              </div>
-                              <div class="col form-group">
-                                  <h3 class="control-label " >Alias </h3>   
-                                  <input type="text" class="form-control input-lg" placeholder="" name="alias" id="alias" required>
                               </div> <!-- form-group end.// -->
-                           
-                              <div class="col form-group">
-                                  <h3 class="control-label " >Descripción</h3>
-                                  <input type="text" class="form-control input-lg" placeholder=" " name="descripcion" id="descripcion" required>
-                              </div> <!-- form-group end.// -->
-                              <div class="col form-group">
-                                  <h3 class="control-label " >Fecha</h3>
-                                  <input type="date" class="form-control input-lg" placeholder="" name="fecha" id="fecha" required>
-                              </div> <!-- form-group end.// -->
-                                
-                              <div class="col form-group">
-                                  <h3 class="control-label " >Importe</h3>
-                                  <input type="text" class="form-control input-lg" placeholder="" name="importe" id="importe" required>
-                              </div> <!-- form-group end.// -->
-                              
-                            </div> <!-- form-row end.// -->
+                              </div> <!-- form-row end.// -->
                              
                         
                     </div>
@@ -257,13 +285,13 @@
            
                 <div class="modal-footer">
                   <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                  <p style="margin: 10px 0px;"><button class="btn btn-lg btn-primary" id="carga">Registrar</button></p>
+                  <p style="margin: 10px 0px;"><button class="btn btn-lg btn-primary" id="registrarCadena">Registrar</button></p>
                 </div>
               </div>
             </div>
           </div>
           
-           <!-- Modal Modificar-->
+           <!-- Modal Modificar Cadena-->
             <div class="modal fade" id="cadenaModificar" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
             <div class="modal-dialog" role="document">
               <div class="modal-content">
@@ -298,6 +326,41 @@
               </div>
             </div>
           </div> 
+          <!-- Modal Modificar Sucursal-->
+          <div class="modal fade" id="modiSucursal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h3 class="modal-title" id="exampleModalLongTitle">Modificar Sucursal</h3>
+                </div>
+                      <div class="modal-body"> 
+                        <div class="card">
+                         
+                        <div class="form-row">
+                            <div class="col form-group">
+                                  <h3 class="control-label " >Nombre </h3>   
+                                  <input type="text" class="form-control input-lg"  name="nombreCad" id="nombreSuc" required>
+                              </div> <!-- form-group end.// -->
+                           
+                              <div class="col form-group">
+                                  <h3 class="control-label " >Responsable de Sucursal</h3>
+                                  <input type="text" class="form-control input-lg"  name="Provincia" id="responsableSuc" required>
+                              </div> <!- form-group end.// ->
+                              <input type="text" name="idSucursal" id="idSucursal" style="visibility:hidden">
+                              
+                            </div> <!-- form-row end.// -->
+                             
+                        
+                    </div>
+                </div>
+           
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                  <p style="margin: 10px 0px;"><button class="btn btn-lg btn-primary" id="modificarSucursal">Registrar</button></p>
+                </div>
+              </div>
+            </div>
+          </div> 
 
 
           <!-- Modal Eliminar cadena--> 
@@ -311,16 +374,19 @@
                         <div class="card">
 
                             <div class="form-row">
+                            <h3 class="control-label " >¿Desea Eliminar la Cadena? </h3>   
                             <input type="text" name="CadenaCodigo" id="CadenaCodigo" style="visibility:hidden">
                               
                             </div> <!-- form-row end.// -->
                         
                     </div>
                 </div>
+
+              
            
                 <div class="modal-footer">
-                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                  <p style="margin: 10px 0px;"><button class="btn btn-lg btn-primary" id="delCadena">Registrar</button></p>
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">NO</button>
+                  <p style="margin: 10px 0px;"><button class="btn btn-lg btn-primary" id="delCadena">SI</button></p>
                 </div>
               </div>
             </div>
@@ -328,6 +394,36 @@
 		</div>	
     </div>
 
+    <!-- Modal Eliminar Sucursal--> 
+    <div class="modal fade" id="deleteSucursal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h3 class="modal-title" id="exampleModalLongTitle">Eliminar Sucursal</h3>
+                </div>
+                      <div class="modal-body"> 
+                        <div class="card">
+
+                            <div class="form-row">
+                            <h3 class="control-label " >¿Desea Eliminar la Sucursal? </h3>
+                            <input type="text" name="codigoSuc" id="codigoSuc" style="visibility:hidden">
+                              
+                            </div> <!-- form-row end.// -->
+                        
+                    </div>
+                </div>
+
+              
+           
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">NO</button>
+                  <p style="margin: 10px 0px;"><button class="btn btn-lg btn-primary" id="borrasSucursal">SI</button></p>
+                </div>
+              </div>
+            </div>
+          </div>
+		</div>	
+    </div>
     
 
     <!--datatable-->

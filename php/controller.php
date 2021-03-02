@@ -57,8 +57,8 @@ if ($tipo=='traerGastos'){
 		echo $result;
 	
 	}
-if($tipo=='selectClientes'){
-		$result = $modelo->traerClienteSelect();
+if($tipo=='selectProvincias'){
+		$result = $modelo->traerProvinciasSelect();
 		if(isset($result)){
 			echo $result;
 		}
@@ -72,42 +72,17 @@ if($tipo=='selectModTrabajos'){
 		
 }
 	
-if($tipo=='agregarC')
+if($tipo=='registrarCadena')
 	{
-		$dni=$_POST['numeroDocumento'];
-		$resultComparacion = $modelo->consultaRegistros($dni);
-		//decodifico el json que devuelve consultaRegistros()
-		$array = json_decode($resultComparacion);
-		//pregunto si lo que devolvio es igual al dato que estoy mandando
-		if($array[0]->numeroDocumento==$dni)
-		{
-		//de serlo significa que ya existe un registro con ese numero de documento
-		$array=new stdClass;
-			$array->estado="NO";
-			$json=json_encode($array, JSON_FORCE_OBJECT);
-			echo $json;
-
-					
-		}else { 
-			//de no existir procedo a crear el registro solicitado
-			$registros['tipoCliente']=$_POST['tipoCliente'];
-			$registros['nombre']=$_POST['nombre'];
-			$registros['numeroDocumento']=$_POST['numeroDocumento'];
-			$registros['telefono']=$_POST['telefono'];
-			$registros['email']=$_POST['email'];
-			$registros['direccion']=$_POST['direccion'];
-			$registros['ciudad']=$_POST['ciudad'];
-			
-			$result = $modelo->agregarCliente($registros);		
-			//genero la bandera para que si se ejecuta el script de arriba se envie la validacion
+		
+			$registros['cadenaNombre']=$_POST['cadenaNombre'];
+			$registros['cadenaProvincia']=$_POST['cadenaProvincia'];
+			$result = $modelo->registrarCadena($registros);		
 			$array=new stdClass;
 			$array->estado="OK";
 			$json=json_encode($array, JSON_FORCE_OBJECT);
 			echo $json;
 			
-			
-
-		}
 	}	
 
 if($tipo=="agregarTrabajo"){
@@ -177,12 +152,43 @@ if($tipo=="modCadena")
 	
 
 }
+if($tipo=="modSucursal")
+{
+			$registros['codigoSucursal']=$_POST['codigoSucursal'];
+			$registros['nombreSuc']=$_POST['nombreSuc'];
+			$registros['responsableSuc']=$_POST['responsableSuc'];
+			
+			$result = $modelo->modSucursal($registros);		
+			if(isset($result)){
+				$array=new stdClass;
+					$array->estado="OK";
+					$json=json_encode($array, JSON_FORCE_OBJECT);
+					echo $json;
+			}
+	
+
+}
 if($tipo=="deleteCadena")
 {
 			$registros['codigoCadena']=$_POST['codigoCadena'];
 			
 			
 			$result = $modelo->deleteCadena($registros);		
+			if(isset($result)){
+				$array=new stdClass;
+					$array->estado="OK";
+					$json=json_encode($array, JSON_FORCE_OBJECT);
+					echo $json;
+			}
+	
+
+}
+if($tipo=="deleteSucursal")
+{
+			$registros['codigoSucursal']=$_POST['codigoSucursal'];
+			
+			
+			$result = $modelo->deleteSucursal($registros);		
 			if(isset($result)){
 				$array=new stdClass;
 					$array->estado="OK";

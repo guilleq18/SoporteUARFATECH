@@ -5,7 +5,7 @@ var array_gastos=[];
 var array_balance_ingreso=[];
 var array_balance_gasto=[];
 var arrayinsert=[];
-var array_colocar_clientes=[];
+var array_colocar_provincias=[];
 var array_balance_ingeg=[];
 var array_balance_general=[];
 var array_detalle_cliente=[];
@@ -134,15 +134,15 @@ function colocarBalanceGeneral(fechaInicial, fechaFinal){
 
 }
 
-function colocarClientesSelect(){
+function colocarProvinciasSelect(){
 	$.ajax({
 		url:'php/controller.php',
 		type:'POST',
 		async: false,
 		dataType:'json',
-		data:{tipo:'selectClientes'},
+		data:{tipo:'selectProvincias'},
 		success:function(data){
-			array_colocar_clientes=data;
+			array_colocar_provincias=data;
 		},
 		error: function (jqXHR, textStatus, errorThrown){
 			console.log(jqXHR+" " +textStatus+ " " +errorThrown);
@@ -166,7 +166,7 @@ function colocarClientesModSelect(codigo){
 	})
 }
 	//recibo los parametros del modal 
-function agregarCliente(tipoCliente, nombre, numeroDocumento, telefono, email, direccion, ciudad){
+function registrarCadena(cadenaNombre, cadenaProvincia){
 	
 	
 	$.ajax({
@@ -175,16 +175,16 @@ function agregarCliente(tipoCliente, nombre, numeroDocumento, telefono, email, d
 		async: false,
 		dataType:'json',
 		//paso a json los datos que recibo de parametro y el ajax los manda a controller
-		data:{tipo:'agregarC', tipoCliente: tipoCliente, nombre: nombre, numeroDocumento: numeroDocumento, telefono: telefono, email: email, direccion: direccion, ciudad: ciudad},
+		data:{tipo:'registrarCadena', cadenaNombre: cadenaNombre, cadenaProvincia: cadenaProvincia},
 		
 		success:function(data){
 			//pregunto si el estado es ok. 
 			if (data.estado=="OK")
 			{	//de serlo indico que el cliente se agrego con exito y recargo la pagina
-				alert("cliente agregado con exito");
-				window.location.href='/clientes.php';
+				alert("Cadena agregada con exito");
+				window.location.href='/gastos.php';
 			}else{// de no serlo indico porque
-				alert("cliente o empresa ya existen con ese numero de documento");
+				alert("Cadena ya existe");
 			}
 			
 		},
@@ -397,6 +397,62 @@ function deleteCadena(codigoCadena){
 				
 			}else{// de no serlo indico porque
 				alert("El Cliente no pudo ser Eliminado");
+			}
+				
+		},
+		error: function (jqXHR, textStatus, errorThrown){
+			console.log(jqXHR+" " +textStatus+ " " +errorThrown);
+		}
+	});
+		
+}
+function modificSucursal(codigoSucursal, nombreSuc, responsableSuc){
+	
+	
+	$.ajax({
+		url:'/php/controller.php',
+		type:'POST',
+		async: false,
+		dataType:'json',
+		//paso a json los datos que recibo de parametro y el ajax los manda a controller
+		data:{tipo:'modSucursal', codigoSucursal:codigoSucursal, nombreSuc:nombreSuc, responsableSuc:responsableSuc},
+		
+		success:function(data){
+			if (data.estado=="OK")
+			{	
+				alert("Cambios Realizados con Exito!");
+				
+			}else{
+				alert("La Sucursal no pudo ser modificada");
+			}
+				
+		},
+		error: function (jqXHR, textStatus, errorThrown){
+			console.log(jqXHR+" " +textStatus+ " " +errorThrown);
+		}
+	});
+		
+}
+function deleteSucursal(codigoSucursal){
+	
+	
+	$.ajax({
+		url:'/php/controller.php',
+		type:'POST',
+		async: false,
+		dataType:'json',
+		//paso a json los datos que recibo de parametro y el ajax los manda a controller
+		data:{tipo:'deleteSucursal', codigoSucursal:codigoSucursal},
+		
+		success:function(data){
+			if (data.estado=="OK")
+			{	
+				//window.open("/clientes.php");
+				//window.close("/detalleCliente.php");
+				alert("Sucursal Eliminada con exito!");
+				
+			}else{// de no serlo indico porque
+				alert("La Sucursal no pudo ser Eliminada");
 			}
 				
 		},

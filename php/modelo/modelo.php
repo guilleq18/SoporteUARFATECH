@@ -32,7 +32,9 @@ class Modelo {
     //metodo que realiza la consulta de clientes
     public function traercadenas()
     {
-        $sql = "SELECT * FROM CadenasCat where estatus=0; ";
+        $sql = "SELECT cad.codigoCadena, cad.nombre, cad.provincia, pr.provincia as nombreProvincia FROM CadenasCat cad
+        inner join provinciasCat pr on pr.codigoProvincia=cad.provincia
+        where cad.estatus=0; ";
         //instancio en datos la consulta que se envia al metodo hacerConsulta que me devuelve los datos a mostrar
         $datos = $this->gestorBD->hacerConsulta($sql);
         //retorno la variable datos para poder ser utilizada posteriormente al ser llamado el metodo
@@ -102,37 +104,21 @@ class Modelo {
 
 
     //insert de clientes
-    public function agregarCliente($registros){
+    public function registrarCadena($registros){
   
         $sql="           
 
-            DECLARE @tipoCliente nvarchar(15)='".$registros['tipoCliente']."';
-            DECLARE @nombre nvarchar(40)='".$registros['nombre']."';
-            DECLARE @numeroDocumento nvarchar(20)='".$registros['numeroDocumento']."';
-            DECLARE @telefono nvarchar(20)='".$registros['telefono']."';
-            DECLARE @email nvarchar(50)='".$registros['email']."';
-            DECLARE @direccion nvarchar(50)='".$registros['direccion']."';
-            DECLARE @ciudad nvarchar(25)='".$registros['ciudad']."';
+            DECLARE @cadenaNombre nvarchar(15)='".$registros['cadenaNombre']."';
+            DECLARE @cadenaProvincia nvarchar(10)='".$registros['cadenaProvincia']."';
             
-            INSERT INTO dbo.clientes (tipoCliente, nombre, numeroDocumento, telefono, email, direccion, ciudad,baja) VALUES(@tipoCliente, @nombre, @numeroDocumento, @telefono, @email, @direccion, @ciudad, 0);";
+            
+            INSERT INTO dbo.cadenasCat (nombre, provincia, estatus) VALUES(@cadenaNombre, @cadenaNombre, 0);";
             
           
        $datos = $this->gestorBD->hacerInsert($sql);
         return $datos;
      }
-     /*public function modCadena($registros){
-  
-        $sql="           
-            DECLARE @idCadena bigint='".$registros['idCadena']. "';
-            DECLARE @nombreCad nvarchar(40)='".$registros['nombreCad']."';
-            DECLARE @provCadena nvarchar(15)='".$registros['provCadena']."';
-            
-            UPDATE dbo.CadenasCat SET codigoCadena=@idCadena, nombre=@nombreCad, provincia=@provCadena WHERE codigoCadena=1;";
-            
-          
-       $datos = $this->gestorBD->hacerCambio($sql);
-        return $datos;
-     }*/
+     
      public function modCadena($registros){
   
         $sql="           
@@ -141,6 +127,19 @@ class Modelo {
             DECLARE @provCadena nvarchar(25)='".$registros['provCadena']."';
             
             UPDATE dbo.CadenasCat SET nombre=@nombreCad, provincia=@provCadena WHERE codigoCadena=@codigoCadena;";
+            
+          
+       $datos = $this->gestorBD->hacerCambio($sql);
+        return $datos;
+     }
+     public function modSucursal($registros){
+  
+        $sql="           
+            DECLARE @codigoSucursal bigint='".$registros['codigoSucursal']. "';
+            DECLARE @nombreSuc nvarchar(40)='".$registros['nombreSuc']."';
+            DECLARE @responsableSuc nvarchar(25)='".$registros['responsableSuc']."';
+            
+            UPDATE dbo.sucursalesCat SET nombre=@nombreSuc, roc=@responsableSuc WHERE codigoSucursal=@codigoSucursal;";
             
           
        $datos = $this->gestorBD->hacerCambio($sql);
@@ -158,10 +157,22 @@ class Modelo {
        $datos = $this->gestorBD->hacerCambio($sql);
         return $datos;
      }
+     public function deleteSucursal($registros){
+  
+        $sql="           
+            DECLARE @codigoSucursal bigint='".$registros['codigoSucursal']. "';
+           
+            
+            UPDATE dbo.sucursalesCat SET estatus=1 WHERE codigoSucursal=@codigoSucursal;";
+            
+          
+       $datos = $this->gestorBD->hacerCambio($sql);
+        return $datos;
+     }
     //traer clientes para llenar el select de clientes para los trabajos
-    public function traerClienteSelect(){
+    public function traerProvinciasSelect(){
                 //con la primera parte de la consulta genero un campo por defecto
-		$sql = "SELECT '0' as id, '' as text UNION SELECT cl.codigoCliente  as id,  cl.nombre as text FROM clientes cl order by id;";
+		$sql = "SELECT '0' as id, '' as text UNION SELECT pr.codigoProvincia  as id,  pr.provincia as text FROM provinciasCat pr order by id;";
 		$datos = $this->gestorBD->hacerConsulta($sql);
 		return $datos;
     }
