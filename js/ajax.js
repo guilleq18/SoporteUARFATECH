@@ -166,7 +166,7 @@ function colocarClientesModSelect(codigo){
 	})
 }
 	//recibo los parametros del modal 
-function registrarCadena(cadenaNombre, cadenaProvincia){
+function registrarCadena(cadenaNombre, select_provincias){
 	
 	
 	$.ajax({
@@ -175,7 +175,7 @@ function registrarCadena(cadenaNombre, cadenaProvincia){
 		async: false,
 		dataType:'json',
 		//paso a json los datos que recibo de parametro y el ajax los manda a controller
-		data:{tipo:'registrarCadena', cadenaNombre: cadenaNombre, cadenaProvincia: cadenaProvincia},
+		data:{tipo:'registrarCadena', cadenaNombre: cadenaNombre, select_provincias: select_provincias},
 		
 		success:function(data){
 			//pregunto si el estado es ok. 

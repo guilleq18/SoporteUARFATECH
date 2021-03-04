@@ -104,11 +104,10 @@
             dataSrc: ""
           },
           columns: [
-            { data: "codigoCadena", sTitle: "ID"},
             { data: "nombre", sTitle: "Nombre"},
             { data: "nombreProvincia", sTitle: "Provincia"},
+            { data: "codigoCadena", sTitle: "ID"},
             { data: "provincia", sTitle: "codigoProvincia"},
-            { data: "estatus", sTitle: "Status"},
             { data: null, sTitle:"Acciones"}
                   
                 ], 
@@ -116,12 +115,12 @@
                 //con el primer targets le digo cual columna quiero que se vea.
                 //con el segundo target le digo en donde van a estar los botones
                 columnDefs: [
-                  { targets: [0,4,5], visible: false },
-				          { targets: 6, width: 30, orderable: false, searchable: false, 
+                  { targets: [2,3,4], visible: false },
+				          { targets: 5, width: 80, orderable: false, searchable: false, 
                     render: function (data, type, row) {
                     data="";
 
-                    data+='<span class="accion modifCadena" title="Configuración de seciones" width="30" height="30" border="1" style="pading:1px"><input type="image" src="./img/editar.png"></span> <span &nbsp; class="accion delCadena" title="Configuración de seciones" width="30" height="30" border="1" pading:1px><input type="image" src="./img/del.png"></span>'; 
+                    data+='<span class="accion modifCadena" title="Configuración de seciones" width="30" height="30" border="1" style="pading:1px"><input type="image" src="./img/editar.png"></span> <span &nbsp; class="accion regSucursal" title="Configuración de seciones" width="30" height="30" border="1" pading:1px><input type="image" src="./img/plus.png"></span> <span &nbsp; class="accion delCadena" title="Configuración de seciones" width="30" height="30" border="1" pading:1px><input type="image" src="./img/del.png"></span>'; 
                         
                         
                         
@@ -154,9 +153,9 @@
         language: "es"
     });
       //AGREGAR CADENA
-      $("#registrarCadena").click(function(e){
+      $("#regCadena").click(function(e){
               
-                        
+            
               $("#cadenaReg").modal('hide');//ocultamos el modal
                  
               registrarCadena($("#cadenaNombre").val(), $("#select_provincias").val());
@@ -285,7 +284,7 @@
            
                 <div class="modal-footer">
                   <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                  <p style="margin: 10px 0px;"><button class="btn btn-lg btn-primary" id="registrarCadena">Registrar</button></p>
+                  <p style="margin: 10px 0px;"><button class="btn btn-lg btn-primary" id="regCadena">Registrar</button></p>
                 </div>
               </div>
             </div>

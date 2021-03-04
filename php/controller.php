@@ -76,7 +76,7 @@ if($tipo=='registrarCadena')
 	{
 		
 			$registros['cadenaNombre']=$_POST['cadenaNombre'];
-			$registros['cadenaProvincia']=$_POST['cadenaProvincia'];
+			$registros['cadenaProvincia']=$_POST['select_provincias'];
 			$result = $modelo->registrarCadena($registros);		
 			$array=new stdClass;
 			$array->estado="OK";

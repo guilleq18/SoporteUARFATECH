@@ -112,7 +112,7 @@ class Modelo {
             DECLARE @cadenaProvincia nvarchar(10)='".$registros['cadenaProvincia']."';
             
             
-            INSERT INTO dbo.cadenasCat (nombre, provincia, estatus) VALUES(@cadenaNombre, @cadenaNombre, 0);";
+            INSERT INTO dbo.cadenasCat (nombre, provincia, estatus) VALUES(@cadenaNombre, @cadenaProvincia, 0);";
             
           
        $datos = $this->gestorBD->hacerInsert($sql);
