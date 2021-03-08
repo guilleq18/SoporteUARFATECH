@@ -84,58 +84,20 @@ if($tipo=='registrarCadena')
 			echo $json;
 			
 	}	
-
-if($tipo=="agregarTrabajo"){
-	$registros['codigoCliente']=$_POST['codigoCliente'];
-	$registros['tipoTrabajo']=$_POST['tipoTrabajo'];
-	$registros['nombreCorto']=$_POST['nombreCorto'];
-	$registros['descripcion']=$_POST['descripcion'];
-	$registros['fechaInicio']=$_POST['fechaInicio'];
-	$registros['fechaEntrega']=$_POST['fechaEntrega'];
-	$registros['referente']=$_POST['referente'];
-	$registros['telefonoReferente']=$_POST['telefonoReferente'];
-	$registros['puestoEmpresa']=$_POST['puestoEmpresa'];
-	$registros['importe']=$_POST['importe'];
-	$result = $modelo->agregarTrabajo($registros);
-	//pregunto si el registro fue agregado
-	if(isset($result)){
-		$array=new stdClass;
+	if($tipo=='registrarSucursal')
+	{
+		
+			$registros['idCadena']=$_POST['idCadenaSuc'];
+			$registros['nombre']=$_POST['sucursalNombre'];
+			$registros['roc']=$_POST['encargadoSuc'];
+			$result = $modelo->registrarSucursal($registros);		
+			$array=new stdClass;
 			$array->estado="OK";
 			$json=json_encode($array, JSON_FORCE_OBJECT);
 			echo $json;
+			
 	}
 
-
-}
-if($tipo=="agregarGasto")
-{
-	$registros['tipoGasto']=$_POST['tipoGasto'];
-	$registros['alias']=$_POST['alias'];
-	$registros['descripcion']=$_POST['descripcion'];
-	$registros['fecha']=$_POST['fecha'];
-	$registros['importe']=$_POST['importe'];
-	
-	$result = $modelo->agregarGasto($registros);
-	//pregunto si el registro fue agregado
-	if(isset($result)){
-		$array=new stdClass;
-			$array->estado="OK";
-			$json=json_encode($array, JSON_FORCE_OBJECT);
-			echo $json;
-	}
-
-
-}
-if($tipo=="detalleCliente")
-{
-	$registros['codigoCliente']=$_POST['codigoCliente'];
-	
-	$result = $modelo->detalleCliente($registros);
-	if(isset($result)){
-		echo $result;
-	}
-	
-}
 if($tipo=="modCadena")
 {
 			$registros['codigoCadena']=$_POST['codigoCadena'];
@@ -189,101 +151,6 @@ if($tipo=="deleteSucursal")
 			
 			
 			$result = $modelo->deleteSucursal($registros);		
-			if(isset($result)){
-				$array=new stdClass;
-					$array->estado="OK";
-					$json=json_encode($array, JSON_FORCE_OBJECT);
-					echo $json;
-			}
-	
-
-}
-if($tipo=="detalleTrabajo")
-{
-	$registros['codigoTrabajo']=$_POST['codigoTrabajo'];
-	
-	$result = $modelo->detalleTrabajo($registros);
-	if(isset($result)){
-		echo $result;
-	}
-	
-
-}
-if($tipo=="modTrabajo")
-{
-			$registros['codigoTrabajo']=$_POST['codigoTrabajo'];
-			$registros['cliente']=$_POST['select_clientes'];
-			$registros['nombre']=$_POST['nombre_corto'];
-			$registros['descripcion']=$_POST['descripcion'];
-			$registros['fechaInicio']=$_POST['fecha_inicio'];
-			$registros['fechaEntrega']=$_POST['fecha_entrega'];
-			$registros['importe']=$_POST['importe'];
-			$registros['referente']=$_POST['referente'];
-			$registros['telReferente']=$_POST['telefono_referente'];
-			$registros['puestoReferente']=$_POST['puesto_referente'];
-			$registros['tipoTrabajo']=$_POST['select_tipo_trabajo'];
-			
-			$result = $modelo->modTrabajo($registros);		
-			if(isset($result)){
-				$array=new stdClass;
-					$array->estado="OK";
-					$json=json_encode($array, JSON_FORCE_OBJECT);
-					echo $json;
-			}
-	
-
-}
-if($tipo=="bajaTrabajo")
-{
-			$registros['codigoTrabajo']=$_POST['codigoTrabajo'];
-			
-			
-			$result = $modelo->bajaTrabajo($registros);		
-			if(isset($result)){
-				$array=new stdClass;
-					$array->estado="OK";
-					$json=json_encode($array, JSON_FORCE_OBJECT);
-					echo $json;
-			}
-	
-
-}
-if($tipo=="detalleGasto")
-{
-	$registros['codigoGasto']=$_POST['codigoGasto'];
-	
-	$result = $modelo->detalleGasto($registros);
-	if(isset($result)){
-		echo $result;
-	}
-	
-
-}
-if($tipo=="modGasto")
-{			$registros['codigoGasto']=$_POST['codigoGasto'];
-			$registros['tipoGasto']=$_POST['tipoGasto'];
-			$registros['alias']=$_POST['alias'];
-			$registros['descripcion']=$_POST['descripcion'];
-			$registros['fecha']=$_POST['fecha'];
-			$registros['importe']=$_POST['importe'];
-			
-			
-			$result = $modelo->modGasto($registros);		
-			if(isset($result)){
-				$array=new stdClass;
-					$array->estado="OK";
-					$json=json_encode($array, JSON_FORCE_OBJECT);
-					echo $json;
-			}
-	
-
-}
-if($tipo=="bajaGasto")
-{
-			$registros['codigoGasto']=$_POST['codigoGasto'];
-			
-			
-			$result = $modelo->bajaGasto($registros);		
 			if(isset($result)){
 				$array=new stdClass;
 					$array->estado="OK";

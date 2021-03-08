@@ -194,7 +194,7 @@ function registrarCadena(cadenaNombre, select_provincias){
 	});
 		
 }
-function agregarTrabajo(codigoCliente, tipoTrabajo, nombreCorto, descripcion, fechaInicio, fechaEntrega, referente, telefonoReferente, puestoEmpresa, importe){
+function registrarSucursal(idCadenaSuc, sucursalNombre, encargadoSuc){
 	
 	
 	$.ajax({
@@ -203,100 +203,16 @@ function agregarTrabajo(codigoCliente, tipoTrabajo, nombreCorto, descripcion, fe
 		async: false,
 		dataType:'json',
 		//paso a json los datos que recibo de parametro y el ajax los manda a controller
-		data:{tipo:'agregarTrabajo', codigoCliente: codigoCliente, tipoTrabajo: tipoTrabajo, nombreCorto: nombreCorto, descripcion: descripcion, fechaInicio: fechaInicio, fechaEntrega: fechaEntrega, referente: referente,telefonoReferente:telefonoReferente, puestoEmpresa:puestoEmpresa, importe:importe },
+		data:{tipo:'registrarSucursal', idCadenaSuc: idCadenaSuc, sucursalNombre: sucursalNombre, encargadoSuc:encargadoSuc },
 		
 		success:function(data){
 			//pregunto si el estado es ok. 
 			if (data.estado=="OK")
-			{	//de serlo indico que el trabajo se agrego con exito y recargo la pagina
-				alert("trabajo agregado con exito");
-				window.location.href='/ingresos.php';
-			}else{// de no serlo indico porque
-				alert("El trabajo no pudo ser registrado");
-			}
-			
-		},
-		error: function (jqXHR, textStatus, errorThrown){
-			console.log(jqXHR+" " +textStatus+ " " +errorThrown);
-		}
-	});
-		
-}
-function modTrabajo(codigoTrabajo, select_clientes, nombre_corto, descripcion, fecha_inicio, fecha_entrega, importe, referente, telefono_referente, puesto_referente, select_tipo_trabajo){
-	
-	
-	$.ajax({
-		url:'/php/controller.php',
-		type:'POST',
-		async: false,
-		dataType:'json',
-		//paso a json los datos que recibo de parametro y el ajax los manda a controller
-		data:{tipo:'modTrabajo', codigoTrabajo:codigoTrabajo, select_clientes: select_clientes, nombre_corto: nombre_corto, descripcion: descripcion, fecha_inicio: fecha_inicio, fecha_entrega: fecha_entrega, importe: importe, referente: referente, telefono_referente:telefono_referente, puesto_referente:puesto_referente, select_tipo_trabajo:select_tipo_trabajo},
-		
-		success:function(data){
-			if (data.estado=="OK")
-			{	//de serlo indico que el trabajo se agrego con exito y recargo la pagina
-				alert("Cambios Realizados con Exito!");
-				
-			}else{// de no serlo indico porque
-				alert("El Trabajo no pudo ser modificado");
-			}
-				
-		},
-		error: function (jqXHR, textStatus, errorThrown){
-			console.log(jqXHR+" " +textStatus+ " " +errorThrown);
-		}
-	});
-		
-}
-function bajaTrabajo(codigoTrabajo){
-	
-	
-	$.ajax({
-		url:'/php/controller.php',
-		type:'POST',
-		async: false,
-		dataType:'json',
-		//paso a json los datos que recibo de parametro y el ajax los manda a controller
-		data:{tipo:'bajaTrabajo', codigoTrabajo:codigoTrabajo},
-		
-		success:function(data){
-			if (data.estado=="OK")
-			{	
-				window.open("/ingresos.php");
-				window.close("/detalleTrabajo.php");
-				alert("Trabajo Eliminado!");
-				
-			}else{// de no serlo indico porque
-				alert("El Trabajo no pudo ser Eliminado");
-			}
-				
-		},
-		error: function (jqXHR, textStatus, errorThrown){
-			console.log(jqXHR+" " +textStatus+ " " +errorThrown);
-		}
-	});
-		
-}
-function agregarGasto(tipoGasto, alias, descripcion, fecha, importe){
-	
-	
-	$.ajax({
-		url:'/php/controller.php',
-		type:'POST',
-		async: false,
-		dataType:'json',
-		//paso a json los datos que recibo de parametro y el ajax los manda a controller
-		data:{tipo:'agregarGasto', tipoGasto: tipoGasto, alias: alias, descripcion: descripcion, fecha: fecha, importe: importe},
-		
-		success:function(data){
-			//pregunto si el estado es ok. 
-			if (data.estado=="OK")
-			{	//de serlo indico que el trabajo se agrego con exito y recargo la pagina
-				alert("Egreso agregado con exito");
+			{	//de serlo indico que el cliente se agrego con exito y recargo la pagina
+				alert("Sucursal agregada con exito");
 				window.location.href='/gastos.php';
 			}else{// de no serlo indico porque
-				alert("El Egreso no pudo ser registrado");
+				alert("Sucursal ya existe");
 			}
 			
 		},
@@ -305,50 +221,6 @@ function agregarGasto(tipoGasto, alias, descripcion, fecha, importe){
 		}
 	});
 		
-}
-function detalleCliente (codigoCliente)
-{
-	$.ajax({
-		url:'/php/controller.php',
-		type:'POST',
-		async: false,
-		dataType:'json',
-		
-		data:{tipo:'detalleCliente', codigoCliente: codigoCliente },
-		
-		success:function(data){
-			
-			array_detalle_cliente=data;
-			
-		},
-		error: function (jqXHR, textStatus, errorThrown){
-			console.log(jqXHR+" " +textStatus+ " " +errorThrown);
-		}
-	});
-
-
-}
-function detalleTrabajo (codigoTrabajo)
-{
-	$.ajax({
-		url:'/php/controller.php',
-		type:'POST',
-		async: false,
-		dataType:'json',
-		
-		data:{tipo:'detalleTrabajo', codigoTrabajo: codigoTrabajo },
-		
-		success:function(data){
-			
-			array_detalle_trabajo=data;
-			
-		},
-		error: function (jqXHR, textStatus, errorThrown){
-			console.log(jqXHR+" " +textStatus+ " " +errorThrown);
-		}
-	});
-
-
 }
 function modificCadena(codigoCadena, nombreCad, provCadena){
 	
@@ -453,84 +325,6 @@ function deleteSucursal(codigoSucursal){
 				
 			}else{// de no serlo indico porque
 				alert("La Sucursal no pudo ser Eliminada");
-			}
-				
-		},
-		error: function (jqXHR, textStatus, errorThrown){
-			console.log(jqXHR+" " +textStatus+ " " +errorThrown);
-		}
-	});
-		
-}
-function detalleGasto (codigoGasto)
-{
-	$.ajax({
-		url:'/php/controller.php',
-		type:'POST',
-		async: false,
-		dataType:'json',
-		
-		data:{tipo:'detalleGasto', codigoGasto: codigoGasto },
-		
-		success:function(data){
-			
-			array_detalle_gasto=data;
-			
-		},
-		error: function (jqXHR, textStatus, errorThrown){
-			console.log(jqXHR+" " +textStatus+ " " +errorThrown);
-		}
-	});
-
-
-}
-function modGasto(codigoGasto, tipoGasto, alias, descripcion, fecha, importe){
-	
-	
-	$.ajax({
-		url:'/php/controller.php',
-		type:'POST',
-		async: false,
-		dataType:'json',
-		//paso a json los datos que recibo de parametro y el ajax los manda a controller
-		data:{tipo:'modGasto', codigoGasto:codigoGasto, tipoGasto:tipoGasto, alias: alias, descripcion: descripcion, fecha: fecha, importe: importe},
-		
-		success:function(data){
-			if (data.estado=="OK")
-			{	//de serlo indico que el trabajo se agrego con exito y recargo la pagina
-				alert("Cambios Realizados con Exito!");
-				
-			}else{// de no serlo indico porque
-				alert("El Egreso no pudo ser modificado");
-			}
-				
-		},
-		error: function (jqXHR, textStatus, errorThrown){
-			console.log(jqXHR+" " +textStatus+ " " +errorThrown);
-		}
-	});
-		
-}
-function bajaGasto(codigoGasto){
-	
-	
-	$.ajax({
-		url:'/php/controller.php',
-		type:'POST',
-		async: false,
-		dataType:'json',
-		//paso a json los datos que recibo de parametro y el ajax los manda a controller
-		data:{tipo:'bajaGasto', codigoGasto:codigoGasto},
-		
-		success:function(data){
-			if (data.estado=="OK")
-			{	
-				window.open("/gastos.php");
-				window.close("/detalleGasto.php");
-				alert("Egreso Eliminado con exito!");
-				
-			}else{// de no serlo indico porque
-				alert("El Egreso no pudo ser Eliminado");
 			}
 				
 		},

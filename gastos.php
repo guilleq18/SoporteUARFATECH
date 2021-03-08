@@ -120,7 +120,7 @@
                     render: function (data, type, row) {
                     data="";
 
-                    data+='<span class="accion modifCadena" title="Configuración de seciones" width="30" height="30" border="1" style="pading:1px"><input type="image" src="./img/editar.png"></span> <span &nbsp; class="accion regSucursal" title="Configuración de seciones" width="30" height="30" border="1" pading:1px><input type="image" src="./img/plus.png"></span> <span &nbsp; class="accion delCadena" title="Configuración de seciones" width="30" height="30" border="1" pading:1px><input type="image" src="./img/del.png"></span>'; 
+                    data+='<span class="accion modifCadena" title="Configuración de seciones" width="30" height="30" border="1" style="pading:1px"><input type="image" src="./img/editar.png"></span> <span &nbsp; class="accion registroSucursal" title="Configuración de seciones" width="30" height="30" border="1" pading:1px><input type="image" src="./img/plus.png"></span> <span &nbsp; class="accion delCadena" title="Configuración de seciones" width="30" height="30" border="1" pading:1px><input type="image" src="./img/del.png"></span>'; 
                         
                         
                         
@@ -137,6 +137,13 @@
               document.getElementById("idCadena").value = item['codigoCadena'];
               document.getElementById("nombreCad").value = item['nombre'];
               document.getElementById("provCadena").value = item['provincia'];
+		  });
+      $( "#tabla tbody" ).on( "click", ".registroSucursal", function() {
+              var item = $("#tabla").DataTable().row( $(this).parents('tr') ).data();
+              $('#SucursalReg').modal('show');
+              document.getElementById("idCadenaSuc").value = item['codigoCadena'];
+              
+              
 		  });
       $( "#tabla tbody" ).on( "click", ".delCadena", function() {
               var item = $("#tabla").DataTable().row( $(this).parents('tr') ).data();
@@ -159,6 +166,15 @@
               $("#cadenaReg").modal('hide');//ocultamos el modal
                  
               registrarCadena($("#cadenaNombre").val(), $("#select_provincias").val());
+               
+           
+       });
+       $("#regSucursal").click(function(e){
+              
+            
+              $("#SucursalReg").modal('hide');//ocultamos el modal
+                 
+              registrarSucursal($("#idCadenaSuc").val(), $("#sucursalNombre").val(), $("#encargadoSuc").val());
                
            
        });
@@ -285,6 +301,38 @@
                 <div class="modal-footer">
                   <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
                   <p style="margin: 10px 0px;"><button class="btn btn-lg btn-primary" id="regCadena">Registrar</button></p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Modal agregar Sucursal--> 
+          <div class="modal fade" id="SucursalReg" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h3 class="modal-title" id="exampleModalLongTitle">Agregar Cadena</h3>
+                </div>
+                      <div class="modal-body"> 
+                        <div class="card">
+                         
+                            <div class="form-row">
+                              <div class="col form-group">
+                                  <h3 class="control-label " >Nombre de la Sucursal </h3>   
+                                  <input type="text" class="form-control input-lg" placeholder="" name="sucursalNombre" id="sucursalNombre">
+                              </div> <!-- form-group end.// -->
+                              <div class="col form-group">
+                                  <h3 class="control-label " >Encargado</h3>
+                                  <input type="text" class="form-control input-lg" placeholder="" name="encargadoSuc" id="encargadoSuc">
+                              </div> <!-- form-group end.// -->
+                              </div> <!-- form-row end.// -->
+                              <input type="text" name="idCadenaSuc" id="idCadenaSuc" style="visibility:hidden">
+                        
+                    </div>
+                </div>
+           
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                  <p style="margin: 10px 0px;"><button class="btn btn-lg btn-primary" id="regSucursal">Registrar</button></p>
                 </div>
               </div>
             </div>
