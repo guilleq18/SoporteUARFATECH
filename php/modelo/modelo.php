@@ -40,7 +40,6 @@ class Modelo {
         //retorno la variable datos para poder ser utilizada posteriormente al ser llamado el metodo
         return $datos;
     }
-    //llenar datatable de trabajos
     
     public function traerSucursales($registros)
     {
@@ -52,8 +51,25 @@ class Modelo {
         $datos = $this->gestorBD->hacerConsulta($sql);
         return $datos;
     }
-    
-
+    public function traerReclamosDetalle($registros)
+    {
+        $sql = "  
+                DECLARE @idReclamo int='".$registros['reclamo']."';
+                SELECT * FROM casosDet where CodigoCaso=@idReclamo;";
+        $datos = $this->gestorBD->hacerConsulta($sql);
+        return $datos;
+    }
+  
+    public function traerReclamos()
+    {
+        $sql = "select * from casosCab rd
+        inner join tipoCasosCat tr on tr.codigoTipoCaso=rd.CodigoTipoCaso
+        inner join CadenasCat cd on cd.codigoCadena=rd.CodigoCadena ; ";
+        //instancio en datos la consulta que se envia al metodo hacerConsulta que me devuelve los datos a mostrar
+        $datos = $this->gestorBD->hacerConsulta($sql);
+        //retorno la variable datos para poder ser utilizada posteriormente al ser llamado el metodo
+        return $datos;
+    }
 
     //insert de clientes
     public function registrarCadena($registros){

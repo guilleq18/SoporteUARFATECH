@@ -21,6 +21,19 @@ if ($tipo=='traerSucursales'){
 	    echo $result;
 	
 }
+if ($tipo=='traerReclamos'){
+
+	$result = $modelo->traerReclamos();
+	echo $result;
+
+}
+if ($tipo=='traerReclamosDetalle'){
+	$registros['reclamo']=$_POST['reclamo'];
+	$result = $modelo->traerReclamosDetalle($registros);
+	echo $result;
+
+}
+
 if ($tipo=='traerBalanceGasto'){
 
 	$registros['fechaInicial']=$_POST['fechaInicial'];

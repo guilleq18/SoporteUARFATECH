@@ -12,6 +12,7 @@ var array_detalle_cliente=[];
 var array_detalle_trabajo=[];
 var array_colocar_clientes_mod=[];
 var array_detalle_gasto=[];
+var array_colocar_detalleReclamos=[];
 
 function colocarCadenas(){
 	$.ajax({
@@ -22,109 +23,6 @@ function colocarCadenas(){
 		data:{tipo:'traerCadenas'},
 	    success:function(data){
             array_trabajos=data;
-            
-		},
-		error: function (jqXHR, textStatus, errorThrown){
-			console.log(jqXHR+" " +textStatus+ " " +errorThrown);
-		}
-	});	
-
-}
-function colocarTrabajos(){
-	$.ajax({
-		url:'php/controller.php',
-		type:'POST',
-		async: false,
-		dataType:'json',
-		data:{tipo:'traerTrabajos'},
-	    success:function(data){
-            array_trabajos=data;
-            
-		},
-		error: function (jqXHR, textStatus, errorThrown){
-			console.log(jqXHR+" " +textStatus+ " " +errorThrown);
-		}
-	});	
-
-}
-function colocarGastos(){
-	$.ajax({
-		url:'php/controller.php',
-		type:'POST',
-		async: false,
-		dataType:'json',
-		data:{tipo:'traerGastos'},
-	    success:function(data){
-            array_gastos=data;
-            
-		},
-		error: function (jqXHR, textStatus, errorThrown){
-			console.log(jqXHR+" " +textStatus+ " " +errorThrown);
-		}
-	});	
-
-} 
-
-function colocarBalanceGasto(fechaInicial, fechaFinal){
-	$.ajax({
-		url:'php/controller.php',
-		type:'POST',
-		async: false,
-		dataType:'json',
-		data:{tipo:'traerBalanceGasto', fechaInicial: fechaInicial, fechaFinal: fechaFinal},
-	    success:function(data){
-            array_balance_gasto=data;
-            
-		},
-		error: function (jqXHR, textStatus, errorThrown){
-			console.log(jqXHR+" " +textStatus+ " " +errorThrown);
-		}
-	});	
-
-}
-function colocarBalanceIngreso(fechaInicial, fechaFinal){
-	$.ajax({
-		url:'php/controller.php',
-		type:'POST',
-		async: false,
-		dataType:'json',
-		data:{tipo:'traerBalanceIngreso', fechaInicial: fechaInicial, fechaFinal: fechaFinal},
-	    success:function(data){
-            array_balance_ingreso=data;
-            
-		},
-		error: function (jqXHR, textStatus, errorThrown){
-			console.log(jqXHR+" " +textStatus+ " " +errorThrown);
-		}
-	});	
-
-}
-function colocarBalanceIngEg(fechaInicial, fechaFinal){
-	$.ajax({
-		url:'php/controller.php',
-		type:'POST',
-		async: false,
-		dataType:'json',
-		data:{tipo:'colocarBalanceIngEg', fechaInicial: fechaInicial, fechaFinal: fechaFinal},
-	    success:function(data){
-            array_balance_ingeg=data;
-            
-		},
-		error: function (jqXHR, textStatus, errorThrown){
-			console.log(jqXHR+" " +textStatus+ " " +errorThrown);
-		}
-	});	
-
-}
-function colocarBalanceGeneral(fechaInicial, fechaFinal){
-	$.ajax({
-		url:'php/controller.php',
-		type:'POST',
-		async: false,
-		dataType:'json',
-		data:{tipo:'colocarBalanceGeneral', fechaInicial: fechaInicial, fechaFinal: fechaFinal},
-	    success:function(data){
-            array_balance_general=data;
             
 		},
 		error: function (jqXHR, textStatus, errorThrown){
@@ -149,21 +47,25 @@ function colocarProvinciasSelect(){
 		}
 	})
 }
-function colocarClientesModSelect(codigo){
-	console.log(codigo)
+function detalleReclamo(id){
+	
+	
 	$.ajax({
-		url:'php/controller.php',
+		url:'../forum/detalleReclamo.php',
 		type:'POST',
 		async: false,
 		dataType:'json',
-		data:{tipo:'selectModTrabajos', codigo: codigo},
+		//paso a json los datos que recibo de parametro y el ajax los manda a controller
+		data:{id:id},
+		
 		success:function(data){
-			array_colocar_clientes_mod=data;
+			
 		},
 		error: function (jqXHR, textStatus, errorThrown){
 			console.log(jqXHR+" " +textStatus+ " " +errorThrown);
 		}
-	})
+	});
+		
 }
 	//recibo los parametros del modal 
 function registrarCadena(cadenaNombre, select_provincias){

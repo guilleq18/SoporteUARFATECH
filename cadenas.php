@@ -26,8 +26,6 @@
       $('#tabla').on('click', 'tbody tr', function () {
 
        
-          
-        
         var taibol = $('#tabla').DataTable();
         var item = taibol.row(this).data();
         var id = item['codigoCadena'];
