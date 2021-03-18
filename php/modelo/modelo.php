@@ -55,7 +55,9 @@ class Modelo {
     {
         $sql = "  
                 DECLARE @idReclamo int='".$registros['reclamo']."';
-                SELECT * FROM casosDet where CodigoCaso=@idReclamo;";
+                SELECT * FROM casosDet cd 
+                INNER JOIN usuariosCat uc on uc.codigoUsuario=cd.usuarioRespuesta
+                where cd.CodigoCaso=@idReclamo;";
         $datos = $this->gestorBD->hacerConsulta($sql);
         return $datos;
     }

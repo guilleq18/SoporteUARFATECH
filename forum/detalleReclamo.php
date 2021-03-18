@@ -1,3 +1,4 @@
+
 <!DOCTYPE html PUBLIC "FORO">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="nl" lang="nl">
 <head>
@@ -8,6 +9,8 @@
     <link rel="stylesheet" href="../css/bootstrap.css">
     <script src="../js/jquery-3.4.1.min.js"></script>
     <script src="../js/jquery.dataTables.min.js"></script>
+    <script src="../js/select2.min.js"></script>
+    <script src="../js/bootstrap.js"></script>
     <script src="../js/ajax.js"></script>
 
 <script type="text/javascript"> 
@@ -19,9 +22,9 @@ $(document).ready(function(){
 
     
     var reclamo= <?php echo $_POST['CodigoReclamo'];?>;
-    //alert(reclamo);
 
-    $("#tabla").DataTable( {
+
+            $("#tabla").DataTable( {
                   
                   language: {
                     url: './js/Spanish.json',
@@ -38,39 +41,61 @@ $(document).ready(function(){
                   columns: [
                     { data: "codigoDiscusion"},
                     { data: "usuarioRespuesta", sTitle:"Usuario"},
+                    { data: "nombreUsuario", sTitle:"Usuario"}, 
                     { data: "respuesta",sTitle:"Respuesta"},
-                    { data: "urlImagen", sTitle:"Imagen"},
-                   
-                    { data: null, sTitle:"Acciones"},
+                    { data: null, sTitle:"Imagen"},
+                    { data: null, sTitle:"Acciones"}
                     
                   ], 
                   //aqui agrego una columna;
                   //con el primer targets le digo cual columna quiero que se vea.
                   //con el segundo target le digo en donde van a estar los botones
                   columnDefs: [
-                    { targets: [0], visible: false },
-                            { targets: 4, width: 30, orderable: false, searchable: false, 
+                    { targets: [0,1], visible: false },
+                      { targets: 5, width: 30, orderable: false, searchable: false, 
                       render: function (data, type, row) {
                       data="";
                       data+='<span class="accion modificSuc" title="Configuración de seciones" width="30" height="30" border="0" style="pading:1px"><input type="image" src="../img/editar.png"></span> <span &nbsp; class="accion delSucursal" title="Configuración de seciones" width="30" height="30" border="1" pading:1px><input type="image" src="../img/del.png"></span>';
+                      return data;}},
+                      {targets: 4, render: function (data, type, row) {
+                      data="";
+                      data+=
+                      
+                      '<span class="accion verImagen"><input type="image" alt="" style="max-height:400px;max-width:500px;" src="' + row.urlImagen + '" ></span>'
+                      
+                    
                       return data;}}
-                            
                   ],
                   
                     
             });
-
+              
+            $( "#tabla tbody" ).on( "click", ".verImagen", function() {
+              var item = $("#tabla").DataTable().row( $(this).parents('tr') ).data();
+              $('#imgModal').modal('show');
+              document.getElementById("ImagenVer").src = item['urlImagen'];
+		        
+             });
+    
 })
 
 
 
 </script>
-
+    
 
 </head>
 <body>
 
-    
+<!--////////////////////////  MODAL PARA VER EIMAGENES DE COMENTARIOS /////////////////////////////-->
+<div id="imgModal" class="modal fade bd-example-modal-lg" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+        <img style="max-height:1280px;max-width:1024px;" id="ImagenVer">
+  </div>
+</div>
+   
+
+    <!--///////////////////////////////////////////////////////////////////////-->
         <div id="content">
 
               <div class="row">
@@ -83,7 +108,7 @@ $(document).ready(function(){
                          
                             <br>
                             <p style="color:#000">Este es el probmea y como no se que mas agregar lo dejamos de esta manera, pero recordar que siempre es necesario revisar este tipo de cosas para evitar problemas futuros de cualquier indole</p>
-
+                          <!--
                            <img id="imagen1" src='../img/PP723-1.jpg'  width="800" height="500">
                             <br>
                             <img id="imagen2" src='../img/PP723-1.jpg'  width="800" height="500">
@@ -92,7 +117,7 @@ $(document).ready(function(){
                             <br>
                             <img id="imagen4" ></img>
                             <br>
-                          
+                               -->
                         </div>
                     </div>
               </div>
@@ -104,7 +129,14 @@ $(document).ready(function(){
 	  	    	        <table id="tabla" class="table table-bordered"></table>
 		            </div>
   	            </div>
+                <button id='responder'>Responder</button>
             </div>
+
+            <div class="row" style="margin-bottom: 20px;">
+                <button id='responder'>Responder</button>
+            </div>
+
+
         </div><!-- content -->
     </div><!-- wrapper -->
     <!--<div id="footer">Created for Nettuts+</div>-->
