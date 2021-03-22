@@ -1,4 +1,6 @@
-
+<style>
+  
+</style>
 <!DOCTYPE html PUBLIC "FORO">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="nl" lang="nl">
 <head>
@@ -18,9 +20,27 @@
 <?php $rec=$_POST['id'];?>
 
 $(document).ready(function(){
+//////////////////////////////////////////
+$('section.awSlider .carousel').carousel({
+	pause: "hover",
+  //interval: 2000
+});
+
+var startImage = $('section.awSlider .item.active > img').attr('src');
+$('section.awSlider').append('<img src="' + startImage + '">');
+
+$('section.awSlider .carousel').on('slid.bs.carousel', function () {
+ var bscn = $(this).find('.item.active > img').attr('src');
+	$('section.awSlider > img').attr('src',bscn);
+});
 
 
-    
+/* 
+Philips ambilight tv
+Üzerine gleince duruyor slide
+*/
+
+  //////////////////////////////////////  
     var reclamo= <?php echo $_POST['CodigoReclamo'];?>;
 
 
@@ -75,7 +95,13 @@ $(document).ready(function(){
               $('#imgModal').modal('show');
               document.getElementById("ImagenVer").src = item['urlImagen'];
 		        
-             });
+            });
+
+            function cambiarImagenJS(){
+
+              document.getElementById("img1").src="image2.jpg";
+            
+            }
     
 })
 
@@ -108,7 +134,33 @@ $(document).ready(function(){
                          
                             <br>
                             <p style="color:#000">Este es el probmea y como no se que mas agregar lo dejamos de esta manera, pero recordar que siempre es necesario revisar este tipo de cosas para evitar problemas futuros de cualquier indole</p>
-                          <!--
+<!--////////////////////////////////////////////////////////////////////////////////////////////////////////-->
+
+
+
+<div id="carousel" class="carousel slide" data-ride="carousel">
+  <div class="carousel-inner" role="listbox">
+    <div class="item active">
+      <img id="img1" class="d-block w-100" src="../img/PP646-1.jpg" alt="First slide">
+    </div>
+    <div class="item">
+      <img id="img2" class="d-block w-100" src="../img/PP723-1.jpg" alt="Second slide">
+    </div>
+    <div id="img3" class="item">
+      <img class="d-block w-100" src="..." alt="...">
+    </div>
+  </div>
+  <a class="left carousel-control" href=".carousel" role="button" data-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="sr-only">Previous</span>
+  </a>
+  <a class="right carousel-control" href=".carousel" role="button" data-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="sr-only">Next</span>
+  </a>
+</div>
+<!--////////////////////////////////////////////////////////////////////////////////////////////////////////-->
+                            <!--
                            <img id="imagen1" src='../img/PP723-1.jpg'  width="800" height="500">
                             <br>
                             <img id="imagen2" src='../img/PP723-1.jpg'  width="800" height="500">
