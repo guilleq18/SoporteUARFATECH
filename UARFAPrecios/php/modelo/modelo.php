@@ -30,25 +30,34 @@ class Modelo {
 	
 
     //metodo que realiza la consulta de clientes
-    public function traercadenas()
+    public function traerProductosExibidos()
     {
-        $sql = "SELECT cad.codigoCadena, cad.nombre, cad.provincia, pr.provincia as nombreProvincia FROM CadenasCat cad
-        inner join provinciasCat pr on pr.codigoProvincia=cad.provincia
-        where cad.estatus=0; ";
+        $sql = "SELECT * FROM UARFASoporte.dbo.productosPreciosCat ";
         //instancio en datos la consulta que se envia al metodo hacerConsulta que me devuelve los datos a mostrar
         $datos = $this->gestorBD->hacerConsulta($sql);
         //retorno la variable datos para poder ser utilizada posteriormente al ser llamado el metodo
         return $datos;
     }
     
-    public function traerSucursales($registros)
+    public function registrarProducto($registros)
     {
         $sql = "  
-                DECLARE @idCadena int='".$registros['id']."';
-                SELECT sc.codigoSucursal, sc.codigoCadena, cc.nombre as nombreCadena, sc.nombre, sc.roc FROM SucursalesCat sc
-                INNER JOIN CadenasCat cc on cc.codigoCadena=sc.codigoCadena 
-                WHERE sc.codigoCadena=@idCadena and sc.estatus=0 ;";
-        $datos = $this->gestorBD->hacerConsulta($sql);
+                DECLARE @EAN nvarchar(24)='".$registros['EAN']."';
+                insert into UARFASoporte.dbo.productosPreciosCat (codigoProducto,codigoRelacionado,fechaPrecio,precioPublico)
+                select distinct codigoProducto, codigoRelacionado, fechaPrecio, CAST(((1+tasaIva/100) * precioPublico) as numeric(14,2)) as precioventa from (
+                select pc.codigoproducto,cr.codigorelacionado, dep.tasaIva,pc.precioPublico,
+                case 
+                when pc.fechaModificacionPrecioPublico<pc.fechaRegistro then cast(pc.fechaRegistro As date)
+                else cast(pc.fechaModificacionPrecioPublico as date)
+                end 
+                fechaPrecio
+
+                from genProductosCodigosRelacionadosCat cr 
+                inner join genProductosCat pc on pc.codigoProducto=cr.codigoProducto
+                left join genProductosSucursalVentaCnf psv on psv.codigoProducto=pc.codigoProducto
+                left join genDepartamentosIvaCat dep on dep.codigoDepartamento=psv.codigoDepartamento
+                where cr.codigoRelacionado=@EAN) as t";
+        $datos = $this->gestorBD->hacerInsert($sql);
         return $datos;
     }
     public function traerReclamosDetalle($registros)
@@ -72,15 +81,6 @@ class Modelo {
         //retorno la variable datos para poder ser utilizada posteriormente al ser llamado el metodo
         return $datos;
     }
-    public function traerReclamosCab()
-    {
-        $sql = "select * from reclamosCab rc
-        inner join sucursalesCat sc on sc.codigoSucursal=rc.codigoSucursal; ";
-        //instancio en datos la consulta que se envia al metodo hacerConsulta que me devuelve los datos a mostrar
-        $datos = $this->gestorBD->hacerConsulta($sql);
-        //retorno la variable datos para poder ser utilizada posteriormente al ser llamado el metodo
-        return $datos;
-    }
 
     //insert de clientes
     public function registrarCadena($registros){
@@ -92,27 +92,6 @@ class Modelo {
             
             
             INSERT INTO dbo.cadenasCat (nombre, provincia, estatus) VALUES(@cadenaNombre, @cadenaProvincia, 0);";
-            
-          
-       $datos = $this->gestorBD->hacerInsert($sql);
-        return $datos;
-     }
-     public function registrarProblema($registros){
-  
-        $sql="           
-
-            DECLARE @idCadena nvarchar(15)='".$registros['empresa']."';
-            DECLARE @idsucursal nvarchar(20)='".$registros['sucursal']."';
-            DECLARE @tipoReclamo nvarchar(20)='".$registros['motivo']."';
-            DECLARE @fecha date='".$registros['fecha']."';
-            DECLARE @time time='".$registros['time']."';
-            DECLARE @descripcion nvarchar(100)='".$registros['descripcion']."';
-            
-            DECLARE @Respuesta nvarchar(100)='".$registros['Respuesta']."';
-            DECLARE @estado nvarchar(10)='".$registros['estado']."';
-            DECLARE @imagen nvarchar(100)='".$registros['imagen']."';
-            
-            insert into reclamosCab (fechaActualizacion,hora,fechaReclamo,descripcion,respuesta, tipoReclamo,codigoImagen,estado,codigoSucursal) VALUES (GETDATE(), @time, @fecha, @descripcion, @Respuesta, @tipoReclamo, @imagen, @estado, @idsucursal);";
             
           
        $datos = $this->gestorBD->hacerInsert($sql);
@@ -191,20 +170,5 @@ class Modelo {
 		$datos = $this->gestorBD->hacerConsulta($sql);
 		return $datos;
     }
-    public function traerEmpresaSelect(){
-        //con la primera parte de la consulta genero un campo por defecto
-        $sql = "SELECT '0' as id, '' as text UNION SELECT cad.codigoCadena  as id,  cad.nombre as text FROM CadenasCat cad order by id;";
-        $datos = $this->gestorBD->hacerConsulta($sql);
-        return $datos;
-        }
-    public function traerSucursalSelect($registros){
-        
-            $sql = "
-            
-            DECLARE @codigoEmpresa bigint='".$registros['empresa']. "';
-            SELECT '0' as id, '' as text UNION SELECT suc.codigoSucursal  as id,  suc.nombre as text FROM sucursalesCat suc where codigoCadena=@codigoEmpresa and suc.estatus=0 order by id;";
-            $datos = $this->gestorBD->hacerConsulta($sql);
-            return $datos;
-            }
 
 }

@@ -13,43 +13,8 @@ var array_detalle_trabajo=[];
 var array_colocar_clientes_mod=[];
 var array_colocar_imagen=[];
 var array_colocar_detalleReclamos=[];
-var array_colocar_empresas=[];
-var array_colocar_sucursales=[];
 
-function colocarCadenas(){
-	$.ajax({
-		url:'php/controller.php',
-		type:'POST',
-		async: false,
-		dataType:'json',
-		data:{tipo:'traerCadenas'},
-	    success:function(data){
-            array_trabajos=data;
-            
-		},
-		error: function (jqXHR, textStatus, errorThrown){
-			console.log(jqXHR+" " +textStatus+ " " +errorThrown);
-		}
-	});	
 
-}
-function registrarProblema(select_Empresa,select_Sucursal,select_Motivo,fecha,time,descripcion,Respuesta,select_Estado, response){
-	$.ajax({
-		url:'php/controller.php',
-		type:'POST',
-		async: false,
-		dataType:'json',
-		data:{tipo:'registrarProblema',select_Empresa:select_Empresa, select_Sucursal:select_Sucursal, select_Motivo:select_Motivo,fecha:fecha,time:time, descripcion:descripcion,Respuesta:Respuesta,select_Estado:select_Estado,response:response},
-	    success:function(data){
-            alert("Reclamo Agregado con Exito")
-            
-		},
-		error: function (jqXHR, textStatus, errorThrown){
-			console.log(jqXHR+" " +textStatus+ " " +errorThrown);
-		}
-	});	
-
-}
 
 function colocarProvinciasSelect(){
 	$.ajax({
@@ -60,36 +25,6 @@ function colocarProvinciasSelect(){
 		data:{tipo:'selectProvincias'},
 		success:function(data){
 			array_colocar_provincias=data;
-		},
-		error: function (jqXHR, textStatus, errorThrown){
-			console.log(jqXHR+" " +textStatus+ " " +errorThrown);
-		}
-	})
-}
-function colocarEmpresaSelect(){
-	$.ajax({
-		url:'php/controller.php',
-		type:'POST',
-		async: false,
-		dataType:'json',
-		data:{tipo:'selectEmpresa'},
-		success:function(data){
-			array_colocar_empresas=data;
-		},
-		error: function (jqXHR, textStatus, errorThrown){
-			console.log(jqXHR+" " +textStatus+ " " +errorThrown);
-		}
-	})
-}
-function colocarSucursalSelect(select_Empresa){
-	$.ajax({
-		url:'php/controller.php',
-		type:'POST',
-		async: false,
-		dataType:'json',
-		data:{tipo:'selectSucursal',select_Empresa:select_Empresa},
-		success:function(data){
-			array_colocar_sucursales=data;
 		},
 		error: function (jqXHR, textStatus, errorThrown){
 			console.log(jqXHR+" " +textStatus+ " " +errorThrown);
@@ -132,7 +67,7 @@ function detalleReclamo(id){
 		
 }
 	//recibo los parametros del modal 
-function registrarCadena(cadenaNombre, select_provincias){
+function registrarProducto(eanExibir){
 	
 	
 	$.ajax({
@@ -141,14 +76,14 @@ function registrarCadena(cadenaNombre, select_provincias){
 		async: false,
 		dataType:'json',
 		//paso a json los datos que recibo de parametro y el ajax los manda a controller
-		data:{tipo:'registrarCadena', cadenaNombre: cadenaNombre, select_provincias: select_provincias},
+		data:{tipo:'registrarProducto', eanExibir: eanExibir},
 		
 		success:function(data){
 			//pregunto si el estado es ok. 
 			if (data.estado=="OK")
 			{	//de serlo indico que el cliente se agrego con exito y recargo la pagina
-				alert("Cadena agregada con exito");
-				window.location.href='/gastos.php';
+				alert("Producto Agregado");
+				
 			}else{// de no serlo indico porque
 				alert("Cadena ya existe");
 			}

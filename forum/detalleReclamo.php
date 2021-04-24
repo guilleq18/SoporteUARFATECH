@@ -99,7 +99,8 @@ Philips ambilight tv
 
             function cambiarImagenJS(){
 
-              document.getElementById("img1").src="image2.jpg";
+              //document.getElementById("img1").src="image2.jpg";
+              $("#img1").attr("src","http://dummyimage.com/450x255/")
             
             }
     

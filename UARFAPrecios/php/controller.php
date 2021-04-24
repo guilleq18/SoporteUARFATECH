@@ -1,42 +1,30 @@
 
 <?php
 header('Content-Type: text/html; charset=utf-8');
-
+ini_set("display_errors", "1");
+error_reporting(E_ALL);
 require_once('modelo/modelo.php');
 $modelo=new Modelo();
 
 
 $tipo=$_POST['tipo'];
 
-if ($tipo=='traerCadenas'){
+if ($tipo=='traerProductosExibidos'){
 
-		$result = $modelo->traerCadenas();
+		$result = $modelo->traerProductosExibidos();
 		echo $result;
 	
 	}
-if ($tipo=='traerSucursales'){
+if ($tipo=='registrarProducto'){
 
-		$registros['id']=$_POST['idCadena'];
-		$result = $modelo->traerSucursales($registros);
+		$registros['EAN']=$_POST['eanExibir'];
+		$result = $modelo->registrarProducto($registros);
 	    echo $result;
 	
-}
-if ($tipo=='traerSucursales'){
-
-	$registros['id']=$_POST['idCadena'];
-	$result = $modelo->traerSucursales($registros);
-	echo $result;
-
 }
 if ($tipo=='traerReclamos'){
 
 	$result = $modelo->traerReclamos();
-	echo $result;
-
-}
-if ($tipo=='traerReclamosCab'){
-
-	$result = $modelo->traerReclamosCab();
 	echo $result;
 
 }
@@ -62,19 +50,6 @@ if($tipo=='selectProvincias'){
 		}
 	}
 	
-if($tipo=='selectEmpresa'){
-		$result = $modelo->traerEmpresaSelect();
-		if(isset($result)){
-			echo $result;
-		}
-	}
-if($tipo=='selectSucursal'){
-		$registros['empresa']=$_POST['select_Empresa'];
-		$result = $modelo->traerSucursalSelect($registros);
-		if(isset($result)){
-			echo $result;
-		}
-	}
 if($tipo=='selectImagenes'){
 	$result = $modelo->cambiarImagenJS();
 	if(isset($result)){
@@ -163,28 +138,18 @@ if($tipo=="deleteCadena")
 	
 
 }
-if($tipo=="registrarProblema")
+if($tipo=="deleteSucursal")
 {
-	
-	$registros['empresa']=$_POST['select_Empresa'];
-	$registros['sucursal']=$_POST['select_Sucursal'];
-	$registros['motivo']=$_POST['select_Motivo'];
-	$registros['fecha']=$_POST['fecha'];
-	$registros['time']=$_POST['time'];
-	$registros['descripcion']=$_POST['descripcion'];
-	$registros['Respuesta']=$_POST['Respuesta'];
-	$registros['estado']=$_POST['select_Estado'];
-	$registros['imagen']=$_POST['response'];
-
-	
-	$result = $modelo->registrarProblema($registros);		
-	if(isset($result)){
-		$array=new stdClass;
-			$array->estado="OK";
-			$json=json_encode($array, JSON_FORCE_OBJECT);
-			echo $json;
-	}
+			$registros['codigoSucursal']=$_POST['codigoSucursal'];
+			
+			
+			$result = $modelo->deleteSucursal($registros);		
+			if(isset($result)){
+				$array=new stdClass;
+					$array->estado="OK";
+					$json=json_encode($array, JSON_FORCE_OBJECT);
+					echo $json;
+			}
 	
 
 }
-
