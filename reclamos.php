@@ -55,14 +55,19 @@ input[type=date] {
       <script src="js/select2.min.js"></script>
       <script src="js/ajax.js"></script>
       <script src="js/validar.js"></script>
+   
+    
       <script type="text/javascript">
+
+      
+
+
 
 
 
 $(document).ready(function(){
 
   
-   
    //Codigo para obtener el id de una celda presionada del datatable
     
 
@@ -71,7 +76,7 @@ $(document).ready(function(){
                   
                   language: {
                     url: './js/Spanish.json',
-                    buttons: {pageLength: { _: "Mostrar %d filas"}}
+                    //buttons: {pageLength: { _: "Mostrar %d filas"}}
                   },
                   
                   ajax: {
@@ -82,35 +87,54 @@ $(document).ready(function(){
                   },
                   destroy: true,
                   columns: [
-                    { data: "codigoReclamo", sTitle:"Codigo"},
-                    { data: "codigoSucursal", sTitle:"codSuc"},
-                    { data: "nombre", sTitle:"Sucursal"},
-                    { data: "fechaActualizacion", sTitle:"Registro"},
-                    { data: "fechaReclamo", sTitle:"Fecha"},
-                    { data: "descripcion", sTitle:"Reclamo"},
-                    { data: "respuesta", sTitle:"Respuesta"},
-                    { data: "tipoReclamo", sTitle:"Motivo"},
-                    { data: "estado", sTitle:"Estado"},
-                    
-                    { data: null, sTitle:"Acciones"},
+                    { data: "codigoReclamo" },
+                    { data: "nombre"},
+                    { data: "fechaActualizacion"},
+                    { data: "fechaReclamo"},
+                    { data: "descripcion"},
+                    { data: "respuesta"},
+                    { data: "tipoReclamo"},
+                    { data: "estado"},
+                    { data: "codigoSucursal"},
+                    { data: null, sTitle:"Acciones"}
                     
                   ], 
                   //aqui agrego una columna;
                   //con el primer targets le digo cual columna quiero que se vea.
                   //con el segundo target le digo en donde van a estar los botones
                   columnDefs: [
-                    { targets: [1], visible: false },
-                    { targets: 9, width: 30, orderable: false, searchable: false, 
-                      render: function (data, type, row) {
+                    { targets: [8, 9], visible: false },
+                    { targets: 9, width: 30, orderable: false, searchable: false, render: function (data, type, row) {
                       data="";
                       data+='<span class="accion modificSuc" title="Configuración de seciones" width="30" height="30" border="0" style="pading:1px"><input type="image" src="../img/editar.png"></span> <span &nbsp; class="accion delSucursal" title="Configuración de seciones" width="30" height="30" border="1" pading:1px><input type="image" src="../img/del.png"></span>';
                       return data;}}
                             
                   ],
-                  
-                    
-    });
-
+                  dom: 'Bfrtip',
+		              pageLength: 50,
+                  initComplete: function () {
+		
+                        $("#table").DataTable().column(9).visible(true);
+                        $("#table").DataTable().columns.adjust().draw();
+            
+                        $('#table thead .trFiltros th').each(function(index) {
+                        $($('#table thead .trFiltros th')[index]).css('width', $('#table thead .trFiltros th')[index].clientWidth);
+                        $($('#table thead .trFiltros .dFiltro')[index]).css('display', 'block');
+                        });
+                        $('#tabla_filter').css('height', '45px');
+                        $('#tabla_filter label').css('margin-top', '11px');
+                  }
+              });
+                        $(".trFiltros .dFiltro").click(function(e) {
+                          e.stopPropagation();
+                        });
+                        $('#table .celdaFiltro').on( 'keyup change', function ()	{   
+                          var i =$(this).attr('id');  
+                          var v =$(this).val();  
+                          $("#table").DataTable().columns(i).search(v).draw();
+                        
+	                      });
+       
 
 
 
@@ -162,12 +186,7 @@ $(document).ready(function(){
                 }
             }
         });
-              
-      
-            
-              
-            
-        
+         
     });
    
 })
@@ -285,7 +304,30 @@ $(document).ready(function(){
     <div class="row" style="margin-bottom: 20px;">
 		<div class="col-lg-1 col-sm-1"></div>
 		<div class="col-md-10">
-	  		<table id="table" class="table table-bordered"></table>
+	  		<table id="table" class="table table-bordered">
+        <thead>
+        <tr 
+        class="trFiltros">
+          <th><div class="dTitulo">Cod. Reclamo</div><div class="dFiltro"><input id="0" class="form-control celdaFiltro" type="text"></div></th>
+        
+          <th><div class="dTitulo">Sucursal</div><div class="dFiltro"  style="display: block;"><input id="1" class="form-control celdaFiltro" type="text"></div></th>
+          
+          <th><div class="dTitulo">Fecha Actualziacion</div><div class="dFiltro"><input id="2" class="form-control celdaFiltro" type="text"></div></th>
+          
+          <th><div class="dTitulo">Fecha Reclamo</div><div class="dFiltro"><input id="3" class="form-control celdaFiltro" type="text"></div></th>
+          <th><div class="dTitulo">Descipcion</div><div class="dFiltro"><input id="4" class="form-control celdaFiltro" type="text"></div></th>
+          <th><div class="dTitulo">Respuesta</div><div class="dFiltro"><input id="5" class="form-control celdaFiltro" type="text"></div></th>
+          <th><div class="dTitulo">Motivo</div><div class="dFiltro"><input id="6" class="form-control celdaFiltro" type="text"></div></th>
+          <th><div class="dTitulo">Estado</div><div class="dFiltro"><input id="7" class="form-control celdaFiltro" type="text"></div></th>
+          
+          <th></th><th><div class="dFiltro" style="display: block;"><input type="text" disabled="" class="form-control celdaFiltro"></div></th>
+          </tr>
+          </thead>
+        </table>
+
+
+
+        
 		</div>
   	</div>
   </div>
