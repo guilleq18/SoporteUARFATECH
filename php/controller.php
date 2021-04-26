@@ -167,6 +167,7 @@ if($tipo=="registrarProblema")
 {
 	
 	$registros['empresa']=$_POST['select_Empresa'];
+	$registros['usuarioUt']=$_POST['usuarioUt'];
 	$registros['sucursal']=$_POST['select_Sucursal'];
 	$registros['motivo']=$_POST['select_Motivo'];
 	$registros['fecha']=$_POST['fecha'];
@@ -174,6 +175,7 @@ if($tipo=="registrarProblema")
 	$registros['descripcion']=$_POST['descripcion'];
 	$registros['Respuesta']=$_POST['Respuesta'];
 	$registros['estado']=$_POST['select_Estado'];
+	$registros['usuarioR']=$_POST['usuarioR'];
 	$registros['imagen']=$_POST['response'];
 
 	

@@ -74,8 +74,10 @@ class Modelo {
     }
     public function traerReclamosCab()
     {
-        $sql = "select * from reclamosCab rc
-        inner join sucursalesCat sc on sc.codigoSucursal=rc.codigoSucursal; ";
+        $sql = "select rc.codigoReclamo, rc.codigoSucursal, sc.nombre, convert(varchar, rc.hora, 108) as hora, rc.fechaReclamo, tr.reclamo, rc.usuarioReclamo, rc.descripcion, rc.respuesta, CASE WHEN rc.estado=2 THEN 'OK' ELSE 'PENDIENTE' END as estado, us.nombreUsuario  from reclamosCab rc
+        inner join sucursalesCat sc on sc.codigoSucursal=rc.codigoSucursal
+		inner join tipoReclamoCat tr on tr.codigoTipoReclamo=rc.tipoReclamo
+		inner join usuariosCat us on us.codigoUsuario=rc.codigoUsuarioUt; ";
         //instancio en datos la consulta que se envia al metodo hacerConsulta que me devuelve los datos a mostrar
         $datos = $this->gestorBD->hacerConsulta($sql);
         //retorno la variable datos para poder ser utilizada posteriormente al ser llamado el metodo
@@ -103,16 +105,17 @@ class Modelo {
 
             DECLARE @idCadena nvarchar(15)='".$registros['empresa']."';
             DECLARE @idsucursal nvarchar(20)='".$registros['sucursal']."';
+            DECLARE @usuarioUt nvarchar(20)='".$registros['usuarioUt']."';
             DECLARE @tipoReclamo nvarchar(20)='".$registros['motivo']."';
             DECLARE @fecha date='".$registros['fecha']."';
             DECLARE @time time='".$registros['time']."';
             DECLARE @descripcion nvarchar(100)='".$registros['descripcion']."';
-            
             DECLARE @Respuesta nvarchar(100)='".$registros['Respuesta']."';
             DECLARE @estado nvarchar(10)='".$registros['estado']."';
+            DECLARE @usuarioR nvarchar(50)='".$registros['usuarioR']."';
             DECLARE @imagen nvarchar(100)='".$registros['imagen']."';
             
-            insert into reclamosCab (fechaActualizacion,hora,fechaReclamo,descripcion,respuesta, tipoReclamo,codigoImagen,estado,codigoSucursal) VALUES (GETDATE(), @time, @fecha, @descripcion, @Respuesta, @tipoReclamo, @imagen, @estado, @idsucursal);";
+            insert into reclamosCab (fechaActualizacion,codigoUsuarioUt, hora,fechaReclamo,descripcion,respuesta, tipoReclamo,codigoImagen, usuarioReclamo, estado, codigoSucursal) VALUES (GETDATE(), @usuarioUt, @time, @fecha, @descripcion, @Respuesta, @tipoReclamo, @imagen, @usuarioR, @estado, @idsucursal);";
             
           
        $datos = $this->gestorBD->hacerInsert($sql);

@@ -33,13 +33,13 @@ function colocarCadenas(){
 	});	
 
 }
-function registrarProblema(select_Empresa,select_Sucursal,select_Motivo,fecha,time,descripcion,Respuesta,select_Estado, response){
+function registrarProblema(select_Empresa, usuarioUt, select_Sucursal,select_Motivo,fecha,time,descripcion,Respuesta,select_Estado, usuarioR, response){
 	$.ajax({
 		url:'php/controller.php',
 		type:'POST',
 		async: false,
 		dataType:'json',
-		data:{tipo:'registrarProblema',select_Empresa:select_Empresa, select_Sucursal:select_Sucursal, select_Motivo:select_Motivo,fecha:fecha,time:time, descripcion:descripcion,Respuesta:Respuesta,select_Estado:select_Estado,response:response},
+		data:{tipo:'registrarProblema',select_Empresa:select_Empresa, usuarioUt:usuarioUt, select_Sucursal:select_Sucursal, select_Motivo:select_Motivo,fecha:fecha,time:time, descripcion:descripcion,Respuesta:Respuesta,select_Estado:select_Estado,usuarioR:usuarioR, response:response},
 	    success:function(data){
             alert("Reclamo Agregado con Exito")
             

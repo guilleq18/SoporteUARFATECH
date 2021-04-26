@@ -87,14 +87,16 @@ $(document).ready(function(){
                   },
                   destroy: true,
                   columns: [
-                    { data: "codigoReclamo" },
+                    { data: "codigoReclamo"},
                     { data: "nombre"},
-                    { data: "fechaActualizacion"},
+                    { data: "hora"},
                     { data: "fechaReclamo"},
+                    { data: "reclamo"},
+                    { data: "usuarioReclamo"},
                     { data: "descripcion"},
                     { data: "respuesta"},
-                    { data: "tipoReclamo"},
                     { data: "estado"},
+                    { data: "nombreUsuario"},
                     { data: "codigoSucursal"},
                     { data: null, sTitle:"Acciones"}
                     
@@ -103,8 +105,16 @@ $(document).ready(function(){
                   //con el primer targets le digo cual columna quiero que se vea.
                   //con el segundo target le digo en donde van a estar los botones
                   columnDefs: [
-                    { targets: [8, 9], visible: false },
-                    { targets: 9, width: 30, orderable: false, searchable: false, render: function (data, type, row) {
+                    { targets: [10], visible: false },
+                    { targets: 6, width: 150, orderable: false, searchable: false, render: function (data, type, row) {
+                      data='<textarea disabled  rows="2">'+row.descripcion+'</textarea>';
+                      
+                      return data;}},
+                      { targets: 7, width: 150, orderable: false, searchable: false, render: function (data, type, row) {
+                      data='<textarea disabled  rows="2">'+row.respuesta+'</textarea>';
+                      
+                      return data;}},
+                    { targets: 11, width: 30, orderable: false, searchable: false, render: function (data, type, row) {
                       data="";
                       data+='<span class="accion modificSuc" title="Configuración de seciones" width="30" height="30" border="0" style="pading:1px"><input type="image" src="../img/editar.png"></span> <span &nbsp; class="accion delSucursal" title="Configuración de seciones" width="30" height="30" border="1" pading:1px><input type="image" src="../img/del.png"></span>';
                       return data;}}
@@ -159,7 +169,7 @@ $(document).ready(function(){
         language: "es"
     });
 
-    //BTN DE SUBIR IMAGEN
+ 
     
     $("#regReclamo").click(function(e){
      
@@ -175,12 +185,11 @@ $(document).ready(function(){
             processData: false,
             success: function(response) {
                 if (response !="File not uploaded") {
-                  alert(response);
-
                       document.getElementById("uploadedfile").value = "";
+                      var usuarioUt=1;
                        $("#reclamoReg").modal('hide');//ocultamos el modal
-                       registrarProblema($("#select_Empresa").val(), $("#select_Sucursal").val(), $("#select_Motivo").val(), $("#fecha").val(), $("#time").val(), $("#descripcion").val(), $("#Respuesta").val(), $("#select_Estado").val(), response);
-                        
+                       registrarProblema($("#select_Empresa").val(), usuarioUt, $("#select_Sucursal").val(), $("#select_Motivo").val(), $("#fecha").val(), $("#time").val(), $("#descripcion").val(), $("#Respuesta").val(), $("#select_Estado").val(), $("#usuarioR").val(), response);
+                       $("#table").DataTable().ajax.reload(); 
                 } else {
                     alert('captura no cargada');
                 }
@@ -241,6 +250,10 @@ $(document).ready(function(){
                               <div class="col form-group">
                                   <h3 class="control-label " >Hora </h3>   
                                   <input type="time" class="form-control" value="00:00" id='time'>
+                              </div> <!-- form-group end.// -->
+                              <div class="col form-group">
+                                  <h3 class="control-label " >Usuario Reclamo </h3>   
+                                  <input type="text" class="form-control input-lg" placeholder="" name="usuarioR" id="usuarioR" required>
                               </div> <!-- form-group end.// -->
                               <div class="col form-group">
                                   <h3 class="control-label " >Reclamo </h3>   
@@ -312,13 +325,16 @@ $(document).ready(function(){
         
           <th><div class="dTitulo">Sucursal</div><div class="dFiltro"  style="display: block;"><input id="1" class="form-control celdaFiltro" type="text"></div></th>
           
-          <th><div class="dTitulo">Fecha Actualziacion</div><div class="dFiltro"><input id="2" class="form-control celdaFiltro" type="text"></div></th>
+          <th><div class="dTitulo">Hora</div><div class="dFiltro"><input id="2" class="form-control celdaFiltro" type="text"></div></th>
           
           <th><div class="dTitulo">Fecha Reclamo</div><div class="dFiltro"><input id="3" class="form-control celdaFiltro" type="text"></div></th>
-          <th><div class="dTitulo">Descipcion</div><div class="dFiltro"><input id="4" class="form-control celdaFiltro" type="text"></div></th>
-          <th><div class="dTitulo">Respuesta</div><div class="dFiltro"><input id="5" class="form-control celdaFiltro" type="text"></div></th>
-          <th><div class="dTitulo">Motivo</div><div class="dFiltro"><input id="6" class="form-control celdaFiltro" type="text"></div></th>
-          <th><div class="dTitulo">Estado</div><div class="dFiltro"><input id="7" class="form-control celdaFiltro" type="text"></div></th>
+          
+          <th><div class="dTitulo">Reclamo</div><div class="dFiltro"><input id="4" class="form-control celdaFiltro" type="text"></div></th>
+          <th><div class="dTitulo">Usuario</div><div class="dFiltro"><input id="5" class="form-control celdaFiltro" type="text"></div></th>
+          <th><div class="dTitulo">Descripcion</div><div class="dFiltro"><input id="6" class="form-control celdaFiltro" type="text"></div></th>
+          <th><div class="dTitulo">Respuesta</div><div class="dFiltro"><input id="7" class="form-control celdaFiltro" type="text"></div></th>
+          <th><div class="dTitulo">Estado</div><div class="dFiltro"><input id="8" class="form-control celdaFiltro" type="text"></div></th>
+          <th><div class="dTitulo">Encargado UT</div><div class="dFiltro"><input id="9" class="form-control celdaFiltro" type="text"></div></th>
           
           <th></th><th><div class="dFiltro" style="display: block;"><input type="text" disabled="" class="form-control celdaFiltro"></div></th>
           </tr>
