@@ -148,12 +148,41 @@ if($tipo=="modSucursal")
 	
 
 }
+if($tipo=="modEstado")
+{
+			$registros['codigoReclamo']=$_POST['codigoReclamo'];
+			
+			$result = $modelo->modEstado($registros);		
+			if(isset($result)){
+				$array=new stdClass;
+					$array->estado="OK";
+					$json=json_encode($array, JSON_FORCE_OBJECT);
+					echo $json;
+			}
+	
+
+}
 if($tipo=="deleteCadena")
 {
 			$registros['codigoCadena']=$_POST['codigoCadena'];
 			
 			
 			$result = $modelo->deleteCadena($registros);		
+			if(isset($result)){
+				$array=new stdClass;
+					$array->estado="OK";
+					$json=json_encode($array, JSON_FORCE_OBJECT);
+					echo $json;
+			}
+	
+
+}
+if($tipo=="deleteReclamo")
+{
+			$registros['codigoReclamo']=$_POST['codigoReclamoDel'];
+			
+			
+			$result = $modelo->deleteReclamo($registros);		
 			if(isset($result)){
 				$array=new stdClass;
 					$array->estado="OK";

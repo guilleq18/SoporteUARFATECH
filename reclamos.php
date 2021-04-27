@@ -106,18 +106,24 @@ $(document).ready(function(){
                   //con el segundo target le digo en donde van a estar los botones
                   columnDefs: [
                     { targets: [10], visible: false },
-                    { targets: 6, width: 150, orderable: false, searchable: false, render: function (data, type, row) {
-                      data='<textarea disabled  rows="2">'+row.descripcion+'</textarea>';
-                      
-                      return data;}},
+                    
                       { targets: 7, width: 150, orderable: false, searchable: false, render: function (data, type, row) {
                       data='<textarea disabled  rows="2">'+row.respuesta+'</textarea>';
                       
                       return data;}},
+                    
                     { targets: 11, width: 30, orderable: false, searchable: false, render: function (data, type, row) {
+                      if(row.estado=='PENDIENTE'){
                       data="";
-                      data+='<span class="accion modificSuc" title="Configuración de seciones" width="30" height="30" border="0" style="pading:1px"><input type="image" src="../img/editar.png"></span> <span &nbsp; class="accion delSucursal" title="Configuración de seciones" width="30" height="30" border="1" pading:1px><input type="image" src="../img/del.png"></span>';
+                      data+='<span class="accion modificSuc" title="Configuración de seciones" width="30" height="30" border="0" style="pading:1px"><input type="image" src="../img/editar.png"></span> <span &nbsp; class="accion delReclamos" title="Configuración de seciones" width="30" height="30" border="1" pading:1px><input type="image" src="../img/del.png"></span> <span class="accion modEstado" title="Configuración de seciones" width="30" height="30" border="0" style="pading:1px"><input type="image" src="../img/comprobado.png"></span>'
+                      
+                      }else{
+                      
+                      data="";
+                      data+='<span class="accion modEstado" title="Configuración de seciones" width="30" height="30" border="0" style="pading:1px"><input type="image" src="../img/editar.png"></span> <span &nbsp; class="accion delReclamos" title="Configuración de seciones" width="30" height="30" border="1" pading:1px><input type="image" src="../img/del.png"></span> '
+                      }
                       return data;}}
+                      
                             
                   ],
                   dom: 'Bfrtip',
@@ -159,7 +165,7 @@ $(document).ready(function(){
     });  
               
               
-		  });
+		});
     colocarEmpresaSelect();
         //lleno el select de clientes
         $("#select_Empresa").select2({
@@ -169,11 +175,19 @@ $(document).ready(function(){
         language: "es"
     });
 
+    $( "#table tbody" ).on( "click", ".modEstado", function() {
+              var item = $("#table").DataTable().row( $(this).parents('tr') ).data();
+              $('#modificarEstado').modal('show');
+              document.getElementById("codigoReclamo").value = item['codigoReclamo'];
+		});
+    $( "#table tbody" ).on( "click", ".delReclamos", function() {
+              var item = $("#table").DataTable().row( $(this).parents('tr') ).data();
+              $('#delReclamo').modal('show');
+              document.getElementById("codigoReclamoDel").value = item['codigoReclamo'];
+		});
  
     
     $("#regReclamo").click(function(e){
-     
-     
       var formData = new FormData();
       var files = $('#uploadedfile')[0].files[0];
       formData.append('file',files);
@@ -197,6 +211,23 @@ $(document).ready(function(){
         });
          
     });
+    $("#estadoModificar").click(function(e){
+              
+              $("#modificarEstado").modal('hide');//ocultamos el modal
+               
+              estadoMod($("#codigoReclamo").val());
+              $("#table").DataTable().ajax.reload(); 
+             
+         
+    });
+    $("#deleteReclamo").click(function(e){
+              
+              $("#delReclamo").modal('hide');//ocultamos el modal
+               
+              deleteReclamo($("#codigoReclamoDel").val());
+              $("#table").DataTable().ajax.reload(); 
+         
+    });
    
 })
 
@@ -207,6 +238,69 @@ $(document).ready(function(){
 
 </head>
 <body>
+  <!-- Modal Modificar Estado--> 
+  <div class="modal fade" id="modificarEstado" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h3 class="modal-title" id="exampleModalLongTitle">Cambiar Estado</h3>
+                </div>
+                      <div class="modal-body"> 
+                        <div class="card">
+
+                            <div class="form-row">
+                            <h3 class="control-label " >¿Desea Cambiar el Estado a Ok? </h3>   
+                            <input type="text" name="codigoReclamo" id="codigoReclamo" style="visibility:hidden">
+                              
+                            </div> <!-- form-row end.// -->
+                        
+                    </div>
+                </div>
+
+              
+           
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">NO</button>
+                  <p style="margin: 10px 0px;"><button class="btn btn-lg btn-primary" id="estadoModificar">SI</button></p>
+                </div>
+              </div>
+            </div>
+          </div>
+		</div>	
+    </div>
+
+  <!-- Modal Eliminar Reclamo--> 
+  <div class="modal fade" id="delReclamo" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h3 class="modal-title" id="exampleModalLongTitle">Eliminar Reclamo</h3>
+                </div>
+                      <div class="modal-body"> 
+                        <div class="card">
+
+                            <div class="form-row">
+                            <h3 class="control-label " >¿Desea Eliminar el Reclamo? </h3>   
+                            <input type="text" name="codigoReclamoDel" id="codigoReclamoDel" style="visibility:hidden">
+                              
+                            </div> <!-- form-row end.// -->
+                        
+                    </div>
+                </div>
+
+              
+           
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">NO</button>
+                  <p style="margin: 10px 0px;"><button class="btn btn-lg btn-primary" id="deleteReclamo">SI</button></p>
+                </div>
+              </div>
+            </div>
+          </div>
+		</div>	
+    </div>
+
+
 
  <!-- Modal agregar Cadena--> 
  <div class="modal fade" id="reclamoReg" tabindex="-1" role="dialog"  enctype="multipart/form-data" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
@@ -321,20 +415,20 @@ $(document).ready(function(){
         <thead>
         <tr 
         class="trFiltros">
-          <th><div class="dTitulo">Cod. Reclamo</div><div class="dFiltro"><input id="0" class="form-control celdaFiltro" type="text"></div></th>
+          <th><div class="dTitulo">Codigo</div><div class="dFiltro"><input id="0" class="form-control celdaFiltro" type="text"></div></th>
         
           <th><div class="dTitulo">Sucursal</div><div class="dFiltro"  style="display: block;"><input id="1" class="form-control celdaFiltro" type="text"></div></th>
           
           <th><div class="dTitulo">Hora</div><div class="dFiltro"><input id="2" class="form-control celdaFiltro" type="text"></div></th>
           
-          <th><div class="dTitulo">Fecha Reclamo</div><div class="dFiltro"><input id="3" class="form-control celdaFiltro" type="text"></div></th>
+          <th><div class="dTitulo">Fecha</div><div class="dFiltro"><input id="3" class="form-control celdaFiltro" type="text"></div></th>
           
           <th><div class="dTitulo">Reclamo</div><div class="dFiltro"><input id="4" class="form-control celdaFiltro" type="text"></div></th>
           <th><div class="dTitulo">Usuario</div><div class="dFiltro"><input id="5" class="form-control celdaFiltro" type="text"></div></th>
           <th><div class="dTitulo">Descripcion</div><div class="dFiltro"><input id="6" class="form-control celdaFiltro" type="text"></div></th>
           <th><div class="dTitulo">Respuesta</div><div class="dFiltro"><input id="7" class="form-control celdaFiltro" type="text"></div></th>
           <th><div class="dTitulo">Estado</div><div class="dFiltro"><input id="8" class="form-control celdaFiltro" type="text"></div></th>
-          <th><div class="dTitulo">Encargado UT</div><div class="dFiltro"><input id="9" class="form-control celdaFiltro" type="text"></div></th>
+          <th><div class="dTitulo">Encargado </div><div class="dFiltro"><input id="9" class="form-control celdaFiltro" type="text"></div></th>
           
           <th></th><th><div class="dFiltro" style="display: block;"><input type="text" disabled="" class="form-control celdaFiltro"></div></th>
           </tr>

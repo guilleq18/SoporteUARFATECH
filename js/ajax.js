@@ -215,6 +215,31 @@ function modificCadena(codigoCadena, nombreCad, provCadena){
 	});
 		
 }
+function estadoMod(codigoReclamo){
+	$.ajax({
+		url:'/php/controller.php',
+		type:'POST',
+		async: false,
+		dataType:'json',
+		//paso a json los datos que recibo de parametro y el ajax los manda a controller
+		data:{tipo:'modEstado', codigoReclamo:codigoReclamo},
+		
+		success:function(data){
+			if (data.estado=="OK")
+			{	//de serlo indico que el trabajo se agrego con exito y recargo la pagina
+				alert("Cambios Realizados con Exito!");
+				
+			}else{// de no serlo indico porque
+				alert("La accion no se pudo Realizar!");
+			}
+				
+		},
+		error: function (jqXHR, textStatus, errorThrown){
+			console.log(jqXHR+" " +textStatus+ " " +errorThrown);
+		}
+	});
+		
+}
 function deleteCadena(codigoCadena){
 	
 	
@@ -291,6 +316,35 @@ function deleteSucursal(codigoSucursal){
 				
 			}else{// de no serlo indico porque
 				alert("La Sucursal no pudo ser Eliminada");
+			}
+				
+		},
+		error: function (jqXHR, textStatus, errorThrown){
+			console.log(jqXHR+" " +textStatus+ " " +errorThrown);
+		}
+	});
+		
+}
+function deleteReclamo(codigoReclamoDel){
+	
+	
+	$.ajax({
+		url:'/php/controller.php',
+		type:'POST',
+		async: false,
+		dataType:'json',
+		//paso a json los datos que recibo de parametro y el ajax los manda a controller
+		data:{tipo:'deleteReclamo', codigoReclamoDel:codigoReclamoDel},
+		
+		success:function(data){
+			if (data.estado=="OK")
+			{	
+				//window.open("/clientes.php");
+				//window.close("/detalleCliente.php");
+				alert("Reclamo Eliminado con exito!");
+				
+			}else{// de no serlo indico porque
+				alert("El Reclamo no pudo ser Eliminado");
 			}
 				
 		},

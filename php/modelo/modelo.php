@@ -77,7 +77,8 @@ class Modelo {
         $sql = "select rc.codigoReclamo, rc.codigoSucursal, sc.nombre, convert(varchar, rc.hora, 108) as hora, rc.fechaReclamo, tr.reclamo, rc.usuarioReclamo, rc.descripcion, rc.respuesta, CASE WHEN rc.estado=2 THEN 'OK' ELSE 'PENDIENTE' END as estado, us.nombreUsuario  from reclamosCab rc
         inner join sucursalesCat sc on sc.codigoSucursal=rc.codigoSucursal
 		inner join tipoReclamoCat tr on tr.codigoTipoReclamo=rc.tipoReclamo
-		inner join usuariosCat us on us.codigoUsuario=rc.codigoUsuarioUt; ";
+		inner join usuariosCat us on us.codigoUsuario=rc.codigoUsuarioUt
+        where rc.estado!=3; ";
         //instancio en datos la consulta que se envia al metodo hacerConsulta que me devuelve los datos a mostrar
         $datos = $this->gestorBD->hacerConsulta($sql);
         //retorno la variable datos para poder ser utilizada posteriormente al ser llamado el metodo
@@ -149,6 +150,18 @@ class Modelo {
        $datos = $this->gestorBD->hacerCambio($sql);
         return $datos;
      }
+     public function modEstado($registros){
+  
+        $sql="           
+            DECLARE @codigoReclamo bigint='".$registros['codigoReclamo']. "';
+           
+            
+            UPDATE dbo.reclamosCab SET estado=2 WHERE codigoReclamo=@codigoReclamo;";
+            
+          
+       $datos = $this->gestorBD->hacerCambio($sql);
+        return $datos;
+     }
      public function modSucursal($registros){
   
         $sql="           
@@ -170,6 +183,18 @@ class Modelo {
            
             
             UPDATE dbo.CadenasCat SET estatus=1 WHERE codigoCadena=@codigoCadena;";
+            
+          
+       $datos = $this->gestorBD->hacerCambio($sql);
+        return $datos;
+     }
+     public function deleteReclamo($registros){
+  
+        $sql="           
+            DECLARE @codigoReclamo bigint='".$registros['codigoReclamo']. "';
+           
+            
+            UPDATE dbo.reclamosCab SET estado=3 WHERE codigoReclamo=@codigoReclamo;";
             
           
        $datos = $this->gestorBD->hacerCambio($sql);
