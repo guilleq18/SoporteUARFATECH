@@ -21,13 +21,7 @@ if ($tipo=='traerSucursales'){
 	    echo $result;
 	
 }
-if ($tipo=='traerSucursales'){
 
-	$registros['id']=$_POST['idCadena'];
-	$result = $modelo->traerSucursales($registros);
-	echo $result;
-
-}
 if ($tipo=='traerReclamos'){
 
 	$result = $modelo->traerReclamos();
@@ -200,6 +194,7 @@ if($tipo=="registrarProblema")
 	$registros['sucursal']=$_POST['select_Sucursal'];
 	$registros['motivo']=$_POST['select_Motivo'];
 	$registros['fecha']=$_POST['fecha'];
+	$registros['titulo']=$_POST['titulo'];
 	$registros['time']=$_POST['time'];
 	$registros['descripcion']=$_POST['descripcion'];
 	$registros['Respuesta']=$_POST['Respuesta'];

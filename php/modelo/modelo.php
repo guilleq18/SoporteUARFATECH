@@ -48,8 +48,9 @@ class Modelo {
                 SELECT sc.codigoSucursal, sc.codigoCadena, cc.nombre as nombreCadena, sc.nombre, sc.roc FROM SucursalesCat sc
                 INNER JOIN CadenasCat cc on cc.codigoCadena=sc.codigoCadena 
                 WHERE sc.codigoCadena=@idCadena and sc.estatus=0 ;";
-        $datos = $this->gestorBD->hacerConsulta($sql);
-        return $datos;
+                $datos = $this->gestorBD->hacerConsulta($sql);
+                //retorno la variable datos para poder ser utilizada posteriormente al ser llamado el metodo
+                return $datos;
     }
     public function traerReclamosDetalle($registros)
     {
@@ -74,7 +75,7 @@ class Modelo {
     }
     public function traerReclamosCab()
     {
-        $sql = "select rc.codigoReclamo, rc.codigoSucursal, sc.nombre, convert(varchar, rc.hora, 108) as hora, rc.fechaReclamo, tr.reclamo, rc.usuarioReclamo, rc.descripcion, rc.respuesta, CASE WHEN rc.estado=2 THEN 'OK' ELSE 'PENDIENTE' END as estado, us.nombreUsuario  from reclamosCab rc
+        $sql = "select rc.codigoReclamo, rc.titulo, rc.codigoSucursal, sc.nombre, convert(varchar, rc.hora, 108) as hora, rc.fechaReclamo, tr.reclamo, rc.usuarioReclamo, rc.descripcion, rc.respuesta, CASE WHEN rc.estado=2 THEN 'OK' ELSE 'PENDIENTE' END as estado, us.nombreUsuario  from reclamosCab rc
         inner join sucursalesCat sc on sc.codigoSucursal=rc.codigoSucursal
 		inner join tipoReclamoCat tr on tr.codigoTipoReclamo=rc.tipoReclamo
 		inner join usuariosCat us on us.codigoUsuario=rc.codigoUsuarioUt
@@ -108,6 +109,7 @@ class Modelo {
             DECLARE @idsucursal nvarchar(20)='".$registros['sucursal']."';
             DECLARE @usuarioUt nvarchar(20)='".$registros['usuarioUt']."';
             DECLARE @tipoReclamo nvarchar(20)='".$registros['motivo']."';
+            DECLARE @titulo nvarchar(50)='".$registros['titulo']."';
             DECLARE @fecha date='".$registros['fecha']."';
             DECLARE @time time='".$registros['time']."';
             DECLARE @descripcion nvarchar(100)='".$registros['descripcion']."';
@@ -116,7 +118,7 @@ class Modelo {
             DECLARE @usuarioR nvarchar(50)='".$registros['usuarioR']."';
             DECLARE @imagen nvarchar(100)='".$registros['imagen']."';
             
-            insert into reclamosCab (fechaActualizacion,codigoUsuarioUt, hora,fechaReclamo,descripcion,respuesta, tipoReclamo,codigoImagen, usuarioReclamo, estado, codigoSucursal) VALUES (GETDATE(), @usuarioUt, @time, @fecha, @descripcion, @Respuesta, @tipoReclamo, @imagen, @usuarioR, @estado, @idsucursal);";
+            insert into reclamosCab (fechaActualizacion,codigoUsuarioUt,hora,fechaReclamo,titulo, descripcion,respuesta, tipoReclamo,codigoImagen, usuarioReclamo, estado, codigoSucursal) VALUES (GETDATE(), @usuarioUt, @time, @fecha,@titulo, @descripcion, @Respuesta, @tipoReclamo, @imagen, @usuarioR, @estado, @idsucursal);";
             
           
        $datos = $this->gestorBD->hacerInsert($sql);

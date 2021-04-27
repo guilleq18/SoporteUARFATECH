@@ -89,15 +89,13 @@ $(document).ready(function(){
                   columns: [
                     { data: "codigoReclamo"},
                     { data: "nombre"},
+                    { data: "titulo"},
                     { data: "hora"},
                     { data: "fechaReclamo"},
-                    { data: "reclamo"},
                     { data: "usuarioReclamo"},
-                    { data: "descripcion"},
-                    { data: "respuesta"},
                     { data: "estado"},
                     { data: "nombreUsuario"},
-                    { data: "codigoSucursal"},
+                    
                     { data: null, sTitle:"Acciones"}
                     
                   ], 
@@ -105,14 +103,9 @@ $(document).ready(function(){
                   //con el primer targets le digo cual columna quiero que se vea.
                   //con el segundo target le digo en donde van a estar los botones
                   columnDefs: [
-                    { targets: [10], visible: false },
-                    
-                      { targets: 7, width: 150, orderable: false, searchable: false, render: function (data, type, row) {
-                      data='<textarea disabled  rows="2">'+row.respuesta+'</textarea>';
-                      
-                      return data;}},
-                    
-                    { targets: 11, width: 30, orderable: false, searchable: false, render: function (data, type, row) {
+                    //{ targets: [9,10], visible: false },
+                   
+                    { targets: 8, width: 30, orderable: false, searchable: false, render: function (data, type, row) {
                       if(row.estado=='PENDIENTE'){
                       data="";
                       data+='<span class="accion modificSuc" title="Configuración de seciones" width="30" height="30" border="0" style="pading:1px"><input type="image" src="../img/editar.png"></span> <span &nbsp; class="accion delReclamos" title="Configuración de seciones" width="30" height="30" border="1" pading:1px><input type="image" src="../img/del.png"></span> <span class="accion modEstado" title="Configuración de seciones" width="30" height="30" border="0" style="pading:1px"><input type="image" src="../img/comprobado.png"></span>'
@@ -202,7 +195,7 @@ $(document).ready(function(){
                       document.getElementById("uploadedfile").value = "";
                       var usuarioUt=1;
                        $("#reclamoReg").modal('hide');//ocultamos el modal
-                       registrarProblema($("#select_Empresa").val(), usuarioUt, $("#select_Sucursal").val(), $("#select_Motivo").val(), $("#fecha").val(), $("#time").val(), $("#descripcion").val(), $("#Respuesta").val(), $("#select_Estado").val(), $("#usuarioR").val(), response);
+                       registrarProblema($("#select_Empresa").val(), usuarioUt, $("#select_Sucursal").val(), $("#select_Motivo").val(), $("#fecha").val(),$("#titulo").val(), $("#time").val(), $("#descripcion").val(), $("#Respuesta").val(), $("#select_Estado").val(), $("#usuarioR").val(), response);
                        $("#table").DataTable().ajax.reload(); 
                 } else {
                     alert('captura no cargada');
@@ -327,6 +320,10 @@ $(document).ready(function(){
                                     </select>
                               </div> <!-- form-group end.// -->
                               <div class="col form-group">
+                                  <h3 class="control-label " >Titulo Problema </h3>   
+                                  <input type="text" class="form-control input-lg" placeholder="" name="titulo" id="titulo" required>
+                              </div> <!-- form-group end.// -->
+                              <div class="col form-group">
                                   <h3 class="control-label">Motivo</h3>
                                     <select class="form-control" name="selectMotivo" id="select_Motivo"   required>
                                      <option value="1">Capacitacion</option>
@@ -418,19 +415,21 @@ $(document).ready(function(){
           <th><div class="dTitulo">Codigo</div><div class="dFiltro"><input id="0" class="form-control celdaFiltro" type="text"></div></th>
         
           <th><div class="dTitulo">Sucursal</div><div class="dFiltro"  style="display: block;"><input id="1" class="form-control celdaFiltro" type="text"></div></th>
+
+          <th><div class="dTitulo">Titulo </div><div class="dFiltro"><input id="2" class="form-control celdaFiltro" type="text"></div></th>
           
-          <th><div class="dTitulo">Hora</div><div class="dFiltro"><input id="2" class="form-control celdaFiltro" type="text"></div></th>
+          <th><div class="dTitulo">Hora</div><div class="dFiltro"><input id="3" class="form-control celdaFiltro" type="text"></div></th>
           
-          <th><div class="dTitulo">Fecha</div><div class="dFiltro"><input id="3" class="form-control celdaFiltro" type="text"></div></th>
+          <th><div class="dTitulo">Fecha</div><div class="dFiltro"><input id="4" class="form-control celdaFiltro" type="text"></div></th>
           
-          <th><div class="dTitulo">Reclamo</div><div class="dFiltro"><input id="4" class="form-control celdaFiltro" type="text"></div></th>
+         
           <th><div class="dTitulo">Usuario</div><div class="dFiltro"><input id="5" class="form-control celdaFiltro" type="text"></div></th>
-          <th><div class="dTitulo">Descripcion</div><div class="dFiltro"><input id="6" class="form-control celdaFiltro" type="text"></div></th>
-          <th><div class="dTitulo">Respuesta</div><div class="dFiltro"><input id="7" class="form-control celdaFiltro" type="text"></div></th>
-          <th><div class="dTitulo">Estado</div><div class="dFiltro"><input id="8" class="form-control celdaFiltro" type="text"></div></th>
-          <th><div class="dTitulo">Encargado </div><div class="dFiltro"><input id="9" class="form-control celdaFiltro" type="text"></div></th>
+         
+           <th><div class="dTitulo">Estado</div><div class="dFiltro"><input id="6" class="form-control celdaFiltro" type="text"></div></th>
+          <th><div class="dTitulo">Encargado </div><div class="dFiltro"><input id="7" class="form-control celdaFiltro" type="text"></div></th>
+        
           
-          <th></th><th><div class="dFiltro" style="display: block;"><input type="text" disabled="" class="form-control celdaFiltro"></div></th>
+          <th></th>
           </tr>
           </thead>
         </table>
