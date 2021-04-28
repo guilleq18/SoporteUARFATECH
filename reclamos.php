@@ -42,7 +42,7 @@ input[type=date] {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>SGD</title>
+    <title>RSU</title>
      <!--librerias-->
      <link rel="stylesheet" href="css/bootstrap.css">
       <link rel="stylesheet" href="css/jquery.dataTables.min.css">
@@ -92,7 +92,6 @@ $(document).ready(function(){
                     { data: "titulo"},
                     { data: "hora"},
                     { data: "fechaReclamo"},
-                    { data: "usuarioReclamo"},
                     { data: "estado"},
                     { data: "nombreUsuario"},
                     
@@ -105,15 +104,15 @@ $(document).ready(function(){
                   columnDefs: [
                     //{ targets: [9,10], visible: false },
                    
-                    { targets: 8, width: 30, orderable: false, searchable: false, render: function (data, type, row) {
+                    { targets: 7, width: 30, orderable: false, searchable: false, render: function (data, type, row) {
                       if(row.estado=='PENDIENTE'){
                       data="";
-                      data+='<span class="accion modificSuc" title="Configuración de seciones" width="30" height="30" border="0" style="pading:1px"><input type="image" src="../img/editar.png"></span> <span &nbsp; class="accion delReclamos" title="Configuración de seciones" width="30" height="30" border="1" pading:1px><input type="image" src="../img/del.png"></span> <span class="accion modEstado" title="Configuración de seciones" width="30" height="30" border="0" style="pading:1px"><input type="image" src="../img/comprobado.png"></span>'
+                      data+='<span class="accion modReclamo" title="Configuración de seciones" width="30" height="30" border="0" style="pading:1px"><input type="image" src="../img/editar.png"></span> <span &nbsp; class="accion delReclamos" title="Configuración de seciones" width="30" height="30" border="1" pading:1px><input type="image" src="../img/del.png"></span> <span class="accion modEstado" title="Configuración de seciones" width="30" height="30" border="0" style="pading:1px"><input type="image" src="../img/comprobado.png"></span> <span class="accion detalleReclamo" title="Configuración de seciones" width="30" height="30" border="0" style="pading:1px"><input type="image" src="../img/buscar.png"></span>'
                       
                       }else{
                       
                       data="";
-                      data+='<span class="accion modEstado" title="Configuración de seciones" width="30" height="30" border="0" style="pading:1px"><input type="image" src="../img/editar.png"></span> <span &nbsp; class="accion delReclamos" title="Configuración de seciones" width="30" height="30" border="1" pading:1px><input type="image" src="../img/del.png"></span> '
+                      data+='<span class="accion modReclamo" title="Configuración de seciones" width="30" height="30" border="0" style="pading:1px"><input type="image" src="../img/editar.png"></span> <span &nbsp; class="accion delReclamos" title="Configuración de seciones" width="30" height="30" border="1" pading:1px><input type="image" src="../img/del.png"></span> <span class="accion detalleReclamo" title="Configuración de seciones" width="30" height="30" border="0" style="pading:1px"><input type="image" src="../img/buscar.png"></span>'
                       }
                       return data;}}
                       
@@ -178,6 +177,23 @@ $(document).ready(function(){
               $('#delReclamo').modal('show');
               document.getElementById("codigoReclamoDel").value = item['codigoReclamo'];
 		});
+    $( "#table tbody" ).on( "click", ".detalleReclamo", function() {
+              var taibol = $('#table').DataTable();
+                var item = taibol.row(this).data();
+                var id = item['codigoReclamo'];
+
+              
+              var form = document.createElement("form");
+              form.setAttribute('method',"post");
+              form.setAttribute('action',"detalleReclamo.php");
+              var codigoReclamo = document.createElement("input"); 
+              codigoReclamo.setAttribute('type',"hidden");
+              codigoReclamo.setAttribute('name',"codigoReclamo");
+              codigoReclamo.setAttribute('value',id);
+              form.appendChild(codigoReclamo);
+              document.getElementsByTagName('body')[0].appendChild(form);
+              form.submit()
+		});
  
     
     $("#regReclamo").click(function(e){
@@ -230,6 +246,26 @@ $(document).ready(function(){
 
 
 </head>
+<nav class="navbar navbar-default">
+  <div class="container-fluid"> 
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse-1"> <span class="sr-only">Cambiar navegación</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button></div>
+    
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="navbar-collapse-1">
+      <ul class="nav navbar-nav">
+        <li><a href="cadenas.php" class="active">Cadenas</a></li>
+        <li><a href="reclamos.php" class="active">Reclamos</a></li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+          <li><a href="php/cerrar.php">Cerrar Sesion</a></li>
+        </ul>
+    </div>
+    <!-- /.navbar-collapse --> 
+  </div>
+  <!-- /.container-fluid --> 
+</nav>
 <body>
   <!-- Modal Modificar Estado--> 
   <div class="modal fade" id="modificarEstado" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
@@ -295,7 +331,7 @@ $(document).ready(function(){
 
 
 
- <!-- Modal agregar Cadena--> 
+ <!-- Modal agregar Reclamo--> 
  <div class="modal fade" id="reclamoReg" tabindex="-1" role="dialog"  enctype="multipart/form-data" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
             <div class="modal-dialog" role="document">
               <div class="modal-content">
@@ -421,12 +457,10 @@ $(document).ready(function(){
           <th><div class="dTitulo">Hora</div><div class="dFiltro"><input id="3" class="form-control celdaFiltro" type="text"></div></th>
           
           <th><div class="dTitulo">Fecha</div><div class="dFiltro"><input id="4" class="form-control celdaFiltro" type="text"></div></th>
-          
          
-          <th><div class="dTitulo">Usuario</div><div class="dFiltro"><input id="5" class="form-control celdaFiltro" type="text"></div></th>
+           <th><div class="dTitulo">Estado</div><div class="dFiltro"><input id="5" class="form-control celdaFiltro" type="text"></div></th>
          
-           <th><div class="dTitulo">Estado</div><div class="dFiltro"><input id="6" class="form-control celdaFiltro" type="text"></div></th>
-          <th><div class="dTitulo">Encargado </div><div class="dFiltro"><input id="7" class="form-control celdaFiltro" type="text"></div></th>
+          <th><div class="dTitulo">Encargado </div><div class="dFiltro"><input id="6" class="form-control celdaFiltro" type="text"></div></th>
         
           
           <th></th>
