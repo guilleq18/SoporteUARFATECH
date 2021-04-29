@@ -52,6 +52,19 @@ class Modelo {
                 //retorno la variable datos para poder ser utilizada posteriormente al ser llamado el metodo
                 return $datos;
     }
+    public function traerDetReclamos($registros)
+    {
+        $sql = "  
+                DECLARE @codigo int='".$registros['codigoReclamo']."';
+                select rc.codigoReclamo, rc.codigoimagen, rc.tipoReclamo, rc.estado as codEstado, rc.titulo, rc.codigoSucursal, sc.nombre, convert(varchar, rc.hora, 108) as hora, rc.fechaReclamo, tr.reclamo, rc.usuarioReclamo, rc.descripcion, rc.respuesta, CASE WHEN rc.estado=2 THEN 'OK' ELSE 'PENDIENTE' END as estado, us.nombreUsuario  from reclamosCab rc
+                inner join sucursalesCat sc on sc.codigoSucursal=rc.codigoSucursal
+                inner join tipoReclamoCat tr on tr.codigoTipoReclamo=rc.tipoReclamo
+                inner join usuariosCat us on us.codigoUsuario=rc.codigoUsuarioUt
+                where rc.codigoReclamo=@codigo;";
+                $datos = $this->gestorBD->hacerConsulta($sql);
+                //retorno la variable datos para poder ser utilizada posteriormente al ser llamado el metodo
+                return $datos;
+    }
     public function traerReclamosDetalle($registros)
     {
         $sql = "  
@@ -75,11 +88,12 @@ class Modelo {
     }
     public function traerReclamosCab()
     {
-        $sql = "select rc.codigoReclamo, rc.titulo, rc.codigoSucursal, sc.nombre, convert(varchar, rc.hora, 108) as hora, rc.fechaReclamo, tr.reclamo, rc.usuarioReclamo, rc.descripcion, rc.respuesta, CASE WHEN rc.estado=2 THEN 'OK' ELSE 'PENDIENTE' END as estado, us.nombreUsuario  from reclamosCab rc
+        $sql = "select rc.codigoReclamo, rc.titulo as titulo, rc.codigoSucursal, sc.nombre, convert(varchar, rc.hora, 108) as hora, rc.fechaReclamo, tr.reclamo, rc.usuarioReclamo, rc.descripcion, rc.respuesta, CASE WHEN rc.estado=2 THEN 'OK' ELSE 'PENDIENTE' END as estado, us.nombreUsuario  from reclamosCab rc
         inner join sucursalesCat sc on sc.codigoSucursal=rc.codigoSucursal
 		inner join tipoReclamoCat tr on tr.codigoTipoReclamo=rc.tipoReclamo
 		inner join usuariosCat us on us.codigoUsuario=rc.codigoUsuarioUt
-        where rc.estado!=3; ";
+        where rc.estado!=3
+        order by rc.codigoReclamo desc; ";
         //instancio en datos la consulta que se envia al metodo hacerConsulta que me devuelve los datos a mostrar
         $datos = $this->gestorBD->hacerConsulta($sql);
         //retorno la variable datos para poder ser utilizada posteriormente al ser llamado el metodo

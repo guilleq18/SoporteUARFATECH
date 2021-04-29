@@ -75,14 +75,7 @@ if($tipo=='selectImagenes'){
 		echo $result;
 	}
 }
-if($tipo=='selectModTrabajos'){
 
-		$registros['codigo'] =$_POST['codigo'];
-		$result = $modelo->traerClienteSelectMod($registros);
-		echo $result;
-
-		
-}
 	
 if($tipo=='registrarCadena')
 	{
@@ -90,11 +83,12 @@ if($tipo=='registrarCadena')
 			$registros['cadenaNombre']=$_POST['cadenaNombre'];
 			$registros['cadenaProvincia']=$_POST['select_provincias'];
 			$result = $modelo->registrarCadena($registros);		
-			$array=new stdClass;
-			$array->estado="OK";
-			$json=json_encode($array, JSON_FORCE_OBJECT);
-			echo $json;
-			
+			if(isset($result)){
+				$array=new stdClass;
+					$array->estado="OK";
+					$json=json_encode($array, JSON_FORCE_OBJECT);
+					echo $json;
+			}
 	}	
 	if($tipo=='registrarSucursal')
 	{
@@ -103,10 +97,12 @@ if($tipo=='registrarCadena')
 			$registros['nombre']=$_POST['sucursalNombre'];
 			$registros['roc']=$_POST['encargadoSuc'];
 			$result = $modelo->registrarSucursal($registros);		
-			$array=new stdClass;
-			$array->estado="OK";
-			$json=json_encode($array, JSON_FORCE_OBJECT);
-			echo $json;
+			if(isset($result)){
+				$array=new stdClass;
+					$array->estado="OK";
+					$json=json_encode($array, JSON_FORCE_OBJECT);
+					echo $json;
+			}
 			
 	}
 
@@ -139,6 +135,17 @@ if($tipo=="modSucursal")
 					$json=json_encode($array, JSON_FORCE_OBJECT);
 					echo $json;
 			}
+	
+
+}
+if($tipo=="detReclamo")
+{
+			$registros['codigoReclamo']=$_POST['reclamo'];
+			
+			$result = $modelo->traerDetReclamos($registros);
+			
+				echo $result;
+			
 	
 
 }

@@ -172,30 +172,88 @@ $(document).ready(function(){
               $('#modificarEstado').modal('show');
               document.getElementById("codigoReclamo").value = item['codigoReclamo'];
 		});
+    $( "#table tbody" ).on( "click", ".modReclamo", function() {
+              var item = $("#table").DataTable().row( $(this).parents('tr') ).data();
+              var reclamo = item['codigoReclamo'];
+              $('#modificarReclamo').modal('show');
+
+              colocarEmpresaSelect();
+                //lleno el select de clientes
+                $("#select_EmpresaMod").select2({
+                data: array_colocar_empresas,
+                width: '100%',
+                allowClear: false,
+                language: "es"
+              });
+
+              $( "#select_EmpresaMod" ).on( "change", function() {
+                colocarSucursalSelect($("#select_EmpresaMod").val());
+                //lleno el select de clientes
+                $("#select_SucursalMod").select2({
+                data: array_colocar_sucursales,
+                width: '100%',
+                allowClear: false,
+                language: "es"
+              });  
+                      
+                      
+              });
+              
+
+              detalleReclamoCab(reclamo);
+
+              if(array_reclamo.length>0){        
+                 
+                document.getElementById("codigoReclamoMod").value=array_reclamo[0].codigoReclamo;
+                document.getElementById("tituloMod").value=array_reclamo[0].titulo;
+                document.getElementById("select_MotivoMod").value=array_reclamo[0].tipoReclamo;
+                document.getElementById("timeMod").value=array_reclamo[0].hora;
+                document.getElementById("fechaMod").value=array_reclamo[0].fechaReclamo;
+                document.getElementById("descripcionMod").value=array_reclamo[0].descripcion;
+                document.getElementById("RespuestaMod").value=array_reclamo[0].respuesta;
+                document.getElementById("usuarioMod").value=array_reclamo[0].usuarioReclamo;
+                document.getElementById("select_EstadoMod").value=array_reclamo[0].codEstado;
+                document.getElementById("usuarioUtMod").value=array_reclamo[0].nombreUsuario;
+                
+   
+              }
+
+             
+		});
     $( "#table tbody" ).on( "click", ".delReclamos", function() {
               var item = $("#table").DataTable().row( $(this).parents('tr') ).data();
               $('#delReclamo').modal('show');
               document.getElementById("codigoReclamoDel").value = item['codigoReclamo'];
 		});
     $( "#table tbody" ).on( "click", ".detalleReclamo", function() {
-              var taibol = $('#table').DataTable();
-                var item = taibol.row(this).data();
-                var id = item['codigoReclamo'];
+              var item = $("#table").DataTable().row( $(this).parents('tr') ).data();
+              var reclamo = item['codigoReclamo'];
+              $('#verReclamo').modal('show');
+
+              detalleReclamoCab(reclamo);
+
+              if(array_reclamo.length>0){        
+                 
+                document.getElementById("codigoReclamoVer").value=array_reclamo[0].codigoReclamo;
+                document.getElementById("tituloVer").value=array_reclamo[0].titulo;
+                document.getElementById("motivoVer").value=array_reclamo[0].reclamo;
+                document.getElementById("sucursalVer").value=array_reclamo[0].nombre;
+                document.getElementById("timeVer").value=array_reclamo[0].hora;
+                document.getElementById("fechaVer").value=array_reclamo[0].fechaReclamo;
+                document.getElementById("descripcionVer").value=array_reclamo[0].descripcion;
+                document.getElementById("respuestaVer").value=array_reclamo[0].respuesta;
+                document.getElementById("usuarioRVer").value=array_reclamo[0].usuarioReclamo;
+                document.getElementById("estadoVer").value=array_reclamo[0].estado;
+                document.getElementById("usuarioUtVer").value=array_reclamo[0].nombreUsuario;
+                document.getElementById("capturaVer").src="img/"+array_reclamo[0].codigoimagen;
+                
+              }
 
               
-              var form = document.createElement("form");
-              form.setAttribute('method',"post");
-              form.setAttribute('action',"detalleReclamo.php");
-              var codigoReclamo = document.createElement("input"); 
-              codigoReclamo.setAttribute('type',"hidden");
-              codigoReclamo.setAttribute('name',"codigoReclamo");
-              codigoReclamo.setAttribute('value',id);
-              form.appendChild(codigoReclamo);
-              document.getElementsByTagName('body')[0].appendChild(form);
-              form.submit()
+
 		});
  
-    
+  //REGISTRAR RECLAMO
     $("#regReclamo").click(function(e){
       var formData = new FormData();
       var files = $('#uploadedfile')[0].files[0];
@@ -207,19 +265,22 @@ $(document).ready(function(){
             contentType: false,
             processData: false,
             success: function(response) {
-                if (response !="File not uploaded") {
-                      document.getElementById("uploadedfile").value = "";
+                if (response =="File not uploaded" || response =="Formato Invalido" || response =="Nombre Demasiado Largo") {
+                  alert(response);
+                } else {
+                  document.getElementById("uploadedfile").value = "";
                       var usuarioUt=1;
                        $("#reclamoReg").modal('hide');//ocultamos el modal
                        registrarProblema($("#select_Empresa").val(), usuarioUt, $("#select_Sucursal").val(), $("#select_Motivo").val(), $("#fecha").val(),$("#titulo").val(), $("#time").val(), $("#descripcion").val(), $("#Respuesta").val(), $("#select_Estado").val(), $("#usuarioR").val(), response);
                        $("#table").DataTable().ajax.reload(); 
-                } else {
-                    alert('captura no cargada');
+                    
                 }
             }
         });
          
     });
+
+//MODIFICAR ESTADO 
     $("#estadoModificar").click(function(e){
               
               $("#modificarEstado").modal('hide');//ocultamos el modal
@@ -229,6 +290,8 @@ $(document).ready(function(){
              
          
     });
+    
+//BORRAR RECLAMO
     $("#deleteReclamo").click(function(e){
               
               $("#delReclamo").modal('hide');//ocultamos el modal
@@ -267,6 +330,15 @@ $(document).ready(function(){
   <!-- /.container-fluid --> 
 </nav>
 <body>
+
+
+<!-- MODAL DE PRUEBA CON TABS --> 
+
+
+
+
+
+
   <!-- Modal Modificar Estado--> 
   <div class="modal fade" id="modificarEstado" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
             <div class="modal-dialog" role="document">
@@ -414,7 +486,177 @@ $(document).ready(function(){
               </div>
             </div>
           </div>
-         
+
+
+
+
+
+
+
+<!-- Modal Visualizar Reclamo--> 
+<div class="modal fade" id="verReclamo" tabindex="-1" role="dialog"  enctype="multipart/form-data" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h3 class="modal-title" id="exampleModalLongTitle">Agregar Reclamo</h3>
+                </div>
+                      <div class="modal-body"> 
+                        <div class="card">
+                         
+                            <div class="form-row">
+                            <input type="text" class="form-control input-lg" placeholder="" name="sucursalVer" id="codigoReclamoVer" style="margin: 10px 0px;  visibility: hidden;" required>
+                              <div class="col form-group">
+                                  <h3 class="control-label">Sucursal</h3>
+                                  <input type="text" class="form-control input-lg" placeholder="" name="sucursalVer" id="sucursalVer" readonly=readonly required>
+                              </div> <!-- form-group end.// -->
+                              <div class="col form-group">
+                                  <h3 class="control-label " >Titulo Problema </h3>   
+                                  <input type="text" class="form-control input-lg" placeholder="" name="tituloVer" id="tituloVer" readonly=readonly required>
+                              </div> <!-- form-group end.// -->
+                              <div class="col form-group">
+                                  <h3 class="control-label">Motivo</h3>
+                                  <input type="text" class="form-control input-lg" placeholder="" name="motivoVer" id="motivoVer" readonly=readonly required>
+                                    
+                              </div> <!-- form-group end.// -->
+                              <div class="col form-group">
+                                  <h3 class="control-label " >Fecha </h3>   
+                                  <input type="date" class="form-control" name="fechaVer" id="fechaVer" readonly=readonly required>
+                              </div> <!-- form-group end.// -->
+                              <div class="col form-group">
+                                  <h3 class="control-label " >Hora </h3>   
+                                  <input type="time" class="form-control" readonly=readonly id='timeVer'>
+                              </div> <!-- form-group end.// -->
+                              <div class="col form-group">
+                                  <h3 class="control-label " >Usuario Reclamo </h3>   
+                                  <input type="text" class="form-control input-lg" placeholder="" name="usuarioRVer" id="usuarioRVer" readonly=readonly required>
+                              </div> <!-- form-group end.// -->
+                              <div class="col form-group">
+                                  <h3 class="control-label " >Reclamo </h3>   
+                                  <textarea type="text" class="form-control input-lg" placeholder="" name="problemaVer" id="descripcionVer" readonly=readonly required></textarea>
+                              </div> <!-- form-group end.// -->
+                              <div class="col form-group">
+                                  <h3 class="control-label " >Respuesta </h3>   
+                                  <textarea type="text" class="form-control input-lg" placeholder="" name="respuestaVer" id="respuestaVer" readonly=readonly required></textarea>
+                              </div> <!-- form-group end.// -->
+                              <div class="col form-group">
+                                  <h3 class="control-label " >Captura </h3>   
+                                  <img type="image" alt="" style="max-height:400px;max-width:500px;" id="capturaVer" >
+                              </div> <!-- form-group end.// -->
+                              <div class="col form-group">
+                                  <h3 class="control-label">Motivo</h3>
+                                  <input type="text" class="form-control input-lg" placeholder="" name="estadoVer" id="estadoVer" readonly=readonly required>
+                              </div> <!-- form-group end.// -->
+                              <div class="col form-group">
+                                  <h3 class="control-label">Usuario UT</h3>
+                                  <input type="text" class="form-control input-lg" placeholder="" name="usuarioUtVer" id="usuarioUtVer" readonly=readonly required>
+                              </div> <!-- form-group end.// -->
+                              </div> <!-- form-row end.// -->
+                             
+                        
+                    </div>
+                </div>
+           
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                  <p style="margin: 10px 0px;"><button class="btn btn-lg btn-primary" id="modReclamo">Modificar</button></p>
+                </div>
+              </div>
+            </div>
+</div>
+
+
+ <!-- Modal Modificar Reclamo--> 
+ <div class="modal fade" id="modificarReclamo" tabindex="-1" role="dialog"  enctype="multipart/form-data" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h3 class="modal-title" id="exampleModalLongTitle">Modificar Reclamo</h3>
+                </div>
+                      <div class="modal-body"> 
+                        <div class="card">
+                         
+                            <div class="form-row">
+                            <input type="text" class="form-control input-lg" placeholder="" name="codigoReclamoMod" id="codigoReclamoMod" style="visibility: hidden;" required>
+                            <!-- CODIGO PROVISIORIO PARA CAMBIAR EL USUARIO ENCARGADO-->
+                            <input type="text" class="form-control input-lg" placeholder="" name="usuarioUtMod" id="usuarioUtMod" style="visibility: hidden;" required>
+                               <!-- ......................................................-->
+                              <div class="col form-group">
+                                  <h3 class="control-label">Empresa</h3>
+                                    <select class="form-control" name="selectEmpresaMod" id="select_EmpresaMod"   required>
+                                     <option value=""></option>
+                                    </select>
+                              </div> <!-- form-group end.// -->
+                              <div class="col form-group">
+                                  <h3 class="control-label">Sucursal</h3>
+                                    <select class="form-control" name="selectSucursalMod" id="select_SucursalMod"   required>
+                                     <option value=""></option>
+                                    </select>
+                              </div> <!-- form-group end.// -->
+                              <div class="col form-group">
+                                  <h3 class="control-label " >Titulo Problema </h3>   
+                                  <input type="text" class="form-control input-lg" placeholder="" name="tituloMod" id="tituloMod" required>
+                              </div> <!-- form-group end.// -->
+                              <div class="col form-group">
+                                  <h3 class="control-label">Motivo</h3>
+                                    <select class="form-control" name="selectMotivoMod" id="select_MotivoMod"   required>
+                                     <option value="1">Capacitacion</option>
+                                     <option value="2">Duda</option>
+                                     <option value="3">Error</option>
+                                     <option value="4">Configuracion</option>
+                                     <option value="5">Replicacion</option>
+                                     <option value="6">Operativo</option>
+                                     </select>
+                              </div> <!-- form-group end.// -->
+                              <div class="col form-group">
+                                  <h3 class="control-label " >Fecha </h3>   
+                                  <input type="date" class="form-control" name="fechaMod" id="fechaMod" required>
+                              </div> <!-- form-group end.// -->
+                              <div class="col form-group">
+                                  <h3 class="control-label " >Hora </h3>   
+                                  <input type="time" class="form-control" value="00:00" id='timeMod'>
+                              </div> <!-- form-group end.// -->
+                              <div class="col form-group">
+                                  <h3 class="control-label " >Usuario Reclamo </h3>   
+                                  <input type="text" class="form-control input-lg" placeholder="" name="usuarioMod" id="usuarioMod" required>
+                              </div> <!-- form-group end.// -->
+                              <div class="col form-group">
+                                  <h3 class="control-label " >Reclamo </h3>   
+                                  <textarea  class="form-control input-lg" placeholder="" name="problemaMod" id="descripcionMod" required></textarea>
+                              </div> <!-- form-group end.// -->
+                              <div class="col form-group">
+                                  <h3 class="control-label " >Respuesta </h3>   
+                                  <textarea  class="form-control input-lg" placeholder="" name="RespuestaMod" id="RespuestaMod" required></textarea>
+                              </div> <!-- form-group end.// -->
+                              <div class="col form-group">
+                                  <h3 class="control-label " >Captura </h3>   
+                                  <input type="file" class="form-control input-file" value='NULL' name="uploadedfileMod" id="uploadedfileMod">
+                              </div> <!-- form-group end.// -->
+                              <div class="col form-group">
+                                  <h3 class="control-label">Estado</h3>
+                                    <select class="form-control" name="selectEstadoMod" id="select_EstadoMod"   required>
+                                     <option value="1">Pendiente</option>
+                                     <option value="2">Ok</option>
+                                     </select>
+                              </div> <!-- form-group end.// -->
+                              </div> <!-- form-row end.// -->
+                             
+                        
+                    </div>
+                </div>
+           
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                  <p style="margin: 10px 0px;"><button class="btn btn-lg btn-primary" id="recamoMod">Guardar</button></p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+
+
+
+<!--seccion su-->
 <section>
   <div class="container-fluid">
   	<div class="row">
@@ -440,7 +682,10 @@ $(document).ready(function(){
     </div>
 		<div class="col-lg-1 col-md-1"></div>
 	</div>
-<!--datatable-->
+
+
+
+<!--DATATABLE-->
     <div class="row" style="margin-bottom: 20px;">
 		<div class="col-lg-1 col-sm-1"></div>
 		<div class="col-md-10">

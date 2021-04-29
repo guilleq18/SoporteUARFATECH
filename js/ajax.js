@@ -15,6 +15,7 @@ var array_colocar_imagen=[];
 var array_colocar_detalleReclamos=[];
 var array_colocar_empresas=[];
 var array_colocar_sucursales=[];
+var array_reclamo=[];
 
 function colocarCadenas(){
 	$.ajax({
@@ -33,6 +34,8 @@ function colocarCadenas(){
 	});	
 
 }
+
+
 function registrarProblema(select_Empresa, usuarioUt, select_Sucursal,select_Motivo,fecha, titulo,time,descripcion,Respuesta,select_Estado, usuarioR, response){
 	$.ajax({
 		url:'php/controller.php',
@@ -124,6 +127,24 @@ function detalleReclamo(id){
 		
 		success:function(data){
 			
+		},
+		error: function (jqXHR, textStatus, errorThrown){
+			console.log(jqXHR+" " +textStatus+ " " +errorThrown);
+		}
+	});
+		
+}
+function detalleReclamoCab(reclamo){
+	
+	
+	$.ajax({
+		url:'/php/controller.php',
+		type:'POST',
+		async: false,
+		dataType:'json',
+		data:{tipo:'detReclamo', reclamo:reclamo},
+		success:function(data){
+			array_reclamo=data;
 		},
 		error: function (jqXHR, textStatus, errorThrown){
 			console.log(jqXHR+" " +textStatus+ " " +errorThrown);

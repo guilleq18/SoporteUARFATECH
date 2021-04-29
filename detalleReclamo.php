@@ -24,22 +24,27 @@
    
          
 <script type="text/javascript">
+<?php
+var_dump($_POST['id']);
 
-<?php $rec=$_POST['id'];?>
-
-
+?>
 $(document).ready(function(){
+
+
+    var reclamo= <?php echo($var);?>
+    alert(reclamo);
+    detalleReclamoCab(reclamo);
+
+    if(array_reclamo.length>0){        
+        alert(array_reclamo);
+        document.getElementById("titulo").innerHTML=array_reclamo[0].titulo;
+        $("#pArchivo").val(value=array_reclamo_detalleCab.titulo);
+        
+        
+    }else{alert('hola');}
     
-    var reclamo= <?php echo $_POST['CodigoReclamo'];?>;
 
-
-
-
-
-
-)}
-
-
+})
 
 
 </script>
