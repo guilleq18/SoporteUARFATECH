@@ -71,7 +71,7 @@ $(document).ready(function(){
    //Codigo para obtener el id de una celda presionada del datatable
     
 
-    
+//tabla    
     $("#table").DataTable( {
                   
                   language: {
@@ -145,7 +145,7 @@ $(document).ready(function(){
        
 
 
-
+//selects
     $( "#select_Empresa" ).on( "change", function() {
         colocarSucursalSelect($("#select_Empresa").val());
         //lleno el select de clientes
@@ -166,12 +166,13 @@ $(document).ready(function(){
         allowClear: false,
         language: "es"
     });
-
+//form de modificar estado
     $( "#table tbody" ).on( "click", ".modEstado", function() {
               var item = $("#table").DataTable().row( $(this).parents('tr') ).data();
               $('#modificarEstado').modal('show');
               document.getElementById("codigoReclamo").value = item['codigoReclamo'];
 		});
+//form de modificar
     $( "#table tbody" ).on( "click", ".modReclamo", function() {
               var item = $("#table").DataTable().row( $(this).parents('tr') ).data();
               var reclamo = item['codigoReclamo'];
@@ -220,11 +221,13 @@ $(document).ready(function(){
 
              
 		});
+//form borrar reclamo
     $( "#table tbody" ).on( "click", ".delReclamos", function() {
               var item = $("#table").DataTable().row( $(this).parents('tr') ).data();
               $('#delReclamo').modal('show');
               document.getElementById("codigoReclamoDel").value = item['codigoReclamo'];
 		});
+//form detalle del reclamo
     $( "#table tbody" ).on( "click", ".detalleReclamo", function() {
               var item = $("#table").DataTable().row( $(this).parents('tr') ).data();
               var reclamo = item['codigoReclamo'];
@@ -279,6 +282,32 @@ $(document).ready(function(){
         });
          
     });
+//MODIFICAR RECLAMO
+$("#modifReclamo").click(function(e){
+      var formData = new FormData();
+      var files = $('#uploadedfile')[0].files[0];
+      formData.append('file',files);
+        $.ajax({
+            url: 'php/upload.php',
+            type: 'post',
+            data: formData,
+            contentType: false,
+            processData: false,
+            success: function(response) {
+                if (response =="File not uploaded" || response =="Formato Invalido" || response =="Nombre Demasiado Largo") {
+                  alert(response);
+                } else {
+                  document.getElementById("uploadedfile").value = "";
+                      var usuarioUt=1;
+                       $("#modificarReclamo").modal('hide');//ocultamos el modal
+                       modificarProblema( usuarioUt, $("#select_SucursalMod").val(), $("#select_MotivoMod").val(), $("#fechaMod").val(),$("#tituloMod").val(), $("#timeMod").val(), $("#descripcionMod").val(), $("#RespuestaMod").val(), $("#select_EstadoMod").val(), $("#usuarioRMod").val(), response);
+                       $("#table").DataTable().ajax.reload(); 
+                    
+                }
+            }
+        });
+         
+    });
 
 //MODIFICAR ESTADO 
     $("#estadoModificar").click(function(e){
@@ -290,7 +319,7 @@ $(document).ready(function(){
              
          
     });
-    
+
 //BORRAR RECLAMO
     $("#deleteReclamo").click(function(e){
               
@@ -646,7 +675,7 @@ $(document).ready(function(){
            
                 <div class="modal-footer">
                   <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                  <p style="margin: 10px 0px;"><button class="btn btn-lg btn-primary" id="recamoMod">Guardar</button></p>
+                  <p style="margin: 10px 0px;"><button class="btn btn-lg btn-primary" id="modifReclamo">Guardar</button></p>
                 </div>
               </div>
             </div>
