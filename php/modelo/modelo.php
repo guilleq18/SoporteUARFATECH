@@ -56,6 +56,7 @@ class Modelo {
     {
         $sql = "  
                 DECLARE @codigo int='".$registros['codigoReclamo']."';
+
                 select rc.codigoReclamo, rc.codigoimagen, rc.tipoReclamo, rc.estado as codEstado, rc.titulo, rc.codigoSucursal, sc.nombre, convert(varchar, rc.hora, 108) as hora, rc.fechaReclamo, tr.reclamo, rc.usuarioReclamo, rc.descripcion, rc.respuesta, CASE WHEN rc.estado=2 THEN 'OK' ELSE 'PENDIENTE' END as estado, us.nombreUsuario  from reclamosCab rc
                 inner join sucursalesCat sc on sc.codigoSucursal=rc.codigoSucursal
                 inner join tipoReclamoCat tr on tr.codigoTipoReclamo=rc.tipoReclamo
@@ -166,6 +167,28 @@ class Modelo {
        $datos = $this->gestorBD->hacerCambio($sql);
         return $datos;
      }
+     public function modificarProblema($registros){
+  
+        $sql="           
+            DECLARE @codigoReclamo nvarchar(20)='".$registros['codigoReclamo']."';
+            DECLARE @idsucursal nvarchar(20)='".$registros['sucursal']."';
+            DECLARE @usuarioUt nvarchar(20)='".$registros['usuarioUt']."';
+            DECLARE @tipoReclamo nvarchar(20)='".$registros['motivo']."';
+            DECLARE @titulo nvarchar(50)='".$registros['titulo']."';
+            DECLARE @fecha date='".$registros['fecha']."';
+            DECLARE @time time='".$registros['time']."';
+            DECLARE @descripcion nvarchar(100)='".$registros['descripcion']."';
+            DECLARE @Respuesta nvarchar(100)='".$registros['Respuesta']."';
+            DECLARE @estado nvarchar(10)='".$registros['estado']."';
+            DECLARE @usuarioR nvarchar(50)='".$registros['usuarioR']."';
+            DECLARE @imagen nvarchar(100)='".$registros['imagen']."';
+            
+            update reclamosCab set fechaActualizacion=GETDATE(), codigoUsuarioUt=@usuarioUt, hora=@time, descripcion=@descripcion, respuesta=@Respuesta,tipoReclamo=@tipoReclamo,codigoImagen=@imagen,usuarioReclamo=@usuarioR, estado=@estado, codigoSucursal=@idsucursal where codigoReclamo=@codigoReclamo;";
+            
+          
+       $datos = $this->gestorBD->hacerCambio($sql);
+        return $datos;
+     }
      public function modEstado($registros){
   
         $sql="           
@@ -250,5 +273,12 @@ class Modelo {
             $datos = $this->gestorBD->hacerConsulta($sql);
             return $datos;
             }
+
+
+    public function importarAlfabeta($tipoD, $archivo, $usuario){
+                $sql = "exec spImportarAlfabeta ".$tipoD.", '".$archivo."', ".$usuario.";";
+                $result = $this->gestorBD->hacerConsulta($sql);
+                return $result;
+    }
 
 }

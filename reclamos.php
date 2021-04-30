@@ -76,8 +76,7 @@ $(document).ready(function(){
                   
                   language: {
                     url: './js/Spanish.json',
-                    //buttons: {pageLength: { _: "Mostrar %d filas"}}
-                  },
+                   },
                   
                   ajax: {
                     url: "/php/controller.php",
@@ -94,7 +93,6 @@ $(document).ready(function(){
                     { data: "fechaReclamo"},
                     { data: "estado"},
                     { data: "nombreUsuario"},
-                    
                     { data: null, sTitle:"Acciones"}
                     
                   ], 
@@ -104,10 +102,10 @@ $(document).ready(function(){
                   columnDefs: [
                     //{ targets: [9,10], visible: false },
                    
-                    { targets: 7, width: 30, orderable: false, searchable: false, render: function (data, type, row) {
+                    { targets: 7, width: 100, orderable: false, searchable: false, render: function (data, type, row) {
                       if(row.estado=='PENDIENTE'){
                       data="";
-                      data+='<span class="accion modReclamo" title="Configuración de seciones" width="30" height="30" border="0" style="pading:1px"><input type="image" src="../img/editar.png"></span> <span &nbsp; class="accion delReclamos" title="Configuración de seciones" width="30" height="30" border="1" pading:1px><input type="image" src="../img/del.png"></span> <span class="accion modEstado" title="Configuración de seciones" width="30" height="30" border="0" style="pading:1px"><input type="image" src="../img/comprobado.png"></span> <span class="accion detalleReclamo" title="Configuración de seciones" width="30" height="30" border="0" style="pading:1px"><input type="image" src="../img/buscar.png"></span>'
+                      data+='<span class="accion modReclamo" title="Configuración de seciones" width="30" height="30" border="0" style="pading:1px"><input type="image" src="../img/editar.png"></span> <span &nbsp; class="accion delReclamos" title="Configuración de seciones" width="30" height="30" border="1" pading:1px><input type="image" src="../img/del.png"></span> <span class="accion detalleReclamo" title="Configuración de seciones" width="30" height="30" border="0" style="pading:1px"><input type="image" src="../img/buscar.png"></span><span class="accion modEstado" title="Configuración de seciones" width="30" height="30" border="0" style="pading:1px"><input type="image" src="../img/comprobado.png"></span> '
                       
                       }else{
                       
@@ -131,8 +129,8 @@ $(document).ready(function(){
                         });
                         $('#tabla_filter').css('height', '45px');
                         $('#tabla_filter label').css('margin-top', '11px');
-                  }
-              });
+                      }
+                  });
                         $(".trFiltros .dFiltro").click(function(e) {
                           e.stopPropagation();
                         });
@@ -206,6 +204,7 @@ $(document).ready(function(){
               if(array_reclamo.length>0){        
                  
                 document.getElementById("codigoReclamoMod").value=array_reclamo[0].codigoReclamo;
+                document.getElementById("select_SucursalMod").value=array_reclamo[0].codigoSucursal;
                 document.getElementById("tituloMod").value=array_reclamo[0].titulo;
                 document.getElementById("select_MotivoMod").value=array_reclamo[0].tipoReclamo;
                 document.getElementById("timeMod").value=array_reclamo[0].hora;
@@ -213,8 +212,9 @@ $(document).ready(function(){
                 document.getElementById("descripcionMod").value=array_reclamo[0].descripcion;
                 document.getElementById("RespuestaMod").value=array_reclamo[0].respuesta;
                 document.getElementById("usuarioMod").value=array_reclamo[0].usuarioReclamo;
-                document.getElementById("select_EstadoMod").value=array_reclamo[0].codEstado;
                 document.getElementById("usuarioUtMod").value=array_reclamo[0].nombreUsuario;
+                document.getElementById("select_EstadoMod").value=array_reclamo[0].codEstado;
+                
                 
    
               }
@@ -256,7 +256,7 @@ $(document).ready(function(){
 
 		});
  
-  //REGISTRAR RECLAMO
+//REGISTRAR RECLAMO
     $("#regReclamo").click(function(e){
       var formData = new FormData();
       var files = $('#uploadedfile')[0].files[0];
@@ -285,7 +285,7 @@ $(document).ready(function(){
 //MODIFICAR RECLAMO
 $("#modifReclamo").click(function(e){
       var formData = new FormData();
-      var files = $('#uploadedfile')[0].files[0];
+      var files = $('#uploadedfileMod')[0].files[0];
       formData.append('file',files);
         $.ajax({
             url: 'php/upload.php',
@@ -300,7 +300,7 @@ $("#modifReclamo").click(function(e){
                   document.getElementById("uploadedfile").value = "";
                       var usuarioUt=1;
                        $("#modificarReclamo").modal('hide');//ocultamos el modal
-                       modificarProblema( usuarioUt, $("#select_SucursalMod").val(), $("#select_MotivoMod").val(), $("#fechaMod").val(),$("#tituloMod").val(), $("#timeMod").val(), $("#descripcionMod").val(), $("#RespuestaMod").val(), $("#select_EstadoMod").val(), $("#usuarioRMod").val(), response);
+                       modificarProblema($("#codigoReclamoMod").val(), usuarioUt, $("#select_SucursalMod").val(), $("#select_MotivoMod").val(), $("#fechaMod").val(),$("#tituloMod").val(), $("#timeMod").val(), $("#descripcionMod").val(), $("#RespuestaMod").val(), $("#select_EstadoMod").val(), $("#usuarioMod").val(), response);
                        $("#table").DataTable().ajax.reload(); 
                     
                 }
@@ -662,7 +662,7 @@ $("#modifReclamo").click(function(e){
                               </div> <!-- form-group end.// -->
                               <div class="col form-group">
                                   <h3 class="control-label">Estado</h3>
-                                    <select class="form-control" name="selectEstadoMod" id="select_EstadoMod"   required>
+                                    <select class="form-control" name="select_EstadoMod" id="select_EstadoMod"   required>
                                      <option value="1">Pendiente</option>
                                      <option value="2">Ok</option>
                                      </select>

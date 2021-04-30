@@ -53,6 +53,23 @@ function registrarProblema(select_Empresa, usuarioUt, select_Sucursal,select_Mot
 	});	
 
 }
+function modificarProblema( codigoReclamoMod, usuarioUt, select_SucursalMod,select_MotivoMod,fechaMod, tituloMod,timeMod,descripcionMod,RespuestaMod,select_EstadoMod, usuarioRMod, response){
+	$.ajax({
+		url:'php/controller.php',
+		type:'POST',
+		async: false,
+		dataType:'json',
+		data:{tipo:'modificarProblema', codigoReclamoMod:codigoReclamoMod, usuarioUt:usuarioUt, select_SucursalMod:select_SucursalMod, select_MotivoMod:select_MotivoMod,fechaMod:fechaMod, tituloMod:tituloMod,timeMod:timeMod, descripcionMod:descripcionMod,RespuestaMod:RespuestaMod,select_EstadoMod:select_EstadoMod,usuarioRMod:usuarioRMod, response:response},
+	    success:function(data){
+            alert("Reclamo Modificado con Exito")
+            
+		},
+		error: function (jqXHR, textStatus, errorThrown){
+			console.log(jqXHR+" " +textStatus+ " " +errorThrown);
+		}
+	});	
+
+}
 
 function colocarProvinciasSelect(){
 	$.ajax({
