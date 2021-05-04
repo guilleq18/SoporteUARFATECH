@@ -4,7 +4,18 @@ header('Content-Type: text/html; charset=utf-8');
 
 require_once('modelo/modelo.php');
 $modelo=new Modelo();
-
+//ENCRIPTAR
+function encrypt($string, $key) {
+	$result = '';
+	for($i=0; $i<strlen($string); $i++) {
+	   $char = substr($string, $i, 1);
+	   $keychar = substr($key, ($i % strlen($key))-1, 1);
+	   $char = chr(ord($char)+ord($keychar));
+	   $result.=$char;
+	}
+	return base64_encode($result);
+ }
+//FIN ENCRIPTAR
 
 $tipo=$_POST['tipo'];
 
@@ -175,7 +186,6 @@ if($tipo=="deleteReclamo")
 }
 if($tipo=="registrarProblema")
 {
-	
 	$registros['empresa']=$_POST['select_Empresa'];
 	$registros['usuarioUt']=$_POST['usuarioUt'];
 	$registros['sucursal']=$_POST['select_Sucursal'];
@@ -189,8 +199,24 @@ if($tipo=="registrarProblema")
 	$registros['usuarioR']=$_POST['usuarioR'];
 	$registros['imagen']=$_POST['response'];
 
-	
+
 	$result = $modelo->registrarProblema($registros);		
+		if(isset($result)){
+			echo $result;
+		}
+		
+
+}
+if($tipo=="registrarUsuario")
+{
+	$registros['nombre']=$_POST['nombre'];
+	$registros['apellido']=$_POST['apellido'];
+	$registros['usuario']=$_POST['nombreUsuario'];
+	$registros['pass']=  encrypt($_POST['contraseña'],'SHA');
+	
+
+
+	$result = $modelo->registrarUsuario($registros);		
 		if(isset($result)){
 			echo $result;
 		}

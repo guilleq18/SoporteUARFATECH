@@ -38,6 +38,15 @@ input[type=date] {
 
 <!DOCTYPE html PUBLIC "FORO">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="nl" lang="nl">
+<?php 
+    session_start();
+    if(!isset($_SESSION['codigoUsuario'])){
+        header("Location: /login.php");
+    }
+    $usuario=$_SESSION['codigoUsuario'];
+    
+?>
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -69,7 +78,9 @@ $(document).ready(function(){
 
   
    //Codigo para obtener el id de una celda presionada del datatable
-    
+
+var idUsuarioUt=<?php echo $usuario;?>;
+
 
 //tabla    
     $("#table").DataTable( {
@@ -120,7 +131,7 @@ $(document).ready(function(){
 		              pageLength: 50,
                   initComplete: function () {
 		
-                        $("#table").DataTable().column(9).visible(true);
+                        $("#table").DataTable().column(7).visible(true);
                         $("#table").DataTable().columns.adjust().draw();
             
                         $('#table thead .trFiltros th').each(function(index) {
@@ -176,6 +187,7 @@ $(document).ready(function(){
               var reclamo = item['codigoReclamo'];
               $('#modificarReclamo').modal('show');
 
+              detalleReclamoCab(reclamo);
               colocarEmpresaSelect();
                 //lleno el select de clientes
                 $("#select_EmpresaMod").select2({
@@ -194,16 +206,14 @@ $(document).ready(function(){
                 allowClear: false,
                 language: "es"
               });  
-                      
-                      
+                  
               });
               
-
-              detalleReclamoCab(reclamo);
 
               if(array_reclamo.length>0){        
                  
                 document.getElementById("codigoReclamoMod").value=array_reclamo[0].codigoReclamo;
+                
                 document.getElementById("select_SucursalMod").value=array_reclamo[0].codigoSucursal;
                 document.getElementById("tituloMod").value=array_reclamo[0].titulo;
                 document.getElementById("select_MotivoMod").value=array_reclamo[0].tipoReclamo;
@@ -274,16 +284,16 @@ $(document).ready(function(){
                   document.getElementById("uploadedfile").value = "";
                       var usuarioUt=1;
                        $("#reclamoReg").modal('hide');//ocultamos el modal
-                       registrarProblema($("#select_Empresa").val(), usuarioUt, $("#select_Sucursal").val(), $("#select_Motivo").val(), $("#fecha").val(),$("#titulo").val(), $("#time").val(), $("#descripcion").val(), $("#Respuesta").val(), $("#select_Estado").val(), $("#usuarioR").val(), response);
+                       registrarProblema($("#select_Empresa").val(), idUsuarioUt, $("#select_Sucursal").val(), $("#select_Motivo").val(), $("#fecha").val(),$("#titulo").val(), $("#time").val(), $("#descripcion").val(), $("#Respuesta").val(), $("#select_Estado").val(), $("#usuarioR").val(), response);
                        $("#table").DataTable().ajax.reload(); 
-                    
+                      
                 }
             }
         });
          
     });
 //MODIFICAR RECLAMO
-$("#modifReclamo").click(function(e){
+  $("#modifReclamo").click(function(e){
       var formData = new FormData();
       var files = $('#uploadedfileMod')[0].files[0];
       formData.append('file',files);
@@ -300,14 +310,15 @@ $("#modifReclamo").click(function(e){
                   document.getElementById("uploadedfile").value = "";
                       var usuarioUt=1;
                        $("#modificarReclamo").modal('hide');//ocultamos el modal
-                       modificarProblema($("#codigoReclamoMod").val(), usuarioUt, $("#select_SucursalMod").val(), $("#select_MotivoMod").val(), $("#fechaMod").val(),$("#tituloMod").val(), $("#timeMod").val(), $("#descripcionMod").val(), $("#RespuestaMod").val(), $("#select_EstadoMod").val(), $("#usuarioMod").val(), response);
+                       modificarProblema($("#codigoReclamoMod").val(), idUsuarioUt, $("#select_SucursalMod").val(), $("#select_MotivoMod").val(), $("#fechaMod").val(),$("#tituloMod").val(), $("#timeMod").val(), $("#descripcionMod").val(), $("#RespuestaMod").val(), $("#select_EstadoMod").val(), $("#usuarioMod").val(), response);
                        $("#table").DataTable().ajax.reload(); 
+                       document.getElementById('modificarReclamo').reset();
                     
                 }
             }
         });
          
-    });
+  });
 
 //MODIFICAR ESTADO 
     $("#estadoModificar").click(function(e){
@@ -338,37 +349,33 @@ $("#modifReclamo").click(function(e){
 
 
 </head>
-<nav class="navbar navbar-default">
-  <div class="container-fluid"> 
-    <!-- Brand and toggle get grouped for better mobile display -->
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse-1"> <span class="sr-only">Cambiar navegación</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button></div>
-    
-    <!-- Collect the nav links, forms, and other content for toggling -->
-    <div class="collapse navbar-collapse" id="navbar-collapse-1">
-      <ul class="nav navbar-nav">
-        <li><a href="cadenas.php" class="active">Cadenas</a></li>
-        <li><a href="reclamos.php" class="active">Reclamos</a></li>
-      </ul>
-      <ul class="nav navbar-nav navbar-right">
-          <li><a href="php/cerrar.php">Cerrar Sesion</a></li>
-        </ul>
-    </div>
-    <!-- /.navbar-collapse --> 
-  </div>
-  <!-- /.container-fluid --> 
-</nav>
+<!-- menu-->
+    <nav class="navbar navbar-default">
+      <div class="container-fluid"> 
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse-1"> <span class="sr-only">Cambiar navegación</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button></div>
+        
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="navbar-collapse-1">
+          <ul class="nav navbar-nav">
+            <li><a href="index.php" class="active">Inicio</a></li>
+        <li><a href="reclamos.php">Reclamos</a></li>
+            <li><a href="cadenas.php">Cadenas</a></li>
+            
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+              <li><a href="php/cerrar.php">Cerrar Sesion</a></li>
+            </ul>
+        </div>
+        <!-- /.navbar-collapse --> 
+      </div>
+      <!-- /.container-fluid --> 
+    </nav>
+
 <body>
 
-
-<!-- MODAL DE PRUEBA CON TABS --> 
-
-
-
-
-
-
-  <!-- Modal Modificar Estado--> 
+<!-- Modal Modificar Estado--> 
   <div class="modal fade" id="modificarEstado" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
             <div class="modal-dialog" role="document">
               <div class="modal-content">
@@ -399,7 +406,7 @@ $("#modifReclamo").click(function(e){
 		</div>	
     </div>
 
-  <!-- Modal Eliminar Reclamo--> 
+<!-- Modal Eliminar Reclamo--> 
   <div class="modal fade" id="delReclamo" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
             <div class="modal-dialog" role="document">
               <div class="modal-content">
@@ -432,7 +439,7 @@ $("#modifReclamo").click(function(e){
 
 
 
- <!-- Modal agregar Reclamo--> 
+<!-- Modal agregar Reclamo--> 
  <div class="modal fade" id="reclamoReg" tabindex="-1" role="dialog"  enctype="multipart/form-data" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
             <div class="modal-dialog" role="document">
               <div class="modal-content">
@@ -523,7 +530,7 @@ $("#modifReclamo").click(function(e){
 
 
 <!-- Modal Visualizar Reclamo--> 
-<div class="modal fade" id="verReclamo" tabindex="-1" role="dialog"  enctype="multipart/form-data" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+  <div class="modal fade" id="verReclamo" tabindex="-1" role="dialog"  enctype="multipart/form-data" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
             <div class="modal-dialog" role="document">
               <div class="modal-content">
                 <div class="modal-header">
@@ -591,7 +598,7 @@ $("#modifReclamo").click(function(e){
                 </div>
               </div>
             </div>
-</div>
+  </div>
 
 
  <!-- Modal Modificar Reclamo--> 
@@ -686,7 +693,7 @@ $("#modifReclamo").click(function(e){
 
 
 <!--seccion su-->
-<section>
+ <section>
   <div class="container-fluid">
   	<div class="row">
 	  <div class="col-lg-1 col-sm-1"></div>
@@ -724,7 +731,7 @@ $("#modifReclamo").click(function(e){
         class="trFiltros">
           <th><div class="dTitulo">Codigo</div><div class="dFiltro"><input id="0" class="form-control celdaFiltro" type="text"></div></th>
         
-          <th><div class="dTitulo">Sucursal</div><div class="dFiltro"  style="display: block;"><input id="1" class="form-control celdaFiltro" type="text"></div></th>
+          <th><div class="dTitulo">Sucursal</div><div class="dFiltro"><input id="1" class="form-control celdaFiltro" type="text"></div></th>
 
           <th><div class="dTitulo">Titulo </div><div class="dFiltro"><input id="2" class="form-control celdaFiltro" type="text"></div></th>
           
@@ -735,9 +742,9 @@ $("#modifReclamo").click(function(e){
            <th><div class="dTitulo">Estado</div><div class="dFiltro"><input id="5" class="form-control celdaFiltro" type="text"></div></th>
          
           <th><div class="dTitulo">Encargado </div><div class="dFiltro"><input id="6" class="form-control celdaFiltro" type="text"></div></th>
-        
-          
-          <th></th>
+
+          <th>
+          <div class="dTitulo" style="display: block;"><input type="text" disabled="" class="form-control celdaFiltro"></div></th>
           </tr>
           </thead>
         </table>

@@ -39,10 +39,10 @@
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="navbar-collapse-1">
       <ul class="nav navbar-nav">
-        <li><a href="clientes.php" class="active">Clientes</a></li>
-		<li><a href="ingresos.php">Ingresos</a></li>
-        <li><a href="gastos.php">Gastos</a></li>
-        <li><a href="balances.php">Balances</a></li>
+        <li><a href="index.php" class="active">Inicio</a></li>
+		<li><a href="reclamos.php">Reclamos</a></li>
+        <li><a href="cadenas.php">Cadenas</a></li>
+        
         </ul>
         <ul class="nav navbar-nav navbar-right">
           <li><a href="php/cerrar.php">Cerrar Sesion</a></li>

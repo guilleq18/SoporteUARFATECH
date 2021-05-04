@@ -186,9 +186,37 @@ function registrarCadena(cadenaNombre, select_provincias){
 			if (data.estado=="OK")
 			{	//de serlo indico que el cliente se agrego con exito y recargo la pagina
 				alert("Cadena agregada con exito");
-				window.location.href='/gastos.php';
+				
 			}else{// de no serlo indico porque
 				alert("Cadena ya existe");
+			}
+			
+		},
+		error: function (jqXHR, textStatus, errorThrown){
+			console.log(jqXHR+" " +textStatus+ " " +errorThrown);
+		}
+	});
+		
+}
+function registrarUsuario(nombre, apellido, nombreUsuario, contraseña){
+	
+	
+	$.ajax({
+		url:'/php/controller.php',
+		type:'POST',
+		async: false,
+		dataType:'json',
+		//paso a json los datos que recibo de parametro y el ajax los manda a controller
+		data:{tipo:'registrarUsuario', nombre:nombre, apellido:apellido, nombreUsuario:nombreUsuario, contraseña:contraseña},
+		
+		success:function(data){
+			//pregunto si el estado es ok. 
+			if (data.estado=="OK")
+			{	//de serlo indico que el cliente se agrego con exito y recargo la pagina
+				alert("Usuario agregado con exito");
+				
+			}else{// de no serlo indico porque
+				alert(data);
 			}
 			
 		},

@@ -1,12 +1,21 @@
 <!DOCTYPE html>
-
+<?php 
+    session_start();
+    if(!isset($_SESSION['codigoUsuario'])){
+        header("Location: /login.php");
+    }
+    $usuario=$_SESSION['codigoUsuario'];
+    
+?>
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>SGD</title>
+    <title>RSU</title>
      <!--librerias-->
+     
+     
      <link rel="stylesheet" href="css/bootstrap.css">
       <link rel="stylesheet" href="css/jquery.dataTables.min.css">
       <link rel="stylesheet" href="css/select2.min.css">
@@ -18,6 +27,7 @@
       <script src="js/select2.min.js"></script>
       <script src="js/ajax.js"></script>
       <script src="js/validar.js"></script>
+      
       <script type="text/javascript">
        
     $(document).ready(function(){
@@ -228,10 +238,12 @@
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="navbar-collapse-1">
       <ul class="nav navbar-nav">
-        <li><a href="cadenas.php" class="active">Cadenas</a></li>
-        <li><a href="reclamos.php" class="active">Reclamos</a></li>
-      </ul>
-      <ul class="nav navbar-nav navbar-right">
+        <li><a href="index.php" class="active">Inicio</a></li>
+		<li><a href="reclamos.php">Reclamos</a></li>
+        <li><a href="cadenas.php">Cadenas</a></li>
+        
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
           <li><a href="php/cerrar.php">Cerrar Sesion</a></li>
         </ul>
     </div>

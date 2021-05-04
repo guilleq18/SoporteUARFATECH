@@ -57,8 +57,9 @@ class Modelo {
         $sql = "  
                 DECLARE @codigo int='".$registros['codigoReclamo']."';
 
-                select rc.codigoReclamo, rc.codigoimagen, rc.tipoReclamo, rc.estado as codEstado, rc.titulo, rc.codigoSucursal, sc.nombre, convert(varchar, rc.hora, 108) as hora, rc.fechaReclamo, tr.reclamo, rc.usuarioReclamo, rc.descripcion, rc.respuesta, CASE WHEN rc.estado=2 THEN 'OK' ELSE 'PENDIENTE' END as estado, us.nombreUsuario  from reclamosCab rc
+                select cc.codigoCadena, rc.codigoReclamo, rc.codigoimagen, rc.tipoReclamo, rc.estado as codEstado, rc.titulo, rc.codigoSucursal, sc.nombre, convert(varchar, rc.hora, 108) as hora, rc.fechaReclamo, tr.reclamo, rc.usuarioReclamo, rc.descripcion, rc.respuesta, CASE WHEN rc.estado=2 THEN 'OK' ELSE 'PENDIENTE' END as estado, us.nombreUsuario  from reclamosCab rc
                 inner join sucursalesCat sc on sc.codigoSucursal=rc.codigoSucursal
+                inner join CadenasCat cc on cc.codigoCadena=sc.codigoCadena
                 inner join tipoReclamoCat tr on tr.codigoTipoReclamo=rc.tipoReclamo
                 inner join usuariosCat us on us.codigoUsuario=rc.codigoUsuarioUt
                 where rc.codigoReclamo=@codigo;";
@@ -101,7 +102,7 @@ class Modelo {
         return $datos;
     }
 
-    //insert de clientes
+    //insert de Cadenas
     public function registrarCadena($registros){
   
         $sql="           
@@ -115,6 +116,20 @@ class Modelo {
           
        $datos = $this->gestorBD->hacerInsert($sql);
         return $datos;
+     }
+     public function registrarUsuario($registros){
+  
+        $sql="           
+
+            DECLARE @nombre nvarchar(25)='".$registros['nombre']."';
+            DECLARE @apellido nvarchar(20)='".$registros['apellido']."';
+            DECLARE @usuario nvarchar(20)='".$registros['usuario']."';
+            DECLARE @pass nvarchar(30)='".$registros['pass']."';
+            
+            INSERT INTO dbo.usuariosCat (nombreUsuario, fechaAlta, password, nombre, apellido, status) VALUES(@usuario, GETDATE(), @pass, @nombre, @apellido, 'A');";
+            
+            $datos = $this->gestorBD->hacerInsert($sql);
+            return $datos;
      }
      public function registrarProblema($registros){
   
@@ -136,8 +151,8 @@ class Modelo {
             insert into reclamosCab (fechaActualizacion,codigoUsuarioUt,hora,fechaReclamo,titulo, descripcion,respuesta, tipoReclamo,codigoImagen, usuarioReclamo, estado, codigoSucursal) VALUES (GETDATE(), @usuarioUt, @time, @fecha,@titulo, @descripcion, @Respuesta, @tipoReclamo, @imagen, @usuarioR, @estado, @idsucursal);";
             
           
-       $datos = $this->gestorBD->hacerInsert($sql);
-        return $datos;
+            $datos = $this->gestorBD->hacerInsert($sql);
+            return $datos;
      }
      public function registrarSucursal($registros){
   
@@ -274,11 +289,16 @@ class Modelo {
             return $datos;
             }
 
-
-    public function importarAlfabeta($tipoD, $archivo, $usuario){
-                $sql = "exec spImportarAlfabeta ".$tipoD.", '".$archivo."', ".$usuario.";";
-                $result = $this->gestorBD->hacerConsulta($sql);
-                return $result;
-    }
-
+    public function traerUsuario($registros){
+        
+                $sql = "
+                DECLARE @usuario nvarchar(20)='".$registros['usuario']. "';
+                DECLARE @pass nvarchar(100)='".$registros['pass']. "';
+                select * from usuariosCat where nombreUsuario=@usuario  and password=@pass and status='A';";
+               
+                $user = json_decode($this->gestorBD->hacerConsulta($sql), true);
+                return $user;
+    }        
+    
 }
+?>
