@@ -107,7 +107,7 @@ class Modelo {
   
         $sql="           
 
-            DECLARE @cadenaNombre nvarchar(15)='".$registros['cadenaNombre']."';
+            DECLARE @cadenaNombre nvarchar(50)='".$registros['cadenaNombre']."';
             DECLARE @cadenaProvincia nvarchar(10)='".$registros['cadenaProvincia']."';
             
             

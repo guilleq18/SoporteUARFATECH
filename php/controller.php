@@ -97,7 +97,10 @@ if($tipo=='registrarCadena')
 			$registros['cadenaProvincia']=$_POST['select_provincias'];
 			$result = $modelo->registrarCadena($registros);		
 			if(isset($result)){
-				echo $result;
+				$array=new stdClass;
+					$array->estado="OK";
+					$json=json_encode($array, JSON_FORCE_OBJECT);
+					echo $json;
 			}
 	}	
 	if($tipo=='registrarSucursal')
@@ -108,7 +111,10 @@ if($tipo=='registrarCadena')
 			$registros['roc']=$_POST['encargadoSuc'];
 			$result = $modelo->registrarSucursal($registros);		
 			if(isset($result)){
-				echo $result;
+				$array=new stdClass;
+					$array->estado="OK";
+					$json=json_encode($array, JSON_FORCE_OBJECT);
+					echo $json;
 			}
 			
 	}
@@ -121,7 +127,10 @@ if($tipo=="modCadena")
 			
 			$result = $modelo->modCadena($registros);		
 			if(isset($result)){
-				echo $result;
+				$array=new stdClass;
+					$array->estado="OK";
+					$json=json_encode($array, JSON_FORCE_OBJECT);
+					echo $json;
 			}
 	
 
@@ -134,7 +143,10 @@ if($tipo=="modSucursal")
 			
 			$result = $modelo->modSucursal($registros);		
 			if(isset($result)){
-				echo $result;
+				$array=new stdClass;
+					$array->estado="OK";
+					$json=json_encode($array, JSON_FORCE_OBJECT);
+					echo $json;
 			}
 
 }
@@ -155,7 +167,10 @@ if($tipo=="modEstado")
 			
 			$result = $modelo->modEstado($registros);		
 			if(isset($result)){
-				echo $result;
+				$array=new stdClass;
+					$array->estado="OK";
+					$json=json_encode($array, JSON_FORCE_OBJECT);
+					echo $json;
 			}
 	
 
@@ -167,7 +182,10 @@ if($tipo=="deleteCadena")
 			
 			$result = $modelo->deleteCadena($registros);		
 			if(isset($result)){
-				echo $result;
+				$array=new stdClass;
+					$array->estado="OK";
+					$json=json_encode($array, JSON_FORCE_OBJECT);
+					echo $json;
 			}
 	
 
@@ -179,7 +197,10 @@ if($tipo=="deleteReclamo")
 			
 			$result = $modelo->deleteReclamo($registros);		
 			if(isset($result)){
-				echo $result;
+				$array=new stdClass;
+					$array->estado="OK";
+					$json=json_encode($array, JSON_FORCE_OBJECT);
+					echo $json;
 			}
 	
 
@@ -201,9 +222,12 @@ if($tipo=="registrarProblema")
 
 
 	$result = $modelo->registrarProblema($registros);		
-		if(isset($result)){
-			echo $result;
-		}
+	if(isset($result)){
+		$array=new stdClass;
+			$array->estado="OK";
+			$json=json_encode($array, JSON_FORCE_OBJECT);
+			echo $json;
+	}
 		
 
 }
@@ -217,9 +241,12 @@ if($tipo=="registrarUsuario")
 
 
 	$result = $modelo->registrarUsuario($registros);		
-		if(isset($result)){
-			echo $result;
-		}
+	if(isset($result)){
+		$array=new stdClass;
+			$array->estado="OK";
+			$json=json_encode($array, JSON_FORCE_OBJECT);
+			echo $json;
+	}
 		
 
 }
@@ -244,7 +271,10 @@ if($tipo=="modificarProblema")
 	
 	$result = $modelo->modificarProblema($registros);		
 	if(isset($result)){
-		echo $result;
+		$array=new stdClass;
+			$array->estado="OK";
+			$json=json_encode($array, JSON_FORCE_OBJECT);
+			echo $json;
 	}
 	
 

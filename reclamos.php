@@ -281,12 +281,17 @@ var idUsuarioUt=<?php echo $usuario;?>;
                 if (response =="File not uploaded" || response =="Formato Invalido" || response =="Nombre Demasiado Largo") {
                   alert(response);
                 } else {
+                  if ( $("#select_Motivo").val()=='' || $("#fecha").val()=='' || $("#titulo").val()=='' || ("#time").val()=='' || $("#descripcion").val()=='' || $("#Respuesta").val()=='' || $("#select_Estado").val()==''){
+
+                      alert('Datos Incompletos, Por favor completar los campos con *');
+
+                  }else{
                   document.getElementById("uploadedfile").value = "";
                       var usuarioUt=1;
                        $("#reclamoReg").modal('hide');//ocultamos el modal
                        registrarProblema($("#select_Empresa").val(), idUsuarioUt, $("#select_Sucursal").val(), $("#select_Motivo").val(), $("#fecha").val(),$("#titulo").val(), $("#time").val(), $("#descripcion").val(), $("#Respuesta").val(), $("#select_Estado").val(), $("#usuarioR").val(), response);
                        $("#table").DataTable().ajax.reload(); 
-                      
+                  }   
                 }
             }
         });
@@ -307,12 +312,20 @@ var idUsuarioUt=<?php echo $usuario;?>;
                 if (response =="File not uploaded" || response =="Formato Invalido" || response =="Nombre Demasiado Largo") {
                   alert(response);
                 } else {
-                  document.getElementById("uploadedfile").value = "";
-                      var usuarioUt=1;
+                  
+                  if ($("#select_MotivoMod").val()=='' || $("#fechaMod").val()=='' || $("#tituloMod").val()=='' || ("#timeMod").val()=='' || $("#descripcionMod").val()=='' || $("#RespuestaMod").val()=='' || $("#select_EstadoMod").val()==''){
+
+                      alert('Datos Incompletos, Por favor completar los campos con *');
+
+
+                  }else{
+                     document.getElementById("uploadedfile").value = "";
+                      
                        $("#modificarReclamo").modal('hide');//ocultamos el modal
                        modificarProblema($("#codigoReclamoMod").val(), idUsuarioUt, $("#select_SucursalMod").val(), $("#select_MotivoMod").val(), $("#fechaMod").val(),$("#tituloMod").val(), $("#timeMod").val(), $("#descripcionMod").val(), $("#RespuestaMod").val(), $("#select_EstadoMod").val(), $("#usuarioMod").val(), response);
                        $("#table").DataTable().ajax.reload(); 
                        document.getElementById('modificarReclamo').reset();
+                      }
                     
                 }
             }

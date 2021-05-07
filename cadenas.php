@@ -170,56 +170,72 @@
       //AGREGAR CADENA
       $("#regCadena").click(function(e){
               
+          if($("#cadenaNombre").val()=='' || $("#select_provincias").val()=='')
+          {
+              alert('Datos Incompletos, Por favor completar los campos con *')
+          }else{
             
               $("#cadenaReg").modal('hide');//ocultamos el modal
-                 
+              
               registrarCadena($("#cadenaNombre").val(), $("#select_provincias").val());
-               
+              $("#tabla").DataTable().ajax.reload();     
+            }
            
        });
        $("#regSucursal").click(function(e){
               
-            
+        if($("#sucursalNombre").val()=='' || $("#encargadoSuc").val()=='')
+          {
+              alert('Datos Incompletos, Por favor completar los campos con *')
+          }else{
               $("#SucursalReg").modal('hide');//ocultamos el modal
                  
               registrarSucursal($("#idCadenaSuc").val(), $("#sucursalNombre").val(), $("#encargadoSuc").val());
-               
-           
+              $("#tabla1").DataTable().ajax.reload(); 
+          } 
        });
       
       //MODIFICAR CADENA
       $("#modificarCadena").click(function(e){
               
+        if($("#nombreCad").val()=='' || $("#provCadena").val()=='')
+          {
+              alert('Datos Incompletos, Por favor completar los campos con *')
+          }else{
                         
              $("#cadenaModificar").modal('hide');//ocultamos el modal
                 
              modificCadena($("#idCadena").val(), $("#nombreCad").val(), $("#provCadena").val());
-              
-          
+             $("#tabla").DataTable().ajax.reload(); 
+          }
       });
       $("#delCadena").click(function(e){
               
              $("#deleteCadena").modal('hide');//ocultamos el modal
               
              deleteCadena($("#CadenaCodigo").val());
-            
+             $("#tabla").DataTable().ajax.reload(); 
         
       });
       $("#modificarSucursal").click(function(e){
-              
+       
+        if($("#nombreSuc").val()=='' || $("#responsableSuc").val()=='')
+          {
+              alert('Datos Incompletos, Por favor completar los campos con *')
+          }else{
                         
               $("#modiSucursal").modal('hide');//ocultamos el modal
                  
               modificSucursal($("#idSucursal").val(), $("#nombreSuc").val(), $("#responsableSuc").val());
-               
-           
+              $("#tabla1").DataTable().ajax.reload(); 
+          }
        });
        $("#borrasSucursal").click(function(e){
                
               $("#deleteSucursal").modal('hide');//ocultamos el modal
                
               deleteSucursal($("#codigoSuc").val());
-             
+              $("#tabla1").DataTable().ajax.reload(); 
          
        });
         
@@ -291,11 +307,11 @@
                          
                             <div class="form-row">
                               <div class="col form-group">
-                                  <h3 class="control-label " >Nombre de la Cadena </h3>   
+                                  <h3 class="control-label " >Nombre de la Cadena *</h3>   
                                   <input type="text" class="form-control input-lg" placeholder="" name="nombre" id="cadenaNombre" required>
                               </div> <!-- form-group end.// -->
                               <div class="col form-group">
-                                  <h3 class="control-label " >Provincia a la que pertenece</h3>
+                                  <h3 class="control-label " >Provincia a la que pertenece *</h3>
                                     <select class="form-control" name="selectClientes" id="select_provincias"   required>
                                      <option value=""></option>
                                     </select>
@@ -325,11 +341,11 @@
                          
                             <div class="form-row">
                               <div class="col form-group">
-                                  <h3 class="control-label " >Nombre de la Sucursal </h3>   
+                                  <h3 class="control-label " >Nombre de la Sucursal *</h3>   
                                   <input type="text" class="form-control input-lg" placeholder="" name="sucursalNombre" id="sucursalNombre">
                               </div> <!-- form-group end.// -->
                               <div class="col form-group">
-                                  <h3 class="control-label " >Encargado</h3>
+                                  <h3 class="control-label " >Nombre del Encargado *</h3>
                                   <input type="text" class="form-control input-lg" placeholder="" name="encargadoSuc" id="encargadoSuc">
                               </div> <!-- form-group end.// -->
                               </div> <!-- form-row end.// -->
@@ -351,19 +367,19 @@
             <div class="modal-dialog" role="document">
               <div class="modal-content">
                 <div class="modal-header">
-                  <h3 class="modal-title" id="exampleModalLongTitle">Agregar Egreso</h3>
+                  <h3 class="modal-title" id="exampleModalLongTitle">Modificar Candena</h3>
                 </div>
                       <div class="modal-body"> 
                         <div class="card">
                          
                         <div class="form-row">
                             <div class="col form-group">
-                                  <h3 class="control-label " >Nombre </h3>   
+                                  <h3 class="control-label " >Nombre Cadena *</h3>   
                                   <input type="text" class="form-control input-lg"  name="nombreCad" id="nombreCad" required>
                               </div> <!-- form-group end.// -->
                            
                               <div class="col form-group">
-                                  <h3 class="control-label " >Provincia</h3>
+                                  <h3 class="control-label " >Provincia *</h3>
                                   <input type="text" class="form-control input-lg"  name="Provincia" id="provCadena" required>
                               </div> <!- form-group end.// ->
                               <input type="text" name="idCadena" id="idCadena" style="visibility:hidden">
@@ -393,12 +409,12 @@
                          
                         <div class="form-row">
                             <div class="col form-group">
-                                  <h3 class="control-label " >Nombre </h3>   
+                                  <h3 class="control-label " >Nombre Sucursal *</h3>   
                                   <input type="text" class="form-control input-lg"  name="nombreCad" id="nombreSuc" required>
                               </div> <!-- form-group end.// -->
                            
                               <div class="col form-group">
-                                  <h3 class="control-label " >Responsable de Sucursal</h3>
+                                  <h3 class="control-label " >Responsable de Sucursal *</h3>
                                   <input type="text" class="form-control input-lg"  name="Provincia" id="responsableSuc" required>
                               </div> <!- form-group end.// ->
                               <input type="text" name="idSucursal" id="idSucursal" style="visibility:hidden">
