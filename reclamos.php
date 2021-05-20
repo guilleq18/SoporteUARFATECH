@@ -43,6 +43,9 @@ input[type=date] {
     if(!isset($_SESSION['codigoUsuario'])){
         header("Location: /login.php");
     }
+    if($_SESSION['rol']==1){
+      header("Location: /index.php");
+    }
     $usuario=$_SESSION['codigoUsuario'];
     
 ?>
@@ -52,6 +55,7 @@ input[type=date] {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>RSU</title>
+     <!-- Bootstrap -->
      <!--librerias-->
      <link rel="stylesheet" href="css/bootstrap.css">
       <link rel="stylesheet" href="css/jquery.dataTables.min.css">
@@ -64,8 +68,6 @@ input[type=date] {
       <script src="js/select2.min.js"></script>
       <script src="js/ajax.js"></script>
       <script src="js/validar.js"></script>
-   
-    
       <script type="text/javascript">
 
       
@@ -83,7 +85,7 @@ var idUsuarioUt=<?php echo $usuario;?>;
 
 
 //tabla    
-    $("#table").DataTable( {
+    $("#tabla").DataTable( {
                   
                   language: {
                     url: './js/Spanish.json',
@@ -104,7 +106,7 @@ var idUsuarioUt=<?php echo $usuario;?>;
                     { data: "fechaReclamo"},
                     { data: "estado"},
                     { data: "nombreUsuario"},
-                    { data: null, sTitle:"Acciones"}
+                    { data: null}
                     
                   ], 
                   //aqui agrego una columna;
@@ -112,16 +114,21 @@ var idUsuarioUt=<?php echo $usuario;?>;
                   //con el segundo target le digo en donde van a estar los botones
                   columnDefs: [
                     //{ targets: [9,10], visible: false },
-                   
-                    { targets: 7, width: 100, orderable: false, searchable: false, render: function (data, type, row) {
+                    { targets: 0, width: 30 },
+                    { targets: 1, width: 180 },
+                    { targets: 3, width: 60},
+                    { targets: 4, width: 60 },
+                    { targets: 5, width: 60 },
+                    { targets: 6, width: 60 },
+                    { targets: 7, width: 130, orderable: false, searchable: false, render: function (data, type, row) {
                       if(row.estado=='PENDIENTE'){
                       data="";
-                      data+='<span class="accion modReclamo" title="Configuración de seciones" width="30" height="30" border="0" style="pading:1px"><input type="image" src="../img/editar.png"></span> <span &nbsp; class="accion delReclamos" title="Configuración de seciones" width="30" height="30" border="1" pading:1px><input type="image" src="../img/del.png"></span> <span class="accion detalleReclamo" title="Configuración de seciones" width="30" height="30" border="0" style="pading:1px"><input type="image" src="../img/buscar.png"></span><span class="accion modEstado" title="Configuración de seciones" width="30" height="30" border="0" style="pading:1px"><input type="image" src="../img/comprobado.png"></span> '
+                      data+='<span class="accion modReclamo" title="Modificar" width="30" height="30" border="0" style="pading:1px"><input type="image" src="../img/editar.png"></span> <span &nbsp; class="accion delReclamos" title="Eliminar" width="30" height="30" border="1" pading:1px><input type="image" src="../img/del.png"></span> <span class="accion detalleReclamo" title="Detalle" width="30" height="30" border="0" style="pading:1px"><input type="image" src="../img/buscar.png"></span><span class="accion modEstado" title="Pasar a OK" width="30" height="30" border="0" style="pading:1px"><input type="image" src="../img/comprobado.png"></span> '
                       
                       }else{
                       
                       data="";
-                      data+='<span class="accion modReclamo" title="Configuración de seciones" width="30" height="30" border="0" style="pading:1px"><input type="image" src="../img/editar.png"></span> <span &nbsp; class="accion delReclamos" title="Configuración de seciones" width="30" height="30" border="1" pading:1px><input type="image" src="../img/del.png"></span> <span class="accion detalleReclamo" title="Configuración de seciones" width="30" height="30" border="0" style="pading:1px"><input type="image" src="../img/buscar.png"></span>'
+                      data+='<span class="accion modReclamo" title="Modificar" width="30" height="30" border="0" style="pading:1px"><input type="image" src="../img/editar.png"></span> <span &nbsp; class="accion delReclamos" title="Eliminar" width="30" height="30" border="1" pading:1px><input type="image" src="../img/del.png"></span> <span class="accion detalleReclamo" title="Detalle" width="30" height="30" border="0" style="pading:1px"><input type="image" src="../img/buscar.png"></span>'
                       }
                       return data;}}
                       
@@ -131,12 +138,12 @@ var idUsuarioUt=<?php echo $usuario;?>;
 		              pageLength: 50,
                   initComplete: function () {
 		
-                        $("#table").DataTable().column(7).visible(true);
-                        $("#table").DataTable().columns.adjust().draw();
+                        $("#tabla").DataTable().column(7).visible(true);
+                        $("#tabla").DataTable().columns.adjust().draw();
             
-                        $('#table thead .trFiltros th').each(function(index) {
-                        $($('#table thead .trFiltros th')[index]).css('width', $('#table thead .trFiltros th')[index].clientWidth);
-                        $($('#table thead .trFiltros .dFiltro')[index]).css('display', 'block');
+                        $('#tabla thead .trFiltros th').each(function(index) {
+                        $($('#tabla thead .trFiltros th')[index]).css('width', $('#tabla thead .trFiltros th')[index].clientWidth);
+                        $($('#tabla thead .trFiltros .dFiltro')[index]).css('display', 'block');
                         });
                         $('#tabla_filter').css('height', '45px');
                         $('#tabla_filter label').css('margin-top', '11px');
@@ -145,10 +152,10 @@ var idUsuarioUt=<?php echo $usuario;?>;
                         $(".trFiltros .dFiltro").click(function(e) {
                           e.stopPropagation();
                         });
-                        $('#table .celdaFiltro').on( 'keyup change', function ()	{   
+                        $('#tabla .celdaFiltro').on( 'keyup change', function ()	{   
                           var i =$(this).attr('id');  
                           var v =$(this).val();  
-                          $("#table").DataTable().columns(i).search(v).draw();
+                          $("#tabla").DataTable().columns(i).search(v).draw();
                         
 	                      });
        
@@ -176,14 +183,14 @@ var idUsuarioUt=<?php echo $usuario;?>;
         language: "es"
     });
 //form de modificar estado
-    $( "#table tbody" ).on( "click", ".modEstado", function() {
-              var item = $("#table").DataTable().row( $(this).parents('tr') ).data();
+    $( "#tabla tbody" ).on( "click", ".modEstado", function() {
+              var item = $("#tabla").DataTable().row( $(this).parents('tr') ).data();
               $('#modificarEstado').modal('show');
               document.getElementById("codigoReclamo").value = item['codigoReclamo'];
 		});
 //form de modificar
-    $( "#table tbody" ).on( "click", ".modReclamo", function() {
-              var item = $("#table").DataTable().row( $(this).parents('tr') ).data();
+    $( "#tabla tbody" ).on( "click", ".modReclamo", function() {
+              var item = $("#tabla").DataTable().row( $(this).parents('tr') ).data();
               var reclamo = item['codigoReclamo'];
               $('#modificarReclamo').modal('show');
 
@@ -232,14 +239,14 @@ var idUsuarioUt=<?php echo $usuario;?>;
              
 		});
 //form borrar reclamo
-    $( "#table tbody" ).on( "click", ".delReclamos", function() {
-              var item = $("#table").DataTable().row( $(this).parents('tr') ).data();
+    $( "#tabla tbody" ).on( "click", ".delReclamos", function() {
+              var item = $("#tabla").DataTable().row( $(this).parents('tr') ).data();
               $('#delReclamo').modal('show');
               document.getElementById("codigoReclamoDel").value = item['codigoReclamo'];
 		});
 //form detalle del reclamo
-    $( "#table tbody" ).on( "click", ".detalleReclamo", function() {
-              var item = $("#table").DataTable().row( $(this).parents('tr') ).data();
+    $( "#tabla tbody" ).on( "click", ".detalleReclamo", function() {
+              var item = $("#tabla").DataTable().row( $(this).parents('tr') ).data();
               var reclamo = item['codigoReclamo'];
               $('#verReclamo').modal('show');
 
@@ -290,7 +297,7 @@ var idUsuarioUt=<?php echo $usuario;?>;
                       var usuarioUt=1;
                        $("#reclamoReg").modal('hide');//ocultamos el modal
                        registrarProblema($("#select_Empresa").val(), idUsuarioUt, $("#select_Sucursal").val(), $("#select_Motivo").val(), $("#fecha").val(),$("#titulo").val(), $("#time").val(), $("#descripcion").val(), $("#Respuesta").val(), $("#select_Estado").val(), $("#usuarioR").val(), response);
-                       $("#table").DataTable().ajax.reload(); 
+                       $("#tabla").DataTable().ajax.reload(); 
                   }   
                 }
             }
@@ -319,12 +326,16 @@ var idUsuarioUt=<?php echo $usuario;?>;
 
 
                   }else{
-                     document.getElementById("uploadedfile").value = "";
-                      
-                       $("#modificarReclamo").modal('hide');//ocultamos el modal
-                       modificarProblema($("#codigoReclamoMod").val(), idUsuarioUt, $("#select_SucursalMod").val(), $("#select_MotivoMod").val(), $("#fechaMod").val(),$("#tituloMod").val(), $("#timeMod").val(), $("#descripcionMod").val(), $("#RespuestaMod").val(), $("#select_EstadoMod").val(), $("#usuarioMod").val(), response);
-                       $("#table").DataTable().ajax.reload(); 
-                       document.getElementById('modificarReclamo').reset();
+                    
+                        document.getElementById("uploadedfile").value = "";
+                          
+                        
+                          $("#modificarReclamo").modal('hide');//ocultamos el modal
+                          modificarProblema($("#codigoReclamoMod").val(), idUsuarioUt, $("#select_SucursalMod").val(), $("#select_MotivoMod").val(), $("#fechaMod").val(),$("#tituloMod").val(), $("#timeMod").val(), $("#descripcionMod").val(), $("#RespuestaMod").val(), $("#select_EstadoMod").val(), $("#usuarioMod").val(), response);
+                          $("#tabla").DataTable().ajax.reload(); 
+                          document.getElementById('modificarReclamo').reset();
+                        
+                     
                       }
                     
                 }
@@ -350,7 +361,7 @@ var idUsuarioUt=<?php echo $usuario;?>;
               $("#delReclamo").modal('hide');//ocultamos el modal
                
               deleteReclamo($("#codigoReclamoDel").val());
-              $("#table").DataTable().ajax.reload(); 
+              $("#tabla").DataTable().ajax.reload(); 
          
     });
    
@@ -489,6 +500,7 @@ var idUsuarioUt=<?php echo $usuario;?>;
                                      <option value="4">Configuracion</option>
                                      <option value="5">Replicacion</option>
                                      <option value="6">Operativo</option>
+                                     <option value="7">Productos</option>
                                      </select>
                               </div> <!-- form-group end.// -->
                               <div class="col form-group">
@@ -516,7 +528,7 @@ var idUsuarioUt=<?php echo $usuario;?>;
                                   <input type="file" class="form-control input-file" value='NULL' name="uploadedfile" id="uploadedfile">
                               </div> <!-- form-group end.// -->
                               <div class="col form-group">
-                                  <h3 class="control-label">Motivo</h3>
+                                  <h3 class="control-label">Estado</h3>
                                     <select class="form-control" name="selectEstado" id="select_Estado"   required>
                                      <option value="1">Pendiente</option>
                                      <option value="2">Ok</option>
@@ -547,7 +559,7 @@ var idUsuarioUt=<?php echo $usuario;?>;
             <div class="modal-dialog" role="document">
               <div class="modal-content">
                 <div class="modal-header">
-                  <h3 class="modal-title" id="exampleModalLongTitle">Agregar Reclamo</h3>
+                  <h3 class="modal-title" id="exampleModalLongTitle">Detalle Reclamo</h3>
                 </div>
                       <div class="modal-body"> 
                         <div class="card">
@@ -592,7 +604,7 @@ var idUsuarioUt=<?php echo $usuario;?>;
                                   <img type="image" alt="" style="max-height:400px;max-width:500px;" id="capturaVer" >
                               </div> <!-- form-group end.// -->
                               <div class="col form-group">
-                                  <h3 class="control-label">Motivo</h3>
+                                  <h3 class="control-label">Estado</h3>
                                   <input type="text" class="form-control input-lg" placeholder="" name="estadoVer" id="estadoVer" readonly=readonly required>
                               </div> <!-- form-group end.// -->
                               <div class="col form-group">
@@ -606,8 +618,8 @@ var idUsuarioUt=<?php echo $usuario;?>;
                 </div>
            
                 <div class="modal-footer">
-                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                  <p style="margin: 10px 0px;"><button class="btn btn-lg btn-primary" id="modReclamo">Modificar</button></p>
+                  <button type="button" class="btn btn-lg btn-primary" data-dismiss="modal">Cerrar</button>
+                  
                 </div>
               </div>
             </div>
@@ -632,13 +644,13 @@ var idUsuarioUt=<?php echo $usuario;?>;
                               <div class="col form-group">
                                   <h3 class="control-label">Empresa</h3>
                                     <select class="form-control" name="selectEmpresaMod" id="select_EmpresaMod"   required>
-                                     <option value=""></option>
+                                     <option selected="selected" value=""></option>
                                     </select>
                               </div> <!-- form-group end.// -->
                               <div class="col form-group">
                                   <h3 class="control-label">Sucursal</h3>
                                     <select class="form-control" name="selectSucursalMod" id="select_SucursalMod"   required>
-                                     <option value=""></option>
+                                     <option selected="selected" value=""></option>
                                     </select>
                               </div> <!-- form-group end.// -->
                               <div class="col form-group">
@@ -654,6 +666,7 @@ var idUsuarioUt=<?php echo $usuario;?>;
                                      <option value="4">Configuracion</option>
                                      <option value="5">Replicacion</option>
                                      <option value="6">Operativo</option>
+                                     <option value="7">Productos</option>
                                      </select>
                               </div> <!-- form-group end.// -->
                               <div class="col form-group">
@@ -725,7 +738,7 @@ var idUsuarioUt=<?php echo $usuario;?>;
     <div class="row" style="margin: 10px 0px;">
 		<div class="col-lg-1 col-md-1 "></div>
 		<div class="col-md-2">
-    <button type="button" class="" data-toggle="modal" data-target="#reclamoReg">
+    <button type="button" class="btn btn-lg btn-primary" data-toggle="modal" data-target="#reclamoReg">
       Agregar Reclamo
     </button>
     </div>
@@ -738,7 +751,7 @@ var idUsuarioUt=<?php echo $usuario;?>;
     <div class="row" style="margin-bottom: 20px;">
 		<div class="col-lg-1 col-sm-1"></div>
 		<div class="col-md-10">
-	  		<table id="table" class="table table-bordered">
+	  		<table id="tabla" class="table table-bordered">
         <thead>
         <tr 
         class="trFiltros">
@@ -757,7 +770,7 @@ var idUsuarioUt=<?php echo $usuario;?>;
           <th><div class="dTitulo">Encargado </div><div class="dFiltro"><input id="6" class="form-control celdaFiltro" type="text"></div></th>
 
           <th>
-          <div class="dTitulo" style="display: block;"><input type="text" disabled="" class="form-control celdaFiltro"></div></th>
+          <div class="dFiltro" style="display: block;"><input type="text" disabled="" class="form-control celdaFiltro"></div></th>
           </tr>
           </thead>
         </table>

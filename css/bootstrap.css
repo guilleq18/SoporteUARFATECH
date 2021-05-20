@@ -9,15 +9,11 @@ html {
   font-family: sans-serif;
   -webkit-text-size-adjust: 100%;
       -ms-text-size-adjust: 100%;
-      
 }
 body {
   margin: 0;
   min-width:400px;
-  
 }
-
-
 article,
 aside,
 details,
@@ -114,16 +110,7 @@ samp {
   font-family: monospace, monospace;
   font-size: 1em;
 }
-button{
-  text-decoration: none;
-  padding: 10px;
-  font-family: Helvetica Arial;
-  font-weight: 600;
-  font-size: 40px;
-  color: #ffffff;
-  border-radius: 6px;
-    background: #15828a;
-}
+button,
 input,
 optgroup,
 select,
@@ -258,7 +245,6 @@ th {
   }
   .navbar {
     display: none;
-    background: #014e54;
   }
   .btn > .caret,
   .dropup > .btn > .caret {
@@ -1103,7 +1089,7 @@ html {
 body {
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-size: 14px;
- /* line-height: 1.42857143;*/
+  line-height: 1.42857143;
   color: #333;
   background-color: #fff;
   margin-top:50px;
@@ -4087,7 +4073,6 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
   position: relative;
   min-height: 50px;
   border: 1px solid transparent;
-  background: #014e54;
 }
 @media (min-width: 768px) {
   .navbar-header {
@@ -4408,7 +4393,7 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
   }
 }
 .navbar-default {
-  background-color: #014e54;
+  background-color: #000332;
   position: fixed;
   width:100%;
   font-size:18px;
@@ -4416,32 +4401,30 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
   top:0;
 }
 .navbar-default .navbar-brand {
-  color: #ffffff;
+  color: #D0D0D0;
 }
 .navbar-default .navbar-brand:hover,
 .navbar-default .navbar-brand:focus {
-  color: #ffffff;
+  color: #5e5e5e;
   background-color: transparent;
 }
 .navbar-default .navbar-text {
-  color: #ffffff;
+  color: #777;
 }
 .navbar-default .navbar-nav > li > a {
-  color: #ffffff;
+  color: #aaa;
 }
 .navbar-default .navbar-nav > li > a:hover,
 .navbar-default .navbar-nav > li > a:focus {
   color: #ddd;
-  background: #006a72;
   background-color: transparent;
-
 }
 .navbar-default .navbar-nav > .active > a,
 .navbar-default .navbar-nav > .active > a:hover,
 .navbar-default .navbar-nav > .active > a:focus {
   color: #FFF;
   font-weight: bold;
-  background-color: #006a72;
+  background-color: #3F5FAC;
 }
 .navbar-default .navbar-nav > .disabled > a,
 .navbar-default .navbar-nav > .disabled > a:hover,
@@ -4491,7 +4474,7 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
   color: #777;
 }
 .navbar-default .navbar-link:hover {
-  color: #006a72;
+  color: #333;
 }
 .navbar-default .btn-link {
   color: #777;
@@ -4517,7 +4500,6 @@ fieldset[disabled] .navbar-default .btn-link:focus {
 .navbar-inverse .navbar-brand:focus {
   color: #fff;
   background-color: transparent;
-  
 }
 .navbar-inverse .navbar-text {
   color: #9d9d9d;

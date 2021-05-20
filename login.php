@@ -8,13 +8,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     
-    <link rel="stylesheet" href="css/bootstrap.min.css">
-    <link rel="stylesheet" href="css/bootstrap.css">
-    <link rel="stylesheet" href="css/login.css">  
-    <link rel="stylesheet" href="css/jquery.dataTables.min.css">
-      <link rel="stylesheet" href="css/select2.min.css">
-      <link rel="stylesheet" href="css/table.css">
-      <link rel="stylesheet" href="css/prop.css">
+    <link rel="stylesheet" href="css2/bootstrap.min.css">
+    <link rel="stylesheet" href="css2/bootstrap.css">
+    <link rel="stylesheet" href="css2/login.css">  
+    <link rel="stylesheet" href="css2/jquery.dataTables.min.css">
+      <link rel="stylesheet" href="css2/select2.min.css">
+      <link rel="stylesheet" href="css2/table.css">
+      <link rel="stylesheet" href="css2/prop.css">
 
 
     <script src="js/jquery-3.4.1.min.js"></script>
@@ -107,7 +107,7 @@
 <form action="php/usuarios.php" method="POST">
 	
 	<div class=" form-group">
-			<label>DNI </label>   
+			<label>Usuario </label>   
 		  	<input type="text" class="form-control" placeholder="" name="dni" id="dni">
 	</div> 
 		
@@ -116,7 +116,7 @@
    </div> 
    <br> 
     <div class="form-group">
-        <button type="submit" class="btn btn-success btn-block"> Entrar  </button>
+        <button style="background:#006a72;" type="submit" class="btn btn-success btn-block"> Entrar  </button>
     </div>      
     <small class="text-muted">Completa los datos y pulsa "entrar" para acceder al sistema.</small>                                          
 </form>

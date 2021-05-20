@@ -190,6 +190,21 @@ if($tipo=="deleteCadena")
 	
 
 }
+if($tipo=="deleteSucursal")
+{
+			$registros['codigoSucursal']=$_POST['codigoSucursal'];
+			
+			
+			$result = $modelo->deleteSucursal($registros);		
+			if(isset($result)){
+				$array=new stdClass;
+					$array->estado="OK";
+					$json=json_encode($array, JSON_FORCE_OBJECT);
+					echo $json;
+			}
+	
+
+}
 if($tipo=="deleteReclamo")
 {
 			$registros['codigoReclamo']=$_POST['codigoReclamoDel'];
@@ -253,30 +268,58 @@ if($tipo=="registrarUsuario")
 
 if($tipo=="modificarProblema")
 {
-	
-	
-	$registros['usuarioUt']=$_POST['usuarioUt'];
-	$registros['sucursal']=$_POST['select_SucursalMod'];
-	$registros['motivo']=$_POST['select_MotivoMod'];
-	$registros['fecha']=$_POST['fechaMod'];
-	$registros['titulo']=$_POST['tituloMod'];
-	$registros['time']=$_POST['timeMod'];
-	$registros['descripcion']=$_POST['descripcionMod'];
-	$registros['Respuesta']=$_POST['RespuestaMod'];
-	$registros['estado']=$_POST['select_EstadoMod'];
-	$registros['usuarioR']=$_POST['usuarioRMod'];
-	$registros['imagen']=$_POST['response'];
-	$registros['codigoReclamo']=$_POST['codigoReclamoMod'];
+	if($_POST['select_SucursalMod']==0){
 
+			$registros['usuarioUt']=$_POST['usuarioUt'];
+			$registros['motivo']=$_POST['select_MotivoMod'];
+			$registros['fecha']=$_POST['fechaMod'];
+			$registros['titulo']=$_POST['tituloMod'];
+			$registros['time']=$_POST['timeMod'];
+			$registros['descripcion']=$_POST['descripcionMod'];
+			$registros['Respuesta']=$_POST['RespuestaMod'];
+			$registros['estado']=$_POST['select_EstadoMod'];
+			$registros['usuarioR']=$_POST['usuarioRMod'];
+			$registros['imagen']=$_POST['response'];
+			$registros['codigoReclamo']=$_POST['codigoReclamoMod'];
+
+			
+			$result = $modelo->modificarProblemaSinSucursal($registros);		
+			if(isset($result)){
+				$array=new stdClass;
+					$array->estado="OK";
+					$json=json_encode($array, JSON_FORCE_OBJECT);
+					echo $json;
+				}
+
+
+	}else{
 	
-	$result = $modelo->modificarProblema($registros);		
-	if(isset($result)){
-		$array=new stdClass;
-			$array->estado="OK";
-			$json=json_encode($array, JSON_FORCE_OBJECT);
-			echo $json;
+			$registros['usuarioUt']=$_POST['usuarioUt'];
+			$registros['sucursal']=$_POST['select_SucursalMod'];
+			$registros['motivo']=$_POST['select_MotivoMod'];
+			$registros['fecha']=$_POST['fechaMod'];
+			$registros['titulo']=$_POST['tituloMod'];
+			$registros['time']=$_POST['timeMod'];
+			$registros['descripcion']=$_POST['descripcionMod'];
+			$registros['Respuesta']=$_POST['RespuestaMod'];
+			$registros['estado']=$_POST['select_EstadoMod'];
+			$registros['usuarioR']=$_POST['usuarioRMod'];
+			$registros['imagen']=$_POST['response'];
+			$registros['codigoReclamo']=$_POST['codigoReclamoMod'];
+
+			
+			$result = $modelo->modificarProblema($registros);		
+			if(isset($result)){
+				$array=new stdClass;
+					$array->estado="OK";
+					$json=json_encode($array, JSON_FORCE_OBJECT);
+					echo $json;
+			}
 	}
 	
 
 }
+
+
+
 

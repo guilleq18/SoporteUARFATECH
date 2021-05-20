@@ -28,6 +28,7 @@ if(isset($result)){
 	session_start();
 	$_SESSION['codigoUsuario'] = $result['codigoUsuario'];
 	$_SESSION['usuario'] = $result['nombreUsuario'];
+	$_SESSION['rol'] = $result['rol'];
 	$_SESSION['nombre'] = $result['nombre'];
 	header("Location: ../");
 }else{

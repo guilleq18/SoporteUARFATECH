@@ -1,65 +1,4 @@
 
-<!--***************************************ALERTAS***********************************************-->
-<?php
-error_reporting(0);
-$f=$_GET['f'];
-
-
-
-
-//************************************USUARIO EXISTENTE*****************************************
-if ($f==2){
-?>
- <div class="alert alert-warning alert-dismissible fade show" role="alert">
-        <strong>El DNI ingresado ya existe</strong>  Ingrese nuevamente el DNI!! o pulse recuperar contraseña para iniciar sesión.
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-            </button>
-    </div>
-
-<?php
-}
-
-if ($f==3){
-?>
-<!--********************************CONTRASEÑA DEMASIADO CORTA**********************************-->
- <div class="alert alert-warning alert-dismissible fade show" role="alert">
-        <strong>La contraseña es Demasiado corta</strong>  Ingrese una nueva contraseña de almenos 8 caracteres!.
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-            </button>
-    </div>
-
-<?php
-}else if($f==4){
-?>
-<!--********************************CONTRASEÑAS NO COINCIDEN**********************************-->
- <div class="alert alert-warning alert-dismissible fade show" role="alert">
-        <strong>Las contraseñas NO coinciden!</strong>  Ingrese una nuevamente la contraseña!.
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-            </button>
-    </div>
-
-
-
-<?php
-}elseif ($f==5) {
-	?>
-<!--********************************E-mail Invalido**********************************-->
- <div class="alert alert-warning alert-dismissible fade show" role="alert">
-        <strong>Email Incompleto. Por favor Ingrese una direccion de E-mail Valida</strong>  Ingrese una nuevamente la contraseña!.
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-            </button>
-    </div>
-
-
-
-<?php
-}
-//*******************************************************************************************
-?>
 
 
 
@@ -186,11 +125,3 @@ if ($f==3){
 </div> 
 
 
-<br><br>
-<article class="bg-secondary mb-3">  
-<div class="card-body text-center">
-    <h3 class="text-white mt-3">Veterinaria Animalia</h3>
-<p class="h5 text-white">Contacto: 3804-3656416   <br><br> Av. Rivadavia N° 542 - La Rioja - Argenitna </p>   
-</div>
-<br><br>
-</article>

@@ -2,9 +2,15 @@
 <?php 
     session_start();
     if(!isset($_SESSION['codigoUsuario'])){
+      
         header("Location: /login.php");
     }
+    if($_SESSION['rol']==1){
+      header("Location: /index.php");
+    }
+    
     $usuario=$_SESSION['codigoUsuario'];
+  
     
 ?>
 
@@ -13,10 +19,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>RSU</title>
-     <!--librerias-->
-     
-     
-     <link rel="stylesheet" href="css/bootstrap.css">
+     <!-- Bootstrap -->
+    <!--librerias-->
+    <link rel="stylesheet" href="css/bootstrap.css">
       <link rel="stylesheet" href="css/jquery.dataTables.min.css">
       <link rel="stylesheet" href="css/select2.min.css">
       <link rel="stylesheet" href="css/table.css">
@@ -27,7 +32,6 @@
       <script src="js/select2.min.js"></script>
       <script src="js/ajax.js"></script>
       <script src="js/validar.js"></script>
-      
       <script type="text/javascript">
        
     $(document).ready(function(){
@@ -39,6 +43,7 @@
         var taibol = $('#tabla').DataTable();
         var item = taibol.row(this).data();
         var id = item['codigoCadena'];
+     
         //levanto el datatable que necesito 
               $("#tabla1").DataTable( {
                   
@@ -60,7 +65,7 @@
                   { data: "nombreCadena", sTitle:"Cadena"},
                   { data: "nombre", sTitle:"Sucursal"},
                   { data: "roc", sTitle:"ROC"},
-                  { data: null, sTitle:"Acciones"},
+                  { data: null},
                   
                 ], 
                 //aqui agrego una columna;
@@ -68,7 +73,7 @@
                 //con el segundo target le digo en donde van a estar los botones
                 columnDefs: [
                   { targets: [0,1], visible: false },
-				          { targets: 5, width: 30, orderable: false, searchable: false, 
+				          { targets: 5, width: 60, orderable: false, searchable: false, 
                     render: function (data, type, row) {
                     data="";
                     data+='<span class="accion modificSuc" title="Configuración de seciones" width="30" height="30" border="0" style="pading:1px"><input type="image" src="./img/editar.png"></span> <span &nbsp; class="accion delSucursal" title="Configuración de seciones" width="30" height="30" border="1" pading:1px><input type="image" src="./img/del.png"></span>';
@@ -172,7 +177,7 @@
               
           if($("#cadenaNombre").val()=='' || $("#select_provincias").val()=='')
           {
-              alert('Datos Incompletos, Por favor completar los campos con *')
+              alert('Datos Incompletos, Por favor completar los campos con *');
           }else{
             
               $("#cadenaReg").modal('hide');//ocultamos el modal
@@ -182,11 +187,11 @@
             }
            
        });
-       $("#regSucursal").click(function(e){
+       $("#registroSucursal").click(function(e){
               
         if($("#sucursalNombre").val()=='' || $("#encargadoSuc").val()=='')
           {
-              alert('Datos Incompletos, Por favor completar los campos con *')
+              alert('Datos Incompletos, Por favor completar los campos con *');
           }else{
               $("#SucursalReg").modal('hide');//ocultamos el modal
                  
@@ -288,7 +293,7 @@
     <div class="row" style="margin: 10px 0px;">
 		<div class="col-lg-1 col-md-1 "></div>
 		<div class="col-md-2">
-    <button type="button" class="" data-toggle="modal" data-target="#cadenaReg">
+    <button type="button" class="btn btn-lg btn-primary" data-toggle="modal" data-target="#cadenaReg">
       Agregar Cadena
     </button>
     </div>
@@ -334,7 +339,7 @@
             <div class="modal-dialog" role="document">
               <div class="modal-content">
                 <div class="modal-header">
-                  <h3 class="modal-title" id="exampleModalLongTitle">Agregar Cadena</h3>
+                  <h3 class="modal-title" id="exampleModalLongTitle">Agregar Sucursal</h3>
                 </div>
                       <div class="modal-body"> 
                         <div class="card">
@@ -347,16 +352,17 @@
                               <div class="col form-group">
                                   <h3 class="control-label " >Nombre del Encargado *</h3>
                                   <input type="text" class="form-control input-lg" placeholder="" name="encargadoSuc" id="encargadoSuc">
+                                  
                               </div> <!-- form-group end.// -->
                               </div> <!-- form-row end.// -->
-                              <input type="text" name="idCadenaSuc" id="idCadenaSuc" style="visibility:hidden">
+                              <input type="text" name="idCadenaSuc" id="idCadenaSuc" >
                         
                     </div>
                 </div>
            
                 <div class="modal-footer">
                   <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                  <p style="margin: 10px 0px;"><button class="btn btn-lg btn-primary" id="regSucursal">Registrar</button></p>
+                  <p style="margin: 10px 0px;"><button class="btn btn-lg btn-primary" id="registroSucursal">Registrar</button></p>
                 </div>
               </div>
             </div>

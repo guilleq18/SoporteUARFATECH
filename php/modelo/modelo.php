@@ -10,25 +10,7 @@ class Modelo {
         $this->gestorBD = new db;
     }
 
-    //Traer Usuarios
-    public function consultaRegistros ($dni){
-
-        $sql="
-        
-        declare @dni nvarchar(20)='".$dni."';
-
-        SELECT numeroDocumento FROM clientes where numeroDocumento=@dni;";
-
-        $datos = $this->gestorBD->hacerConsulta($sql);
-        
-        return $datos;
-
-    }
-
-
-
-	
-
+    
     //metodo que realiza la consulta de clientes
     public function traercadenas()
     {
@@ -126,7 +108,7 @@ class Modelo {
             DECLARE @usuario nvarchar(20)='".$registros['usuario']."';
             DECLARE @pass nvarchar(30)='".$registros['pass']."';
             
-            INSERT INTO dbo.usuariosCat (nombreUsuario, fechaAlta, password, nombre, apellido, status) VALUES(@usuario, GETDATE(), @pass, @nombre, @apellido, 'A');";
+            INSERT INTO dbo.usuariosCat (nombreUsuario, fechaAlta, password, nombre, apellido, status,rol) VALUES(@usuario, GETDATE(), @pass, @nombre, @apellido, 'A',1);";
             
             $datos = $this->gestorBD->hacerInsert($sql);
             return $datos;
@@ -198,7 +180,28 @@ class Modelo {
             DECLARE @usuarioR nvarchar(50)='".$registros['usuarioR']."';
             DECLARE @imagen nvarchar(100)='".$registros['imagen']."';
             
-            update reclamosCab set fechaActualizacion=GETDATE(), codigoUsuarioUt=@usuarioUt, hora=@time, descripcion=@descripcion, respuesta=@Respuesta,tipoReclamo=@tipoReclamo,codigoImagen=@imagen,usuarioReclamo=@usuarioR, estado=@estado, codigoSucursal=@idsucursal where codigoReclamo=@codigoReclamo;";
+            update reclamosCab set fechaActualizacion=GETDATE(), codigoUsuarioUt=@usuarioUt, hora=@time, fechaReclamo=@fecha, titulo=@titulo, descripcion=@descripcion, respuesta=@Respuesta,tipoReclamo=@tipoReclamo,codigoImagen=@imagen,usuarioReclamo=@usuarioR, estado=@estado, codigoSucursal=@idsucursal where codigoReclamo=@codigoReclamo;";
+            
+          
+       $datos = $this->gestorBD->hacerCambio($sql);
+        return $datos;
+     }
+     public function modificarProblemaSinSucursal($registros){
+  
+        $sql="           
+            DECLARE @codigoReclamo nvarchar(20)='".$registros['codigoReclamo']."';
+            DECLARE @usuarioUt nvarchar(20)='".$registros['usuarioUt']."';
+            DECLARE @tipoReclamo nvarchar(20)='".$registros['motivo']."';
+            DECLARE @titulo nvarchar(50)='".$registros['titulo']."';
+            DECLARE @fecha date='".$registros['fecha']."';
+            DECLARE @time time='".$registros['time']."';
+            DECLARE @descripcion nvarchar(100)='".$registros['descripcion']."';
+            DECLARE @Respuesta nvarchar(100)='".$registros['Respuesta']."';
+            DECLARE @estado nvarchar(10)='".$registros['estado']."';
+            DECLARE @usuarioR nvarchar(50)='".$registros['usuarioR']."';
+            DECLARE @imagen nvarchar(100)='".$registros['imagen']."';
+            
+            update reclamosCab set fechaActualizacion=GETDATE(), codigoUsuarioUt=@usuarioUt, hora=@time, fechaReclamo=@fecha, titulo=@titulo, descripcion=@descripcion, respuesta=@Respuesta,tipoReclamo=@tipoReclamo,codigoImagen=@imagen,usuarioReclamo=@usuarioR, estado=@estado where codigoReclamo=@codigoReclamo;";
             
           
        $datos = $this->gestorBD->hacerCambio($sql);
