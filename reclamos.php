@@ -350,7 +350,7 @@ var idUsuarioUt=<?php echo $usuario;?>;
               $("#modificarEstado").modal('hide');//ocultamos el modal
                
               estadoMod($("#codigoReclamo").val());
-              $("#table").DataTable().ajax.reload(); 
+              $("#tabla").DataTable().ajax.reload(); 
              
          
     });
