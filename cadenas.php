@@ -48,7 +48,7 @@
               $("#tabla1").DataTable( {
                   
                 language: {
-                  url: './js/Spanish.json',
+                  url: 'js/Spanish.json',
                   buttons: {pageLength: { _: "Mostrar %d filas"}}
                 },
                 
@@ -300,40 +300,44 @@
 		<div class="col-lg-1 col-md-1"></div>
 	</div>
 <br>
-          <!-- Modal agregar Cadena--> 
-          <div class="modal fade" id="cadenaReg" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+
+<!-- Modal agregar Cliente--> 
+<div class="modal fade" id="cadenaReg" tabindex="-1" role="dialog"  enctype="multipart/form-data" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
             <div class="modal-dialog" role="document">
               <div class="modal-content">
                 <div class="modal-header">
                   <h3 class="modal-title" id="exampleModalLongTitle">Agregar Cadena</h3>
                 </div>
                       <div class="modal-body"> 
-                        <div class="card">
-                         
-                            <div class="form-row">
-                              <div class="col form-group">
-                                  <h3 class="control-label " >Nombre de la Cadena *</h3>   
+                              <div class="form-row">
+                                <div class="form-group col-md-6">
+                                  <h4 class="control-label">Provincia de la Empresa*</h4>
+                                  
+                                  <input type="text" class="form-control input-lg" placeholder="" name="selectClientes" id="select_provincias" required>
+                                </div> <!-- form-group end.// -->
+                                <div class="form-group col-md-6">
+                                  <h4 class="control-label">Nombre de la Empresa*</h4>
                                   <input type="text" class="form-control input-lg" placeholder="" name="nombre" id="cadenaNombre" required>
-                              </div> <!-- form-group end.// -->
-                              <div class="col form-group">
-                                  <h3 class="control-label " >Provincia a la que pertenece *</h3>
-                                    <select class="form-control" name="selectClientes" id="select_provincias"   required>
-                                     <option value=""></option>
-                                    </select>
-                              </div> <!-- form-group end.// -->
+                                </div> <!-- form-group end.// -->
                               </div> <!-- form-row end.// -->
-                             
-                        
-                    </div>
-                </div>
+                        </div>
            
                 <div class="modal-footer">
-                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                  <p style="margin: 10px 0px;"><button class="btn btn-lg btn-primary" id="regCadena">Registrar</button></p>
+                 <div class="form-row">
+                  <div class="form-group col-md-6">
+                    <button class="btn btn-lg btn-primary" id="regCadena">Registrar</button>
+                  </div>
+                  <div class="form-group col-md-6">   
+                    <button class="btn btn-lg btn-warning" data-dismiss="modal">Cancelar</button>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
+          </div>
+
+
+
           <!-- Modal agregar Sucursal--> 
           <div class="modal fade" id="SucursalReg" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
             <div class="modal-dialog" role="document">
@@ -341,33 +345,37 @@
                 <div class="modal-header">
                   <h3 class="modal-title" id="exampleModalLongTitle">Agregar Sucursal</h3>
                 </div>
+                      
                       <div class="modal-body"> 
-                        <div class="card">
-                         
-                            <div class="form-row">
-                              <div class="col form-group">
-                                  <h3 class="control-label " >Nombre de la Sucursal *</h3>   
-                                  <input type="text" class="form-control input-lg" placeholder="" name="sucursalNombre" id="sucursalNombre">
-                              </div> <!-- form-group end.// -->
-                              <div class="col form-group">
-                                  <h3 class="control-label " >Nombre del Encargado *</h3>
-                                  <input type="text" class="form-control input-lg" placeholder="" name="encargadoSuc" id="encargadoSuc">
+                              <div class="form-row">
+                                <div class="form-group col-md-6">
+                                  <h4 class="control-label">Nombre de la Sucursal *</h4>
                                   
-                              </div> <!-- form-group end.// -->
+                                  <input type="text" class="form-control input-lg" placeholder="" name="sucursalNombre" id="sucursalNombre" required>
+                                </div> <!-- form-group end.// -->
+                                <div class="form-group col-md-6">
+                                  <h4 class="control-label">Nombre del Encargado *</h4>
+                                  <input type="text" class="form-control input-lg" placeholder="" name="encargadoSuc" id="encargadoSuc" required>
+                                </div> <!-- form-group end.// -->
                               </div> <!-- form-row end.// -->
-                              <input type="text" name="idCadenaSuc" id="idCadenaSuc" >
-                        
-                    </div>
-                </div>
-           
+                        </div>
+
                 <div class="modal-footer">
-                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                  <p style="margin: 10px 0px;"><button class="btn btn-lg btn-primary" id="registroSucursal">Registrar</button></p>
+                 <div class="form-row">
+                  <div class="form-group col-md-6">
+                    <button class="btn btn-lg btn-primary" id="registroSucursal">Registrar</button>
+                  </div>
+                  <div class="form-group col-md-6">   
+                    <button class="btn btn-lg btn-warning" data-dismiss="modal">Cancelar</button>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
+          </div>
           
+          
+
            <!-- Modal Modificar Cadena-->
             <div class="modal fade" id="cadenaModificar" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
             <div class="modal-dialog" role="document">
@@ -375,34 +383,36 @@
                 <div class="modal-header">
                   <h3 class="modal-title" id="exampleModalLongTitle">Modificar Candena</h3>
                 </div>
-                      <div class="modal-body"> 
-                        <div class="card">
-                         
-                        <div class="form-row">
-                            <div class="col form-group">
-                                  <h3 class="control-label " >Nombre Cadena *</h3>   
-                                  <input type="text" class="form-control input-lg"  name="nombreCad" id="nombreCad" required>
-                              </div> <!-- form-group end.// -->
-                           
-                              <div class="col form-group">
-                                  <h3 class="control-label " >Provincia *</h3>
-                                  <input type="text" class="form-control input-lg"  name="Provincia" id="provCadena" required>
-                              </div> <!- form-group end.// ->
-                              <input type="text" name="idCadena" id="idCadena" style="visibility:hidden">
-                              
-                            </div> <!-- form-row end.// -->
-                             
-                        
-                    </div>
-                </div>
-           
+
+                          <div class="modal-body"> 
+                              <div class="form-row">
+                                <div class="form-group col-md-6">
+                                  <h4 class="control-label">Provincia de la Empresa*</h4>
+                                  
+                                  <input type="text" class="form-control input-lg" placeholder="" name="Provincia" id="provCadena" required>
+                                </div> <!-- form-group end.// -->
+                                <div class="form-group col-md-6">
+                                  <h4 class="control-label">Nombre de la Empresa*</h4>
+                                  <input type="text" class="form-control input-lg" placeholder="" name="nombreCad" id="nombreCad" required>
+                                </div> <!-- form-group end.// -->
+                              </div> <!-- form-row end.// -->
+                        </div>
+                      
+
                 <div class="modal-footer">
-                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                  <p style="margin: 10px 0px;"><button class="btn btn-lg btn-primary" id="modificarCadena">Registrar</button></p>
+                 <div class="form-row">
+                  <div class="form-group col-md-6">
+                    <button class="btn btn-lg btn-primary" id="modificarCadena">Registrar</button>
+                  </div>
+                  <div class="form-group col-md-6">   
+                    <button class="btn btn-lg btn-warning" data-dismiss="modal">Cancelar</button>
+                  </div>
                 </div>
               </div>
             </div>
-          </div> 
+          </div>
+          </div>
+
           <!-- Modal Modificar Sucursal-->
           <div class="modal fade" id="modiSucursal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
             <div class="modal-dialog" role="document">
@@ -410,34 +420,36 @@
                 <div class="modal-header">
                   <h3 class="modal-title" id="exampleModalLongTitle">Modificar Sucursal</h3>
                 </div>
-                      <div class="modal-body"> 
-                        <div class="card">
-                         
-                        <div class="form-row">
-                            <div class="col form-group">
-                                  <h3 class="control-label " >Nombre Sucursal *</h3>   
-                                  <input type="text" class="form-control input-lg"  name="nombreCad" id="nombreSuc" required>
-                              </div> <!-- form-group end.// -->
-                           
-                              <div class="col form-group">
-                                  <h3 class="control-label " >Responsable de Sucursal *</h3>
-                                  <input type="text" class="form-control input-lg"  name="Provincia" id="responsableSuc" required>
-                              </div> <!- form-group end.// ->
-                              <input type="text" name="idSucursal" id="idSucursal" style="visibility:hidden">
-                              
-                            </div> <!-- form-row end.// -->
-                             
-                        
-                    </div>
-                </div>
-           
+
+                        <div class="modal-body"> 
+                              <div class="form-row">
+                                <div class="form-group col-md-6">
+                                  <h4 class="control-label">Nombre de la Sucursal *</h4>
+                                  
+                                  <input type="text" class="form-control input-lg" placeholder="" name="nombreSuc" id="nombreSuc" required>
+                                </div> <!-- form-group end.// -->
+                                <div class="form-group col-md-6">
+                                  <h4 class="control-label">Nombre del Encargado *</h4>
+                                  <input type="text" class="form-control input-lg" placeholder="" name="responsableSuc" id="responsableSuc" required>
+                                </div> <!-- form-group end.// -->
+                              </div> <!-- form-row end.// -->
+                        </div>
+
+
                 <div class="modal-footer">
-                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                  <p style="margin: 10px 0px;"><button class="btn btn-lg btn-primary" id="modificarSucursal">Registrar</button></p>
+                 <div class="form-row">
+                  <div class="form-group col-md-6">
+                    <button class="btn btn-lg btn-primary" id="modificarSucursal">Registrar</button>
+                  </div>
+                  <div class="form-group col-md-6">   
+                    <button class="btn btn-lg btn-warning" data-dismiss="modal">Cancelar</button>
+                  </div>
                 </div>
               </div>
             </div>
-          </div> 
+          </div>
+          </div>
+
 
 
           <!-- Modal Eliminar cadena--> 
@@ -459,17 +471,21 @@
                     </div>
                 </div>
 
-              
-           
                 <div class="modal-footer">
-                  <button type="button" class="btn btn-secondary" data-dismiss="modal">NO</button>
-                  <p style="margin: 10px 0px;"><button class="btn btn-lg btn-primary" id="delCadena">SI</button></p>
+                 <div class="form-row">
+                  <div class="form-group col-md-6">
+                    <button class="btn btn-lg btn-primary" id="delCadena">SI</button>
+                  </div>
+                  <div class="form-group col-md-6">   
+                    <button class="btn btn-lg btn-warning" data-dismiss="modal">NO</button>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-		</div>	
-    </div>
+          </div>
+           
+              
 
     <!-- Modal Eliminar Sucursal--> 
     <div class="modal fade" id="deleteSucursal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
@@ -490,17 +506,21 @@
                     </div>
                 </div>
 
-              
-           
                 <div class="modal-footer">
-                  <button type="button" class="btn btn-secondary" data-dismiss="modal">NO</button>
-                  <p style="margin: 10px 0px;"><button class="btn btn-lg btn-primary" id="borrasSucursal">SI</button></p>
+                 <div class="form-row">
+                  <div class="form-group col-md-6">
+                    <button class="btn btn-lg btn-primary" id="borrasSucursal">SI</button>
+                  </div>
+                  <div class="form-group col-md-6">   
+                    <button class="btn btn-lg btn-warning" data-dismiss="modal">NO</button>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-		</div>	
-    </div>
+          </div>
+           
+                
     
 
     <!--datatable-->

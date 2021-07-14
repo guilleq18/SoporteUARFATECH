@@ -124,8 +124,8 @@ class Modelo {
             DECLARE @titulo nvarchar(50)='".$registros['titulo']."';
             DECLARE @fecha date='".$registros['fecha']."';
             DECLARE @time time='".$registros['time']."';
-            DECLARE @descripcion nvarchar(100)='".$registros['descripcion']."';
-            DECLARE @Respuesta nvarchar(100)='".$registros['Respuesta']."';
+            DECLARE @descripcion nvarchar(300)='".$registros['descripcion']."';
+            DECLARE @Respuesta nvarchar(300)='".$registros['Respuesta']."';
             DECLARE @estado nvarchar(10)='".$registros['estado']."';
             DECLARE @usuarioR nvarchar(50)='".$registros['usuarioR']."';
             DECLARE @imagen nvarchar(100)='".$registros['imagen']."';
@@ -174,8 +174,8 @@ class Modelo {
             DECLARE @titulo nvarchar(50)='".$registros['titulo']."';
             DECLARE @fecha date='".$registros['fecha']."';
             DECLARE @time time='".$registros['time']."';
-            DECLARE @descripcion nvarchar(100)='".$registros['descripcion']."';
-            DECLARE @Respuesta nvarchar(100)='".$registros['Respuesta']."';
+            DECLARE @descripcion nvarchar(300)='".$registros['descripcion']."';
+            DECLARE @Respuesta nvarchar(300)='".$registros['Respuesta']."';
             DECLARE @estado nvarchar(10)='".$registros['estado']."';
             DECLARE @usuarioR nvarchar(50)='".$registros['usuarioR']."';
             DECLARE @imagen nvarchar(100)='".$registros['imagen']."';

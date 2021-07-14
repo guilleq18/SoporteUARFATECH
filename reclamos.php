@@ -2,12 +2,14 @@
 input[type=time] {
   
   color: #2a2c2d;
-  font-size: 20px;
+  font-size: 15px;
   font-family: helvetica;
   width: 180px;
   
   border: 1px solid #ccc;
   color: #888;
+  height:30px;
+  
  
  
   border-radius: 4px;
@@ -18,9 +20,12 @@ input[type=time] {
 input[type=date] {
   
   color: #2a2c2d;
-  font-size: 20px;
+  font-size: 15px;
   font-family: helvetica;
   width: 180px;
+  height:30px;
+  line-height:-10px;
+  
   
   border: 1px solid #ccc;
   color: #888;
@@ -88,7 +93,7 @@ var idUsuarioUt=<?php echo $usuario;?>;
     $("#tabla").DataTable( {
                   
                   language: {
-                    url: './js/Spanish.json',
+                    url: 'js/Spanish.json',
                    },
                   
                   ajax: {
@@ -418,18 +423,22 @@ var idUsuarioUt=<?php echo $usuario;?>;
                     </div>
                 </div>
 
-              
-           
                 <div class="modal-footer">
-                  <button type="button" class="btn btn-secondary" data-dismiss="modal">NO</button>
-                  <p style="margin: 10px 0px;"><button class="btn btn-lg btn-primary" id="estadoModificar">SI</button></p>
+                 <div class="form-row">
+                  <div class="form-group col-md-6">
+                    <p style="margin: 10px 0px;"><button class="btn btn-lg btn-primary" id="estadoModificar">SI</button></p>
+                  </div>
+                  <div class="form-group col-md-6">   
+                    <p style="margin: 10px 0px;"><button class="btn btn-lg btn-warning" data-dismiss="modal">NO</button></p>
+                    
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-		</div>	
-    </div>
+          </div>
 
+              
 <!-- Modal Eliminar Reclamo--> 
   <div class="modal fade" id="delReclamo" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
             <div class="modal-dialog" role="document">
@@ -449,50 +458,52 @@ var idUsuarioUt=<?php echo $usuario;?>;
                     </div>
                 </div>
 
-              
-           
                 <div class="modal-footer">
-                  <button type="button" class="btn btn-secondary" data-dismiss="modal">NO</button>
-                  <p style="margin: 10px 0px;"><button class="btn btn-lg btn-primary" id="deleteReclamo">SI</button></p>
+                 <div class="form-row">
+                  <div class="form-group col-md-6">
+                    <p style="margin: 10px 0px;"><button class="btn btn-lg btn-primary" id="deleteReclamo">SI</button></p>
+                  </div>
+                  <div class="form-group col-md-6">   
+                    <p style="margin: 10px 0px;"><button class="btn btn-lg btn-warning" data-dismiss="modal">NO</button></p>
+                    
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-		</div>	
-    </div>
+          </div>
+           
+               
 
-
-
-<!-- Modal agregar Reclamo--> 
- <div class="modal fade" id="reclamoReg" tabindex="-1" role="dialog"  enctype="multipart/form-data" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+<!-- Modal Agregar Reclamo--> 
+<div class="modal fade" id="reclamoReg" tabindex="-1" role="dialog"  enctype="multipart/form-data" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
             <div class="modal-dialog" role="document">
               <div class="modal-content">
                 <div class="modal-header">
                   <h3 class="modal-title" id="exampleModalLongTitle">Agregar Reclamo</h3>
                 </div>
                       <div class="modal-body"> 
-                        <div class="card">
-                         
-                            <div class="form-row">
-                              
-                              <div class="col form-group">
-                                  <h3 class="control-label">Empresa</h3>
-                                    <select class="form-control" name="selectEmpresa" id="select_Empresa"   required>
+                              <div class="form-row">
+                                <div class="form-group col-md-6">
+                                  <h4 class="control-label">Empresa</h4>
+                                  <select class="form-control" name="selectEmpresa" id="select_Empresa"   required>
                                      <option value=""></option>
                                     </select>
-                              </div> <!-- form-group end.// -->
-                              <div class="col form-group">
-                                  <h3 class="control-label">Sucursal</h3>
-                                    <select class="form-control" name="selectSucursal" id="select_Sucursal"   required>
+                                </div> <!-- form-group end.// -->
+                                <div class="form-group col-md-6">
+                                  <h4 class="control-label">Sucursal</h4>
+                                  <select class="form-control" name="selectSucursal" id="select_Sucursal"   required>
                                      <option value=""></option>
                                     </select>
-                              </div> <!-- form-group end.// -->
-                              <div class="col form-group">
-                                  <h3 class="control-label " >Titulo Problema </h3>   
+                                </div> <!-- form-group end.// -->
+                              </div> <!-- form-row end.// -->
+                              <div class="form-row">
+                                <div class="form-group col-md-6">
+                                  <h4 class="control-label " >Titulo Problema </h4>   
                                   <input type="text" class="form-control input-lg" placeholder="" name="titulo" id="titulo" required>
-                              </div> <!-- form-group end.// -->
-                              <div class="col form-group">
-                                  <h3 class="control-label">Motivo</h3>
+                                </div> <!-- form-group end.// -->
+                                <div class="form-group col-md-6">
+                                  <h4 class="control-label">Motivo</h4>   
                                     <select class="form-control" name="selectMotivo" id="select_Motivo"   required>
                                      <option value="1">Capacitacion</option>
                                      <option value="2">Duda</option>
@@ -502,51 +513,80 @@ var idUsuarioUt=<?php echo $usuario;?>;
                                      <option value="6">Operativo</option>
                                      <option value="7">Productos</option>
                                      </select>
-                              </div> <!-- form-group end.// -->
-                              <div class="col form-group">
-                                  <h3 class="control-label " >Fecha </h3>   
-                                  <input type="date" class="form-control" name="fecha" id="fecha" required>
-                              </div> <!-- form-group end.// -->
-                              <div class="col form-group">
-                                  <h3 class="control-label " >Hora </h3>   
-                                  <input type="time" class="form-control" value="00:00" id='time'>
-                              </div> <!-- form-group end.// -->
-                              <div class="col form-group">
-                                  <h3 class="control-label " >Usuario Reclamo </h3>   
-                                  <input type="text" class="form-control input-lg" placeholder="" name="usuarioR" id="usuarioR" required>
-                              </div> <!-- form-group end.// -->
-                              <div class="col form-group">
-                                  <h3 class="control-label " >Reclamo </h3>   
-                                  <input type="text" class="form-control input-lg" placeholder="" name="problema" id="descripcion" required>
-                              </div> <!-- form-group end.// -->
-                              <div class="col form-group">
-                                  <h3 class="control-label " >Respuesta </h3>   
-                                  <input type="text" class="form-control input-lg" placeholder="" name="Respuesta" id="Respuesta" required>
-                              </div> <!-- form-group end.// -->
-                              <div class="col form-group">
-                                  <h3 class="control-label " >Captura </h3>   
-                                  <input type="file" class="form-control input-file" value='NULL' name="uploadedfile" id="uploadedfile">
-                              </div> <!-- form-group end.// -->
-                              <div class="col form-group">
-                                  <h3 class="control-label">Estado</h3>
-                                    <select class="form-control" name="selectEstado" id="select_Estado"   required>
-                                     <option value="1">Pendiente</option>
-                                     <option value="2">Ok</option>
-                                     </select>
-                              </div> <!-- form-group end.// -->
+                                </div> <!-- form-group end.// -->
                               </div> <!-- form-row end.// -->
-                             
-                        
-                    </div>
-                </div>
+                              <div class="form-row">
+                                <div class="form-group col-md-6">
+                                  <h4 class="control-label " >Fecha Reclamo</h4>   
+                                  <input type="date" class="form-control" name="fecha" id="fecha" required>
+                                </div> <!-- form-group end.// -->
+                                <div class="form-group col-md-6">
+                                  <h4 class="control-label " >Hora </h4>   
+                                  <input type="time" class="form-control" value="00:00" id='time'>
+                                </div> <!-- form-group end.// -->  
+                              </div> <!-- form-row end.// -->    
+                              <div class="form-row">
+                                <div class="form-group col-md-6">
+                                  
+                                  <h4 class="control-label " >Reclamo </h4>   
+                                  <textarea  class="form-control input-lg" placeholder="" name="problema" id="descripcion" required></textarea>
+                                </div> <!-- form-group end.// -->
+                                <div class="form-group col-md-6">
+                                  
+                                  <h4 class="control-label " >Respuesta</h4>   
+                                  <textarea class="form-control input-lg" placeholder="" name="Respuesta" id="Respuesta" required></textarea>
+                                </div> <!-- form-group end.// -->
+                              </div> <!-- form-row end.// -->
+                              <div class="form-row">
+                                <div class="form-group col-md-6">
+                                <h4 class="control-label " >Usuario Reclamo </h4>   
+                                  <input type="text" class="form-control input-lg" placeholder="" name="usuarioR" id="usuarioR" required> 
+                                </div> <!-- form-group end.// -->
+                                <div class="form-group col-md-6">
+                                  <h4 class="control-label " >Captura</h4>   
+                                  <input type="file" class="form-control input-file" value='NULL' name="uploadedfile" id="uploadedfile">
+                                  
+                                </div> <!-- form-group end.// -->
+                              </div> <!-- form-row end.// -->
+                              <div class="form-row">
+                                <div class="form-group col-md-12">
+                                  <h4 class="control-label " >Estado</h4>   
+                                    <select class="form-control" name="selectEstado" id="select_Estado"   required>
+                                      <option value="1">Pendiente</option>
+                                      <option value="2">Ok</option>
+                                    </select>
+                                 </div> <!-- form-group end.// -->
+                               
+                               </div> <!-- form-row end.// -->
+                      </div>
            
                 <div class="modal-footer">
-                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                  <p style="margin: 10px 0px;"><button class="btn btn-lg btn-primary" id="regReclamo">Registrar</button></p>
+                 <div class="form-row">
+                  <div class="form-group col-md-6">
+                    <p style="margin: 10px 0px;"><button class="btn btn-lg btn-primary" id="regReclamo">Registrar</button></p>
+                  </div>
+                  <div class="form-group col-md-6">   
+                    <p style="margin: 10px 0px;"><button class="btn btn-lg btn-warning" data-dismiss="modal">Cancelar</button></p>
+                    
+                  </div>
                 </div>
               </div>
             </div>
           </div>
+          </div>
+          
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -561,69 +601,91 @@ var idUsuarioUt=<?php echo $usuario;?>;
                 <div class="modal-header">
                   <h3 class="modal-title" id="exampleModalLongTitle">Detalle Reclamo</h3>
                 </div>
-                      <div class="modal-body"> 
-                        <div class="card">
-                         
-                            <div class="form-row">
-                            <input type="text" class="form-control input-lg" placeholder="" name="sucursalVer" id="codigoReclamoVer" style="margin: 10px 0px;  visibility: hidden;" required>
-                              <div class="col form-group">
-                                  <h3 class="control-label">Sucursal</h3>
+
+
+                <div class="modal-body"> 
+                              
+                              <div class="form-row">
+                                <div class="form-group col-md-6">
+                                <h4 class="control-label">Sucursal</h4>
                                   <input type="text" class="form-control input-lg" placeholder="" name="sucursalVer" id="sucursalVer" readonly=readonly required>
-                              </div> <!-- form-group end.// -->
-                              <div class="col form-group">
-                                  <h3 class="control-label " >Titulo Problema </h3>   
+                                </div> <!-- form-group end.// -->
+                                <div class="form-group col-md-6">
+                                <h4 style="visibility: hidden;" class="control-label">Sucursal</h4>
+                                  <input type="text" class="form-control input-lg" placeholder="" name="sucursalVer" id="codigoReclamoVer" style="visibility: hidden;" required>
+                                </div> <!-- form-group end.// -->
+                              </div> <!-- form-row end.// -->
+                              <div class="form-row">
+                                <div class="form-group col-md-6">
+                                  <h4 class="control-label " >Titulo Problema </h4>   
                                   <input type="text" class="form-control input-lg" placeholder="" name="tituloVer" id="tituloVer" readonly=readonly required>
-                              </div> <!-- form-group end.// -->
-                              <div class="col form-group">
-                                  <h3 class="control-label">Motivo</h3>
+                                </div> <!-- form-group end.// -->
+                                <div class="form-group col-md-6">
+                                  <h4 class="control-label">Motivo</h4>   
                                   <input type="text" class="form-control input-lg" placeholder="" name="motivoVer" id="motivoVer" readonly=readonly required>
-                                    
-                              </div> <!-- form-group end.// -->
-                              <div class="col form-group">
-                                  <h3 class="control-label " >Fecha </h3>   
+                                </div> <!-- form-group end.// -->
+                              </div> <!-- form-row end.// -->
+                              <div class="form-row">
+                                <div class="form-group col-md-6">
+                                  <h4 class="control-label " >Fecha Reclamo</h4>   
                                   <input type="date" class="form-control" name="fechaVer" id="fechaVer" readonly=readonly required>
-                              </div> <!-- form-group end.// -->
-                              <div class="col form-group">
-                                  <h3 class="control-label " >Hora </h3>   
+                                </div> <!-- form-group end.// -->
+                                <div class="form-group col-md-6">
+                                  <h4 class="control-label " >Hora </h4>   
                                   <input type="time" class="form-control" readonly=readonly id='timeVer'>
-                              </div> <!-- form-group end.// -->
-                              <div class="col form-group">
-                                  <h3 class="control-label " >Usuario Reclamo </h3>   
-                                  <input type="text" class="form-control input-lg" placeholder="" name="usuarioRVer" id="usuarioRVer" readonly=readonly required>
-                              </div> <!-- form-group end.// -->
-                              <div class="col form-group">
-                                  <h3 class="control-label " >Reclamo </h3>   
+                                </div> <!-- form-group end.// -->  
+                              </div> <!-- form-row end.// -->    
+                              <div class="form-row">
+                                <div class="form-group col-md-6">
+                                  
+                                  <h4 class="control-label " >Reclamo </h4>   
                                   <textarea type="text" class="form-control input-lg" placeholder="" name="problemaVer" id="descripcionVer" readonly=readonly required></textarea>
-                              </div> <!-- form-group end.// -->
-                              <div class="col form-group">
-                                  <h3 class="control-label " >Respuesta </h3>   
+                                </div> <!-- form-group end.// -->
+                                <div class="form-group col-md-6">
+                                  
+                                  <h4 class="control-label " >Respuesta</h4>   
                                   <textarea type="text" class="form-control input-lg" placeholder="" name="respuestaVer" id="respuestaVer" readonly=readonly required></textarea>
-                              </div> <!-- form-group end.// -->
-                              <div class="col form-group">
-                                  <h3 class="control-label " >Captura </h3>   
-                                  <img type="image" alt="" style="max-height:400px;max-width:500px;" id="capturaVer" >
-                              </div> <!-- form-group end.// -->
-                              <div class="col form-group">
-                                  <h3 class="control-label">Estado</h3>
+                                </div> <!-- form-group end.// -->
+                              </div> <!-- form-row end.// -->
+                              <div class="form-row">
+                                <div class="form-group col-md-6">
+                                <h4 class="control-label " >Usuario Reclamo </h4>   
+                                <input type="text" class="form-control input-lg" placeholder="" name="usuarioRVer" id="usuarioRVer" readonly=readonly required>
+                                </div> <!-- form-group end.// -->
+                                <div class="form-group col-md-6">
+                                  <h4 class="control-label">Usuario UT</h4>
+                                  <input type="text" class="form-control input-lg" placeholder="" name="usuarioUtVer" id="usuarioUtVer" readonly=readonly required>
+                                </div> <!-- form-group end.// -->
+                              </div> <!-- form-row end.// -->
+                              
+                               <div class="form-row">
+                               <div class="form-group col-md-12">
+                               <h4 class="control-label " >Estado</h4>   
                                   <input type="text" class="form-control input-lg" placeholder="" name="estadoVer" id="estadoVer" readonly=readonly required>
                               </div> <!-- form-group end.// -->
-                              <div class="col form-group">
-                                  <h3 class="control-label">Usuario UT</h3>
-                                  <input type="text" class="form-control input-lg" placeholder="" name="usuarioUtVer" id="usuarioUtVer" readonly=readonly required>
+                              </div> <!-- form-row end.// -->
+                              <div class="form-row">
+                               <div class="form-group col-md-12">
+                                  <h4 class="control-label">Captura</h4>   
+                                  <img type="image" alt="" style="max-height:400px;max-width:500px;" id="capturaVer">
                               </div> <!-- form-group end.// -->
                               </div> <!-- form-row end.// -->
-                             
-                        
-                    </div>
-                </div>
-           
+
+                      </div>
+
                 <div class="modal-footer">
-                  <button type="button" class="btn btn-lg btn-primary" data-dismiss="modal">Cerrar</button>
-                  
+                 <div class="form-row">
+                  <div class="form-group col-md-6">
+                    <p style="margin: 10px 0px;"><button class="btn btn-lg btn-warning" data-dismiss="modal">Cerrar</button></p>
+                  </div>
+                  <div class="form-group col-md-6">   
+                    <p style="visibility: hidden;"><button class="btn btn-lg btn-primary" id="regReclamo">Registrar</button></p>
+                  </div>
                 </div>
               </div>
             </div>
-  </div>
+          </div>
+          </div>
 
 
  <!-- Modal Modificar Reclamo--> 
@@ -633,33 +695,30 @@ var idUsuarioUt=<?php echo $usuario;?>;
                 <div class="modal-header">
                   <h3 class="modal-title" id="exampleModalLongTitle">Modificar Reclamo</h3>
                 </div>
-                      <div class="modal-body"> 
-                        <div class="card">
-                         
-                            <div class="form-row">
-                            <input type="text" class="form-control input-lg" placeholder="" name="codigoReclamoMod" id="codigoReclamoMod" style="visibility: hidden;" required>
-                            <!-- CODIGO PROVISIORIO PARA CAMBIAR EL USUARIO ENCARGADO-->
-                            <input type="text" class="form-control input-lg" placeholder="" name="usuarioUtMod" id="usuarioUtMod" style="visibility: hidden;" required>
-                               <!-- ......................................................-->
-                              <div class="col form-group">
-                                  <h3 class="control-label">Empresa</h3>
-                                    <select class="form-control" name="selectEmpresaMod" id="select_EmpresaMod"   required>
+
+                <div class="modal-body"> 
+                              <div class="form-row">
+                                <div class="form-group col-md-6">
+                                  <h4 class="control-label">Empresa</h4>
+                                  <select class="form-control" name="selectEmpresaMod" id="select_EmpresaMod"   required>
                                      <option selected="selected" value=""></option>
                                     </select>
-                              </div> <!-- form-group end.// -->
-                              <div class="col form-group">
-                                  <h3 class="control-label">Sucursal</h3>
-                                    <select class="form-control" name="selectSucursalMod" id="select_SucursalMod"   required>
+                                </div> <!-- form-group end.// -->
+                                <div class="form-group col-md-6">
+                                  <h4 class="control-label">Sucursal</h4>
+                                  <select class="form-control" name="selectSucursalMod" id="select_SucursalMod"   required>
                                      <option selected="selected" value=""></option>
                                     </select>
-                              </div> <!-- form-group end.// -->
-                              <div class="col form-group">
-                                  <h3 class="control-label " >Titulo Problema </h3>   
+                                </div> <!-- form-group end.// -->
+                              </div> <!-- form-row end.// -->
+                              <div class="form-row">
+                                <div class="form-group col-md-6">
+                                  <h4 class="control-label " >Titulo Problema </h4>   
                                   <input type="text" class="form-control input-lg" placeholder="" name="tituloMod" id="tituloMod" required>
-                              </div> <!-- form-group end.// -->
-                              <div class="col form-group">
-                                  <h3 class="control-label">Motivo</h3>
-                                    <select class="form-control" name="selectMotivoMod" id="select_MotivoMod"   required>
+                                </div> <!-- form-group end.// -->
+                                <div class="form-group col-md-6">
+                                  <h4 class="control-label">Motivo</h4>   
+                                  <select class="form-control" name="selectMotivoMod" id="select_MotivoMod"   required>
                                      <option value="1">Capacitacion</option>
                                      <option value="2">Duda</option>
                                      <option value="3">Error</option>
@@ -668,51 +727,77 @@ var idUsuarioUt=<?php echo $usuario;?>;
                                      <option value="6">Operativo</option>
                                      <option value="7">Productos</option>
                                      </select>
-                              </div> <!-- form-group end.// -->
-                              <div class="col form-group">
-                                  <h3 class="control-label " >Fecha </h3>   
+                                </div> <!-- form-group end.// -->
+                              </div> <!-- form-row end.// -->
+                              <div class="form-row">
+                                <div class="form-group col-md-6">
+                                  <h4 class="control-label " >Fecha Reclamo</h4>   
                                   <input type="date" class="form-control" name="fechaMod" id="fechaMod" required>
-                              </div> <!-- form-group end.// -->
-                              <div class="col form-group">
-                                  <h3 class="control-label " >Hora </h3>   
+                                </div> <!-- form-group end.// -->
+                                <div class="form-group col-md-6">
+                                  <h4 class="control-label " >Hora </h4>   
                                   <input type="time" class="form-control" value="00:00" id='timeMod'>
-                              </div> <!-- form-group end.// -->
-                              <div class="col form-group">
-                                  <h3 class="control-label " >Usuario Reclamo </h3>   
-                                  <input type="text" class="form-control input-lg" placeholder="" name="usuarioMod" id="usuarioMod" required>
-                              </div> <!-- form-group end.// -->
-                              <div class="col form-group">
-                                  <h3 class="control-label " >Reclamo </h3>   
+                                </div> <!-- form-group end.// -->  
+                              </div> <!-- form-row end.// -->    
+                              <div class="form-row">
+                                <div class="form-group col-md-6">
+                                  
+                                  <h4 class="control-label " >Reclamo </h4>   
                                   <textarea  class="form-control input-lg" placeholder="" name="problemaMod" id="descripcionMod" required></textarea>
-                              </div> <!-- form-group end.// -->
-                              <div class="col form-group">
-                                  <h3 class="control-label " >Respuesta </h3>   
+                                </div> <!-- form-group end.// -->
+                                <div class="form-group col-md-6">
+                                  
+                                  <h4 class="control-label " >Respuesta</h4>   
                                   <textarea  class="form-control input-lg" placeholder="" name="RespuestaMod" id="RespuestaMod" required></textarea>
-                              </div> <!-- form-group end.// -->
-                              <div class="col form-group">
-                                  <h3 class="control-label " >Captura </h3>   
+                                </div> <!-- form-group end.// -->
+                              </div> <!-- form-row end.// -->
+                              <div class="form-row">
+                                <div class="form-group col-md-6">
+                                <h4 class="control-label " >Usuario Reclamo </h4>   
+                                <input type="text" class="form-control input-lg" placeholder="" name="usuarioMod" id="usuarioMod" required>
+                                </div> <!-- form-group end.// -->
+                                <div class="form-group col-md-6">
+                                  <h4 class="control-label " >Captura</h4>   
                                   <input type="file" class="form-control input-file" value='NULL' name="uploadedfileMod" id="uploadedfileMod">
-                              </div> <!-- form-group end.// -->
-                              <div class="col form-group">
-                                  <h3 class="control-label">Estado</h3>
-                                    <select class="form-control" name="select_EstadoMod" id="select_EstadoMod"   required>
+                                  
+                                </div> <!-- form-group end.// -->
+                              </div> <!-- form-row end.// -->
+                              <div class="form-row">
+                                <div class="form-group col-md-12">
+                                  <h4 class="control-label " >Estado</h4>   
+                                  <select class="form-control" name="select_EstadoMod" id="select_EstadoMod"   required>
                                      <option value="1">Pendiente</option>
                                      <option value="2">Ok</option>
                                      </select>
-                              </div> <!-- form-group end.// -->
+                                 </div> <!-- form-group end.// -->
+                               </div> <!-- form-row end.// -->
+                               <div class="form-row">
+                                <div class="form-group col-md-6">
+                                <input type="text" class="form-control input-lg" placeholder="" name="codigoReclamoMod" id="codigoReclamoMod" style="visibility: hidden;" required>
+                                </div> <!-- form-group end.// -->
+                                <div class="form-group col-md-6">
+                                <input type="text" class="form-control input-lg" placeholder="" name="usuarioUtMod" id="usuarioUtMod" style="visibility: hidden;" required>
+                                  
+                                </div> <!-- form-group end.// -->
                               </div> <!-- form-row end.// -->
-                             
-                        
-                    </div>
-                </div>
-           
-                <div class="modal-footer">
-                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                  <p style="margin: 10px 0px;"><button class="btn btn-lg btn-primary" id="modifReclamo">Guardar</button></p>
+                      </div>
+
+                      <div class="modal-footer">
+                 <div class="form-row">
+                  <div class="form-group col-md-6">
+                    <p style="margin: 10px 0px;"><button class="btn btn-lg btn-primary" id="modifReclamo">Registrar</button></p>
+                  </div>
+                  <div class="form-group col-md-6">   
+                    <p style="margin: 10px 0px;"><button class="btn btn-lg btn-warning" data-dismiss="modal">Cancelar</button></p>
+                    
+                  </div>
                 </div>
               </div>
             </div>
           </div>
+          </div>
+
+                     
 
 
 
